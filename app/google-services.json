@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "628905896500",
+    "project_id": "aethalides-8b515",
+    "storage_bucket": "aethalides-8b515.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628905896500:android:cd453b0dd839bc23587861",
+        "android_client_info": {
+          "package_name": "com.mrkurilin.aethalides"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628905896500-q4vf16f3emvdvjo3lbrofms2bshh68at.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrkurilin.aethalides",
+            "certificate_hash": "f3d550a34ccd95f037941a013a54a9000ff34d23"
+          }
+        },
+        {
+          "client_id": "628905896500-7defv210ok26i9e0odr9v97qbh88aa6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEEuc4t2sj9p_NvTKNrNTpoTsneBFvlts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628905896500-7defv210ok26i9e0odr9v97qbh88aa6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

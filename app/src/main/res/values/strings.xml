@@ -1,3 +1,14 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Aethalides</string>
+
+    <string name="google_server_client_id" tools:ignore="TypographyDashes,Typos">628905896500-7defv210ok26i9e0odr9v97qbh88aa6f.apps.googleusercontent.com</string>
+    <string name="login">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="or">Или</string>
+    <string name="already_registered">Уже зарегистрированы?</string>
+    <string name="sign_in">Войти</string>
+    <string name="not_registered_yet">Ещё не зарегистрированы?</string>
+    
 </resources>

@@ -1,18 +1,17 @@
 package com.mrkurilin.aethalides
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mrkurilin.aethalides.ui.main.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.mrkurilin.aethalides.ui.sign_in_screen.SignInFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
-        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, SignInFragment.newInstance())
+            .commitNow()
     }
 }
