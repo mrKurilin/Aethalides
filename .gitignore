@@ -8,4 +8,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-/deleted_files/*
+/app/google-services.json
