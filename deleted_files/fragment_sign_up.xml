@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.sign_up_screen.SignUpFragment">
+    tools:context=".deleted_files.sign_up_screen.SignUpFragment">
 
     <EditText
         android:id="@+id/login_edit_text"
@@ -17,7 +17,7 @@
         android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/first_login_edit_text"
+        android:id="@+id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Password"
@@ -25,11 +25,20 @@
         android:inputType="textPassword"
         android:textAlignment="center" />
 
+    <EditText
+        android:id="@+id/second_login_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="Password"
+        android:hint="@string/repeat_password"
+        android:inputType="textPassword"
+        android:textAlignment="center" />
+
     <Button
-        android:id="@+id/register_button"
+        android:id="@+id/sign_in_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         android:textAllCaps="false" />
 
     <TextView
@@ -49,12 +58,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/not_registered_yet" />
+        android:text="@string/already_registered" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
+        android:text="@string/sign_in"
         android:textColor="@android:color/holo_blue_bright"
         android:textStyle="bold" />
 

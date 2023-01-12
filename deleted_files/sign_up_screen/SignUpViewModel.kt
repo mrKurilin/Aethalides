@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.ui.sign_up_screen
+package com.mrkurilin.aethalides.deleted_files.sign_up_screen
 
 import androidx.lifecycle.ViewModel
 
