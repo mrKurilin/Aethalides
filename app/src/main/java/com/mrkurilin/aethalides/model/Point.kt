@@ -5,5 +5,6 @@ import androidx.annotation.ColorInt
 data class Point(
     @ColorInt
     val color: Int,
-    val description: String
+    val description: String,
+    val isDone: Boolean,
 )
