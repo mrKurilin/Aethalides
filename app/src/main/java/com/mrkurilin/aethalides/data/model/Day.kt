@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.model
+package com.mrkurilin.aethalides.data.model
 
 data class Day(
     val date: String,

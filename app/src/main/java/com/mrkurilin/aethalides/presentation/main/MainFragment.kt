@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.ui.main
+package com.mrkurilin.aethalides.presentation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.mrkurilin.aethalides.R
 
 class MainFragment : Fragment() {
-
-    companion object {
-
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var viewModel: MainViewModel
 

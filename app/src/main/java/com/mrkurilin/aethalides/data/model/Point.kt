@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.model
+package com.mrkurilin.aethalides.data.model
 
 import androidx.annotation.ColorInt
 

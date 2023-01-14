@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Aethalides</string>
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="or">или</string>
+    <string name="not_registered_yet">Ещё не зарегистрированы?</string>
+    <string name="sign_up">Зарегистрироваться</string>
 </resources>
