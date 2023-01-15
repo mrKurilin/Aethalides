@@ -6,4 +6,9 @@
     <string name="or">или</string>
     <string name="not_registered_yet">Ещё не зарегистрированы?</string>
     <string name="sign_up">Зарегистрироваться</string>
+
+    <string name="error_wrong_email_or_password">Неверные имя пользователя или пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="already_registered">Уже зарегистрированы?</string>
+
 </resources>

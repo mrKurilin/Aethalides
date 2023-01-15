@@ -1,16 +1,21 @@
 package com.mrkurilin.aethalides.presentation.sign_in_screen
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.constraintlayout.widget.Group
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.SignInButton
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.showLongToast
 import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
@@ -22,6 +27,18 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private lateinit var signInButton: Button
     private lateinit var googleSignInButton: SignInButton
     private lateinit var signUpTextView: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var signInGroup: Group
+
+    private lateinit var launcher: ActivityResultLauncher<Activity>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        launcher = registerForActivityResult(GoogleSignInActivityResultContract()) { credential ->
+            viewModel.signInWithCredential(credential)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +53,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
         googleSignInButton.setOnClickListener {
             viewModel.googleSignInButtonPressed()
+            launcher.launch(requireActivity())
         }
 
         signUpTextView.setOnClickListener {
@@ -55,16 +73,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 //do nothing
             }
             SignInViewModel.UiState.Loading -> {
-                showLoading()
+                uiShowLoading()
             }
             SignInViewModel.UiState.WrongEmailOrPassword -> {
-                // TODO: show error
+                uiStopLoading()
+                showLongToast(R.string.error_wrong_email_or_password)
             }
             SignInViewModel.UiState.ErrorNoInternetConnection -> {
-                Toast.makeText(requireContext(), "FUCK YEAH", Toast.LENGTH_LONG).show()
-                // TODO: show error
+                uiStopLoading()
             }
             SignInViewModel.UiState.ErrorEmptyFields -> {
+                uiStopLoading()
                 uiShowFieldsCanNotBeEmptyError()
             }
         }
@@ -79,8 +98,14 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun showLoading() {
-        TODO("Not yet implemented")
+    private fun uiShowLoading() {
+        progressBar.isVisible = true
+        signInGroup.isVisible = false
+    }
+
+    private fun uiStopLoading() {
+        progressBar.isVisible = false
+        signInGroup.isVisible = true
     }
 
     private fun initViews() {
@@ -90,5 +115,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         signInButton = view.findViewById(R.id.sign_in_button)
         googleSignInButton = view.findViewById(R.id.google_sign_in_button)
         signUpTextView = view.findViewById(R.id.sign_up_text_view)
+        progressBar = view.findViewById(R.id.progress_bar)
+        signInGroup = view.findViewById(R.id.sign_in_group)
     }
 }

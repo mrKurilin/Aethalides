@@ -2,6 +2,11 @@ package com.mrkurilin.aethalides.presentation.sign_in_screen
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.NavOptions
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mrkurilin.aethalides.AethalidesApp
@@ -17,8 +22,6 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     private val _uiState = MutableStateFlow<UiState>(UiState.Init)
     val uiState: StateFlow<UiState> = _uiState
 
-    private val auth = Firebase.auth
-
     fun signInButtonPressed(email: String, password: String) {
         _uiState.value = UiState.Loading
         if (emailAndPasswordAreValid(email, password)) {
@@ -33,7 +36,7 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
-        val signInTask = auth.signInWithEmailAndPassword(email, password)
+        val signInTask = Firebase.auth.signInWithEmailAndPassword(email, password)
         signInTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 navController.navigate(R.id.action_signInFragment_to_mainFragment)
@@ -41,19 +44,42 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
                 _uiState.value = UiState.WrongEmailOrPassword
             }
         }
-            .addOnFailureListener { exception ->
-                if (exception.message.equals("NO_NETWORK")) {
-                    _uiState.value = UiState.ErrorNoInternetConnection
-                }
-            }
     }
 
     fun googleSignInButtonPressed() {
-        TODO("Not yet implemented")
+        //do nothing
     }
 
     fun signUpTextViewPressed() {
-        TODO("Not yet implemented")
+        navController.navigate(
+            R.id.signUpFragment,
+            null,
+            NavOptions.Builder().setPopUpTo(R.id.signInFragment, true).build()
+        )
+    }
+
+    fun signInWithCredential(credential: AuthCredential?) {
+        if (credential == null) {
+            return
+        }
+
+        try {
+            Firebase.auth.signInWithCredential(credential)
+        } catch (e: FirebaseAuthInvalidUserException) {
+
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+
+        } catch (e: FirebaseAuthUserCollisionException) {
+
+        } catch (e: Exception) {
+
+        }
+
+        navController.navigate(
+            R.id.mainFragment,
+            null,
+            NavOptions.Builder().setPopUpTo(R.id.signInFragment, true).build()
+        )
     }
 
     sealed class UiState {
