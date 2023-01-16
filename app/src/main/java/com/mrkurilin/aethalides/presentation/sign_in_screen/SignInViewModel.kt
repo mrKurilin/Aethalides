@@ -19,7 +19,7 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     private val aethalidesApp = app as AethalidesApp
     private val navController = aethalidesApp.provideNavController()
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Init)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState
 
     fun signInButtonPressed(email: String, password: String) {
@@ -39,15 +39,11 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
         val signInTask = Firebase.auth.signInWithEmailAndPassword(email, password)
         signInTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                navController.navigate(R.id.action_signInFragment_to_mainFragment)
+                navigateToMainFragment()
             } else {
                 _uiState.value = UiState.WrongEmailOrPassword
             }
         }
-    }
-
-    fun googleSignInButtonPressed() {
-        //do nothing
     }
 
     fun signUpTextViewPressed() {
@@ -75,6 +71,10 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
 
         }
 
+        navigateToMainFragment()
+    }
+
+    private fun navigateToMainFragment() {
         navController.navigate(
             R.id.mainFragment,
             null,
@@ -82,8 +82,12 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
         )
     }
 
+    fun viewCreated() {
+        _uiState.value = UiState.ViewCreated
+    }
+
     sealed class UiState {
-        object Init : UiState()
+        object ViewCreated : UiState()
         object Loading : UiState()
         object WrongEmailOrPassword : UiState()
         object ErrorNoInternetConnection : UiState()

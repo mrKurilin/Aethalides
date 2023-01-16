@@ -36,6 +36,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         super.onCreate(savedInstanceState)
 
         launcher = registerForActivityResult(GoogleSignInActivityResultContract()) { credential ->
+            uiStopLoading()
             viewModel.signInWithCredential(credential)
         }
     }
@@ -52,7 +53,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
 
         googleSignInButton.setOnClickListener {
-            viewModel.googleSignInButtonPressed()
+            uiShowLoading()
             launcher.launch(requireActivity())
         }
 
@@ -65,15 +66,17 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 updateUi(uiState)
             }
         }
+
+        viewModel.viewCreated()
     }
 
     private fun updateUi(uiState: SignInViewModel.UiState) {
         when (uiState) {
-            SignInViewModel.UiState.Init -> {
-                //do nothing
-            }
             SignInViewModel.UiState.Loading -> {
                 uiShowLoading()
+            }
+            SignInViewModel.UiState.ViewCreated -> {
+                uiStopLoading()
             }
             SignInViewModel.UiState.WrongEmailOrPassword -> {
                 uiStopLoading()
