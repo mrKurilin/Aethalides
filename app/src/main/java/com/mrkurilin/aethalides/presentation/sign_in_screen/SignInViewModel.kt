@@ -1,12 +1,12 @@
 package com.mrkurilin.aethalides.presentation.sign_in_screen
 
 import android.app.Application
+import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.NavOptions
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mrkurilin.aethalides.AethalidesApp
@@ -16,23 +16,33 @@ import kotlinx.coroutines.flow.StateFlow
 
 class SignInViewModel(app: Application) : AndroidViewModel(app) {
 
+    sealed class UiState {
+        object Initial : UiState()
+        object Loading : UiState()
+
+        class ToastError(@StringRes private val errorDescription: Int) : UiState() {
+
+            fun getDescription(): Int {
+                return errorDescription
+            }
+        }
+
+        object NoNetworkError : UiState()
+    }
+
     private val aethalidesApp = app as AethalidesApp
     private val navController = aethalidesApp.provideNavController()
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState> = _uiState
 
     fun signInButtonPressed(email: String, password: String) {
         _uiState.value = UiState.Loading
-        if (emailAndPasswordAreValid(email, password)) {
+        try {
             signInWithEmailAndPassword(email, password)
-        } else {
-            _uiState.value = UiState.ErrorEmptyFields
+        } catch (e: Exception) {
+            handleSignInTaskException(e)
         }
-    }
-
-    private fun emailAndPasswordAreValid(email: String, password: String): Boolean {
-        return (email.isNotBlank() && password.isNotBlank())
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
@@ -41,7 +51,24 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
             if (task.isSuccessful) {
                 navigateToMainFragment()
             } else {
-                _uiState.value = UiState.WrongEmailOrPassword
+                handleSignInTaskException(task.exception)
+            }
+        }
+    }
+
+    private fun handleSignInTaskException(exception: Exception?) {
+        when (exception) {
+            is FirebaseNetworkException -> {
+                _uiState.value = UiState.NoNetworkError
+            }
+            is IllegalArgumentException -> {
+                _uiState.value = UiState.ToastError(R.string.fields_can_not_be_empty)
+            }
+            is FirebaseAuthInvalidCredentialsException -> {
+                _uiState.value = UiState.ToastError(R.string.error_wrong_email_or_password)
+            }
+            else -> {
+                throw Throwable(exception)
             }
         }
     }
@@ -61,14 +88,8 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
 
         try {
             Firebase.auth.signInWithCredential(credential)
-        } catch (e: FirebaseAuthInvalidUserException) {
-
-        } catch (e: FirebaseAuthInvalidCredentialsException) {
-
-        } catch (e: FirebaseAuthUserCollisionException) {
-
         } catch (e: Exception) {
-
+            handleSignInTaskException(e)
         }
 
         navigateToMainFragment()
@@ -80,17 +101,5 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
             null,
             NavOptions.Builder().setPopUpTo(R.id.signInFragment, true).build()
         )
-    }
-
-    fun viewCreated() {
-        _uiState.value = UiState.ViewCreated
-    }
-
-    sealed class UiState {
-        object ViewCreated : UiState()
-        object Loading : UiState()
-        object WrongEmailOrPassword : UiState()
-        object ErrorNoInternetConnection : UiState()
-        object ErrorEmptyFields : UiState()
     }
 }
