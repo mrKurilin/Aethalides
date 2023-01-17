@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.presentation.sign_in_screen
+package com.mrkurilin.aethalides.presentation.auth_screen
 
 import android.app.Activity
 import android.content.Context
