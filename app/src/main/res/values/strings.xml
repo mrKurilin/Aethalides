@@ -12,6 +12,7 @@
     <string name="repeat_password">Повторите пароль</string>
     <string name="already_registered">Уже зарегистрированы?</string>
     <string name="retry">Попробовать снова</string>
-    <string name="fields_can_not_be_empty">Поля не должны быть пустыми</string>
+    <string name="error_fields_can_not_be_empty">Поля не должны быть пустыми</string>
+    <string name="field_can_not_be_empty">Поле не должно быть пустыми</string>
 
 </resources>

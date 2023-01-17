@@ -16,27 +16,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 class SignInViewModel(app: Application) : AndroidViewModel(app) {
 
-    sealed class UiState {
-        object Initial : UiState()
-        object Loading : UiState()
-
-        class ToastError(@StringRes private val errorDescription: Int) : UiState() {
-
-            fun getDescription(): Int {
-                return errorDescription
-            }
-        }
-
-        object NoNetworkError : UiState()
-    }
-
     private val aethalidesApp = app as AethalidesApp
     private val navController = aethalidesApp.provideNavController()
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState> = _uiState
 
-    fun signInButtonPressed(email: String, password: String) {
+    fun tryToSignIn(email: String, password: String) {
         _uiState.value = UiState.Loading
         try {
             signInWithEmailAndPassword(email, password)
@@ -62,7 +48,7 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
                 _uiState.value = UiState.NoNetworkError
             }
             is IllegalArgumentException -> {
-                _uiState.value = UiState.ToastError(R.string.fields_can_not_be_empty)
+                _uiState.value = UiState.ToastError(R.string.error_fields_can_not_be_empty)
             }
             is FirebaseAuthInvalidCredentialsException -> {
                 _uiState.value = UiState.ToastError(R.string.error_wrong_email_or_password)
@@ -101,5 +87,19 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
             null,
             NavOptions.Builder().setPopUpTo(R.id.signInFragment, true).build()
         )
+    }
+
+    sealed class UiState {
+        object Initial : UiState()
+        object Loading : UiState()
+
+        class ToastError(@StringRes private val errorDescription: Int) : UiState() {
+
+            fun getDescription(): Int {
+                return errorDescription
+            }
+        }
+
+        object NoNetworkError : UiState()
     }
 }

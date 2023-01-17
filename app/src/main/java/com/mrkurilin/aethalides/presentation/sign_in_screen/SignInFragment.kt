@@ -48,11 +48,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         initViews()
 
         signInButton.setOnClickListener {
-            signInButtonPressed()
+            hideKeyboard()
+            tryToSignIn()
         }
 
         retrySignInImageButton.setOnClickListener {
-            signInButtonPressed()
+            tryToSignIn()
         }
 
         googleSignInButton.setOnClickListener {
@@ -69,11 +70,10 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
     }
 
-    private fun signInButtonPressed() {
-        hideKeyboard()
+    private fun tryToSignIn() {
         val email = emailEditText.text.toString()
         val password = passwordEditText.text.toString()
-        viewModel.signInButtonPressed(email, password)
+        viewModel.tryToSignIn(email, password)
     }
 
     private fun updateUi(uiState: SignInViewModel.UiState) {
