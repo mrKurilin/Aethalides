@@ -10,9 +10,16 @@
         android:id="@+id/sign_in_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="email_edit_text, password_edit_text, sign_in_button, or_text_view, google_sign_in_button,not_registered_text_view, sign_up_text_view">
+        app:constraint_referenced_ids="email_edit_text, password_edit_text, sign_in_button,
+        or_text_view, google_sign_in_button,not_registered_text_view, sign_up_text_view" />
 
-    </androidx.constraintlayout.widget.Group>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/no_network_error_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="no_network_text_view, no_network_image_view,
+        no_network_image_button, retry_text_view" />
 
     <EditText
         android:id="@+id/email_edit_text"
@@ -107,11 +114,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/no_network_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_network"
+        app:layout_constraintBottom_toTopOf="@id/no_network_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
     <ImageView
+        android:id="@+id/no_network_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:src="@drawable/no_internet_connection"
+        app:layout_constraintBottom_toBottomOf="@id/no_network_image_view"
+        app:layout_constraintBottom_toTopOf="@id/no_network_image_button"
+        app:layout_constraintTop_toBottomOf="@id/no_network_text_view"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageButton
+        android:id="@+id/no_network_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_baseline_refresh_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_network_image_view" />
+
+    <TextView
+        android:id="@+id/retry_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_network_image_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

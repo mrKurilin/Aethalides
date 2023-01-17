@@ -3,10 +3,7 @@ package com.mrkurilin.aethalides.presentation.sign_in_screen
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
@@ -15,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.SignInButton
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.hideKeyboard
+import com.mrkurilin.aethalides.data.util.setErrorIfEmpty
 import com.mrkurilin.aethalides.data.util.showLongToast
 import kotlinx.coroutines.launch
 
@@ -29,6 +28,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private lateinit var signUpTextView: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var signInGroup: Group
+    private lateinit var noNetworkErrorGroup: Group
+    private lateinit var retrySignInImageButton: ImageButton
 
     private lateinit var launcher: ActivityResultLauncher<Activity>
 
@@ -47,9 +48,12 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         initViews()
 
         signInButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            viewModel.signInButtonPressed(email, password)
+            hideKeyboard()
+            tryToSignIn()
+        }
+
+        retrySignInImageButton.setOnClickListener {
+            tryToSignIn()
         }
 
         googleSignInButton.setOnClickListener {
@@ -62,53 +66,51 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         }
 
         lifecycleScope.launch {
-            viewModel.uiState.collect { uiState ->
-                updateUi(uiState)
-            }
+            viewModel.uiState.collect(this@SignInFragment::updateUi)
         }
+    }
 
-        viewModel.viewCreated()
+    private fun tryToSignIn() {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        viewModel.tryToSignIn(email, password)
     }
 
     private fun updateUi(uiState: SignInViewModel.UiState) {
         when (uiState) {
-            SignInViewModel.UiState.Loading -> {
+            is SignInViewModel.UiState.Initial -> {
+                uiStopLoading()
+            }
+            is SignInViewModel.UiState.Loading -> {
                 uiShowLoading()
             }
-            SignInViewModel.UiState.ViewCreated -> {
+            is SignInViewModel.UiState.ToastError -> {
                 uiStopLoading()
+                showLongToast(uiState.getDescription())
+                emailEditText.setErrorIfEmpty()
+                passwordEditText.setErrorIfEmpty()
             }
-            SignInViewModel.UiState.WrongEmailOrPassword -> {
-                uiStopLoading()
-                showLongToast(R.string.error_wrong_email_or_password)
+            is SignInViewModel.UiState.NoNetworkError -> {
+                uiShowNoNetworkError()
             }
-            SignInViewModel.UiState.ErrorNoInternetConnection -> {
-                uiStopLoading()
-            }
-            SignInViewModel.UiState.ErrorEmptyFields -> {
-                uiStopLoading()
-                uiShowFieldsCanNotBeEmptyError()
-            }
-        }
-    }
-
-    private fun uiShowFieldsCanNotBeEmptyError() {
-        if (emailEditText.text.toString().isEmpty()) {
-            emailEditText.error = "Field can not be empty"
-        }
-        if (passwordEditText.text.toString().isEmpty()) {
-            passwordEditText.error = "Field can not be empty"
         }
     }
 
     private fun uiShowLoading() {
         progressBar.isVisible = true
         signInGroup.isVisible = false
+        noNetworkErrorGroup.isVisible = false
     }
 
     private fun uiStopLoading() {
         progressBar.isVisible = false
         signInGroup.isVisible = true
+    }
+
+    private fun uiShowNoNetworkError() {
+        noNetworkErrorGroup.isVisible = true
+        progressBar.isVisible = false
+        signInGroup.isVisible = false
     }
 
     private fun initViews() {
@@ -120,5 +122,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         signUpTextView = view.findViewById(R.id.sign_up_text_view)
         progressBar = view.findViewById(R.id.progress_bar)
         signInGroup = view.findViewById(R.id.sign_in_group)
+        noNetworkErrorGroup = view.findViewById(R.id.no_network_error_group)
+        retrySignInImageButton = view.findViewById(R.id.no_network_image_button)
     }
 }
