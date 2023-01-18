@@ -4,43 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.sign_up_screen.SignUpFragment">
+    tools:context=".presentation.auth_screen.fragments.SignUpFragment">
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/sign_in_group"
+        android:id="@+id/sign_up_group"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="email_edit_text, password_edit_text,
+        repeat_password_edit_text, or_text_view, google_sign_in_button,
+        already_registered_text_view, sign_in_text_view, sign_up_button" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@id/no_network_error_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="no_network_image_view, no_network_text_view,
+        no_network_image_button, retry_text_view" />
 
     <EditText
-        android:id="@+id/email_edit_text"
+        android:id="@id/email_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Email"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/password_edit_text1"
+        app:layout_constraintBottom_toTopOf="@id/password_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/password_edit_text1"
+        android:id="@id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Password"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/password_edit_text2"
+        app:layout_constraintBottom_toTopOf="@id/repeat_password_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_edit_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/password_edit_text2"
+        android:id="@+id/repeat_password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Password"
@@ -50,8 +61,7 @@
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_edit_text1" />
-
+        app:layout_constraintTop_toBottomOf="@id/password_edit_text" />
 
     <Button
         android:id="@+id/sign_up_button"
@@ -62,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@id/or_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_edit_text2" />
+        app:layout_constraintTop_toBottomOf="@id/repeat_password_edit_text" />
 
     <TextView
         android:id="@+id/or_text_view"
@@ -77,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/sign_up_button" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_sign_in_button"
+        android:id="@id/google_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -110,7 +120,7 @@
         app:layout_constraintTop_toBottomOf="@id/already_registered_text_view" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -118,5 +128,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/no_network_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_network"
+        app:layout_constraintBottom_toTopOf="@id/no_network_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <ImageView
+        android:id="@id/no_network_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:src="@drawable/no_internet_connection"
+        app:layout_constraintBottom_toTopOf="@id/no_network_image_button"
+        app:layout_constraintTop_toBottomOf="@id/no_network_text_view"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageButton
+        android:id="@id/no_network_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_baseline_refresh_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_network_image_view" />
+
+    <TextView
+        android:id="@id/retry_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_network_image_button" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
