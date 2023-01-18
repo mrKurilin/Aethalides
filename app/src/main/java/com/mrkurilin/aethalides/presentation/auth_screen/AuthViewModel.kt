@@ -68,12 +68,12 @@ class AuthViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
         val signInTask = auth.signInWithEmailAndPassword(email, password)
-        handleTask(signInTask)
+        handleAuthTask(signInTask)
 
     }
 
-    private fun handleTask(task: Task<AuthResult>) {
-        task.addOnCompleteListener { completedTask ->
+    private fun handleAuthTask(authTask: Task<AuthResult>) {
+        authTask.addOnCompleteListener { completedTask ->
             if (completedTask.isSuccessful) {
                 navigateToMainFragment()
             } else {
@@ -84,7 +84,7 @@ class AuthViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun signUpWithEmailAndPassword(email: String, password: String) {
         val signUpTask = auth.createUserWithEmailAndPassword(email, password)
-        handleTask(signUpTask)
+        handleAuthTask(signUpTask)
     }
 
     fun googleSignInButtonPressed() {

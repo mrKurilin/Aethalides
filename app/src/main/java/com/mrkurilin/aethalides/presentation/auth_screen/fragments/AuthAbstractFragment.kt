@@ -37,8 +37,6 @@ abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutI
         launcher = registerForActivityResult(GoogleSignInActivityResultContract()) { credential ->
             onGoogleSignInActivityResult(credential)
         }
-
-        requireActivity().actionBar?.hide()
     }
 
     protected abstract fun initViews()
