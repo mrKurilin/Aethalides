@@ -1,7 +1,7 @@
 package com.mrkurilin.aethalides.data.model
 
 data class Note(
-    val date: String,
-    val time: String,
-    val text: String
+    val epochSecond: Long,
+    val text: String,
+    val epochDay: Long = epochSecond / 60 / 60 / 24
 )
