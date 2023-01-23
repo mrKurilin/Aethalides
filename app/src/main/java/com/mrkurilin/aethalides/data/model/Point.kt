@@ -1,10 +1,10 @@
 package com.mrkurilin.aethalides.data.model
 
-import androidx.annotation.ColorInt
-
 data class Point(
-    @ColorInt
-    val color: Int,
+    val planEpochSeconds: Long,
     val description: String,
-    val isDone: Boolean,
+    val color: Int,
+    val isDone: Boolean = false,
+    val tag: String = "",
+    val planEpochDays: Long = planEpochSeconds / 60 / 60 / 24
 )
