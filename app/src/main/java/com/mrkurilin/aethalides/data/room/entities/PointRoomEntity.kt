@@ -8,7 +8,6 @@ import com.mrkurilin.aethalides.data.room.RoomConstants
 @Entity(
     tableName = RoomConstants.POINTS_TABLE_NAME,
     primaryKeys = [
-        RoomConstants.POINTS_PLAN_DATE_COLUMN_NAME,
         RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME,
         RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME
     ]
@@ -23,7 +22,7 @@ data class PointRoomEntity(
 ) {
 
     fun toPoint(): Point {
-        return Point(color, planEpochSecond, description, isDone, tag, planEpochDay)
+        return Point(planEpochSecond, description, color, isDone, tag, planEpochDay)
     }
 
     companion object {

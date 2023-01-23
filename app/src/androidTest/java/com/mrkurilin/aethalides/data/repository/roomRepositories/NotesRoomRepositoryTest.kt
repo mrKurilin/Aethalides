@@ -10,6 +10,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -51,6 +52,14 @@ class NotesRoomRepositoryTest {
         val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
 
         assertEquals(listOf(firstNote, secondNote), notesFromDb)
+    }
+
+    @Test
+    fun readEmptyList() {
+        val epochDay = LocalDate.now().toEpochDay()
+        val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
+
+        assertEquals(emptyList<Note>(), notesFromDb)
     }
 
     @Test
