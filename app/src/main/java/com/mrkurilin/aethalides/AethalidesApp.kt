@@ -19,7 +19,7 @@ class AethalidesApp : Application() {
             this,
             AethalidesRoomDatabase::class.java,
             RoomConstants.AETHALIDES_ROOM_DATABASE_NAME
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 
     private val notesRepository: NotesRepository by lazy {

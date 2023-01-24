@@ -9,15 +9,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linear_layout"
+    <GridLayout
+        android:id="@+id/points_grid_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:alignmentMode="alignMargins"
+        android:columnCount="4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/day_number_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/day_number_text_view">
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
+
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
