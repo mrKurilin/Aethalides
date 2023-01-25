@@ -23,7 +23,7 @@ class DaysAdapter(
 
     private val numbers = mutableMapOf<Int, String>()
 
-    private var middleVisiblePosition: Int = 0
+    private var middleVisiblePosition: Int = Int.MAX_VALUE / 2
     private var visibleMonth: Month = today.month
     private var visibleYear: Int = today.year
 
@@ -66,7 +66,7 @@ class DaysAdapter(
             visibleMonth = currentPositionDay.month
             visibleMonthListener.onVisibleMonthChanged(currentPositionDay.month)
         }
-        if (visibleYear!=currentPositionDay.year) {
+        if (visibleYear != currentPositionDay.year) {
             visibleYear = currentPositionDay.year
             visibleYearListener.onVisibleYearListener(currentPositionDay.year)
         }

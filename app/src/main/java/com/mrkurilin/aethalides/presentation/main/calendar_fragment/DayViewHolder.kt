@@ -16,13 +16,7 @@ class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val gridLayoutChildren = pointsGridLayout.children.toList()
     private var color: Int = Color.WHITE
 
-    fun bind(
-        dayNumber: String,
-        isToday: Boolean,
-        points: List<Int>,
-        month: Month
-    ) {
-
+    fun bind(dayNumber: String, isToday: Boolean, points: List<Int>, month: Month) {
         dayOfMonthTextView.text = dayNumber
 
         if (isToday) {
