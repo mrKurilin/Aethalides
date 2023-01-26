@@ -2,27 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calendar_fragment"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:padding="8dp"
     tools:context=".presentation.main.calendar_fragment.CalendarFragment">
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/recycler_calendar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
 
     <TextView
         android:id="@+id/month_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ЯНВАРЬ"
         android:textSize="26sp"
         app:layout_constraintEnd_toStartOf="@+id/year_text_view"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,85 +22,85 @@
         android:id="@+id/year_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2023"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/month_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/day_0"
+    <LinearLayout
+        android:id="@+id/days_names"
         android:layout_width="0dp"
+        android:background="@color/black"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:background="@color/white"
-        android:text="ПН"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@id/day_1"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:background="@color/white"
-        android:text="ПН"
-        app:layout_constraintEnd_toStartOf="@id/day_2"
-        app:layout_constraintStart_toEndOf="@id/day_0"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:text="ПН"
-        app:layout_constraintEnd_toStartOf="@id/day_3"
-        app:layout_constraintStart_toEndOf="@id/day_1"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:text="ПН"
-        app:layout_constraintEnd_toStartOf="@id/day_4"
-        app:layout_constraintStart_toEndOf="@id/day_2"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:text="ПН"
-        app:layout_constraintEnd_toStartOf="@id/day_5"
-        app:layout_constraintStart_toEndOf="@id/day_3"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:text="ПН"
-        app:layout_constraintEnd_toStartOf="@id/day_6"
-        app:layout_constraintStart_toEndOf="@id/day_4"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
-
-    <TextView
-        android:id="@+id/day_6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:text="ПН"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/day_5"
-        app:layout_constraintTop_toBottomOf="@id/month_text_view" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/month_text_view">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/monday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/tuesday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/wednesday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/thursday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/friday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/saturday_short" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:layout_margin="0.5dp"
+            android:gravity="center"
+            android:text="@string/sunday_short" />
+
+    </LinearLayout>
 
     <com.mrkurilin.aethalides.presentation.main.calendar_fragment.GridCalendarRecyclerView
         android:id="@+id/recycler_calendar"
@@ -118,9 +108,11 @@
         android:layout_height="wrap_content"
         android:background="@color/black"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/days_names"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/day_0"
-        app:spanCount="7" />
+        app:layout_constraintTop_toBottomOf="@id/days_names"
+        app:spanCount="7"
+        tools:itemCount="50"
+        tools:listitem="@layout/day_view_holder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

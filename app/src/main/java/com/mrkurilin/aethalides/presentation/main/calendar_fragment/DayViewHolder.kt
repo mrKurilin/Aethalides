@@ -28,12 +28,13 @@ class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         for (i in gridLayoutChildren.indices) {
-            color = try {
-                points[i]
+            try {
+                color = points[i]
+                gridLayoutChildren[i].visibility = View.VISIBLE
+                gridLayoutChildren[i].background.setTint(color)
             } catch (e: IndexOutOfBoundsException) {
-                Color.TRANSPARENT
+                gridLayoutChildren[i].visibility = View.GONE
             }
-            gridLayoutChildren[i].setBackgroundColor(color)
         }
     }
 }
