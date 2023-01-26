@@ -13,9 +13,11 @@ interface PointsRepository {
 
     fun deletePoint(point: Point): Unit
 
-    fun getAllPlanDatesFromDb(): Flow<List<Long>>
+    fun getAllPlanEpochDaysFromDb(): List<Long>
 
     fun getAllPointsColorsByEpochDay(epochDay: Long): List<Int>
 
     fun deletePointByTag(tag: String): Unit
+
+    fun getAllPointsFlow(): Flow<List<Point>>
 }

@@ -22,9 +22,12 @@ interface PointsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updatePoint(point: PointRoomEntity): Unit
 
-    @Query("SELECT ${RoomConstants.POINTS_PLAN_EPOCH_DAY_COLUMN_NAME} FROM ${RoomConstants.POINTS_TABLE_NAME}")
-    fun getAllPlanDatesFromDb(): Flow<List<Long>>
+    @Query("SELECT DISTINCT ${RoomConstants.POINTS_PLAN_EPOCH_DAY_COLUMN_NAME} FROM ${RoomConstants.POINTS_TABLE_NAME}")
+    fun getAllPlanDatesFromDb(): List<Long>
 
     @Query("SELECT DISTINCT ${RoomConstants.POINTS_COLOR_COLUMN_NAME} FROM ${RoomConstants.POINTS_TABLE_NAME} WHERE ${RoomConstants.POINTS_PLAN_EPOCH_DAY_COLUMN_NAME} = :epochDay")
     fun getAllPointsColorsByEpochDay(epochDay: Long): List<Int>
+
+    @Query("SELECT * FROM ${RoomConstants.POINTS_TABLE_NAME}")
+    fun getAllPointRoomEntitiesFlow(): Flow<List<PointRoomEntity>>
 }

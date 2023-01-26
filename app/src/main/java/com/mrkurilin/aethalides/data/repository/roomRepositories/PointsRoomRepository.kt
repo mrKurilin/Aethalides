@@ -5,6 +5,7 @@ import com.mrkurilin.aethalides.data.repository.PointsRepository
 import com.mrkurilin.aethalides.data.room.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 
 class PointsRoomRepository(
     private val pointsDao: PointsDao
@@ -28,7 +29,7 @@ class PointsRoomRepository(
         pointsDao.deletePoint(PointRoomEntity.fromPoint(point))
     }
 
-    override fun getAllPlanDatesFromDb(): Flow<List<Long>> {
+    override fun getAllPlanEpochDaysFromDb(): List<Long> {
         return pointsDao.getAllPlanDatesFromDb()
     }
 
@@ -38,5 +39,13 @@ class PointsRoomRepository(
 
     override fun deletePointByTag(tag: String) {
         pointsDao.deletePointsByTag(tag)
+    }
+
+    override fun getAllPointsFlow(): Flow<List<Point>> {
+        return pointsDao.getAllPointRoomEntitiesFlow().transform { pointRoomEntityList ->
+            pointRoomEntityList.map {
+                it.toPoint()
+            }
+        }
     }
 }
