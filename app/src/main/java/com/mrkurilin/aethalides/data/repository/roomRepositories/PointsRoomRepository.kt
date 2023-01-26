@@ -42,9 +42,9 @@ class PointsRoomRepository(
     }
 
     override fun getAllPointsFlow(): Flow<List<Point>> {
-        return pointsDao.getAllPointRoomEntitiesFlow().transform { pointRoomEntityList ->
-            pointRoomEntityList.map {
-                it.toPoint()
+        return pointsDao.getAllPointRoomEntitiesFlow().transform { pointRoomEntities ->
+            pointRoomEntities.map { pointRoomEntity ->
+                pointRoomEntity.toPoint()
             }
         }
     }
