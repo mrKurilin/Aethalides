@@ -4,13 +4,13 @@ class NumbersToStringUtil {
 
     companion object {
 
-        private val numbers = mutableMapOf<Int, String>()
+        private val stringsNumberOfInt = mutableMapOf<Int, String>()
 
         fun getStringFromInt(number: Int): String {
-            if (numbers[number] == null) {
-                numbers[number] = number.toString()
+            if (stringsNumberOfInt[number] == null) {
+                stringsNumberOfInt[number] = number.toString()
             }
-            return numbers[number] ?: number.toString()
+            return stringsNumberOfInt[number] ?: number.toString()
         }
     }
 }

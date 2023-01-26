@@ -11,8 +11,8 @@ import java.time.temporal.WeekFields
 import java.util.*
 
 class DaysAdapter(
-    private val visibleYearListener: VisibleYearListener,
-    private val visibleMonthListener: VisibleMonthListener
+    private val onVisibleYearChanged: (String) -> Unit,
+    private val onVisibleMonthChanged: (String) -> Unit
 ) : RecyclerView.Adapter<DayViewHolder>() {
 
     private var pointsColorsOfEpochDays = mutableMapOf<Long, List<Int>>()
@@ -38,8 +38,8 @@ class DaysAdapter(
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        val diff = position - Int.MAX_VALUE / 2L
-        val currentPositionDay = firstDayOfCurrentWeek.plusDays(diff)
+        val diffToCurrentDay = position - Int.MAX_VALUE / 2L
+        val currentPositionDay = firstDayOfCurrentWeek.plusDays(diffToCurrentDay)
         val currentPositionEpochDay = currentPositionDay.toEpochDay()
 
         holder.bind(
@@ -60,11 +60,11 @@ class DaysAdapter(
         val currentPositionDay = firstDayOfCurrentWeek.plusDays(diff)
         if (visibleMonth != currentPositionDay.month) {
             visibleMonth = currentPositionDay.month
-            visibleMonthListener.onVisibleMonthChanged(currentPositionDay.month)
+            onVisibleMonthChanged(currentPositionDay.month.toString())
         }
         if (visibleYear != currentPositionDay.year) {
             visibleYear = currentPositionDay.year
-            visibleYearListener.onVisibleYearListener(currentPositionDay.year)
+            onVisibleYearChanged(currentPositionDay.year.toString())
         }
     }
 }

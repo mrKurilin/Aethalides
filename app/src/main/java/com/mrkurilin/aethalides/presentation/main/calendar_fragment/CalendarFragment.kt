@@ -8,10 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
 import kotlinx.coroutines.launch
-import java.time.Month
 
-class CalendarFragment : Fragment(R.layout.fragment_calendar),
-    VisibleMonthListener, VisibleYearListener {
+class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
     private lateinit var recyclerView: GridCalendarRecyclerView
     private lateinit var monthTextView: TextView
@@ -35,9 +33,17 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar),
     }
 
     private fun initRecyclerView() {
-        recyclerView.setHasFixedSize(true)
-        val adapter = DaysAdapter(this, this)
+        val adapter = DaysAdapter(
+            onVisibleMonthChanged = { month ->
+                monthTextView.text = month
+            },
+            onVisibleYearChanged = { year ->
+                yearTextView.text = year
+            }
+        )
+
         recyclerView.adapter = adapter
+        recyclerView.setHasFixedSize(true)
         recyclerView.scrollToPosition(Int.MAX_VALUE / 2)
 
         observePoints(adapter)
@@ -49,13 +55,5 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar),
                 adapter.setItems(points)
             }
         }
-    }
-
-    override fun onVisibleMonthChanged(month: Month) {
-        monthTextView.text = month.toString()
-    }
-
-    override fun onVisibleYearListener(year: Int) {
-        yearTextView.text = year.toString()
     }
 }

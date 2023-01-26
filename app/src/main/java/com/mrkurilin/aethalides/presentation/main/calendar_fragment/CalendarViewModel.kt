@@ -1,17 +1,13 @@
 package com.mrkurilin.aethalides.presentation.main.calendar_fragment
 
 import android.app.Application
-import android.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrkurilin.aethalides.AethalidesApp
-import com.mrkurilin.aethalides.data.model.Point
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import kotlin.random.Random
 
 class CalendarViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -27,25 +23,6 @@ class CalendarViewModel(app: Application) : AndroidViewModel(app) {
             epochDaysFromDb.collect() { epochDaysFromDbList ->
                 fillPointColorsOfEpochDays(epochDaysFromDbList)
             }
-        }
-
-//        addPointsToTest()
-    }
-
-    private fun addPointsToTest() {
-        pointsRepository.deletePointByTag("")
-        val today = LocalDate.now().toEpochDay()
-
-        repeat(1200) {
-            val randomDay = Random.nextLong(today - 700, today + 700)
-            val randomTime = randomDay * 24 * 60 * 60 - Random.nextInt(100)
-            pointsRepository.addPoint(
-                Point(
-                    randomTime,
-                    "Test ${Random.nextInt(1200)}",
-                    Color.rgb(Random.nextInt(254), Random.nextInt(254), Random.nextInt(254))
-                )
-            )
         }
     }
 
