@@ -16,5 +16,12 @@
     <string name="field_can_not_be_empty">Поле не должно быть пустыми</string>
     <string name="passwords_are_not_equals">Пароли не совпадают</string>
     <string name="canceled">Отменено</string>
+    <string name="monday_short">ПН</string>
+    <string name="tuesday_short">ВТ</string>
+    <string name="wednesday_short">СР</string>
+    <string name="thursday_short">ЧТ</string>
+    <string name="friday_short">ПТ</string>
+    <string name="saturday_short">СБ</string>
+    <string name="sunday_short">ВС</string>
 
 </resources>

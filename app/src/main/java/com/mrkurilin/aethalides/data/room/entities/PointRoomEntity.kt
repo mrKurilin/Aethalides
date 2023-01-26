@@ -13,8 +13,8 @@ import com.mrkurilin.aethalides.data.room.RoomConstants
     ]
 )
 data class PointRoomEntity(
-    @ColumnInfo(name = "color") val color: Int,
-    @ColumnInfo(name = RoomConstants.POINTS_PLAN_DATE_COLUMN_NAME) val planEpochDay: Long,
+    @ColumnInfo(name = RoomConstants.POINTS_COLOR_COLUMN_NAME) val color: Int,
+    @ColumnInfo(name = RoomConstants.POINTS_PLAN_EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long,
     @ColumnInfo(name = RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME) val planEpochSecond: Long,
     @ColumnInfo(name = RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME) val description: String,
     @ColumnInfo(name = "is_done") val isDone: Boolean,
