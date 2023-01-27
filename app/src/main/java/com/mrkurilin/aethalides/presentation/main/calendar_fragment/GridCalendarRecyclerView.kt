@@ -20,12 +20,12 @@ class GridCalendarRecyclerView : RecyclerView {
     override fun onScrolled(dx: Int, dy: Int) {
         super.onScrolled(dx, dy)
 
-        if (adapter is DaysAdapter) {
+        if (adapter is CalendarDaysAdapter) {
             if (layoutManager is LinearLayoutManager) {
                 val first = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().toLong()
                 val last = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition().toLong()
                 val middle = (last + first) / 2
-                (adapter as DaysAdapter).setMiddleVisiblePosition(middle.toInt())
+                (adapter as CalendarDaysAdapter).setMiddleVisiblePosition(middle.toInt())
             }
         }
     }

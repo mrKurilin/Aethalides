@@ -33,7 +33,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun initRecyclerView() {
-        val adapter = DaysAdapter(
+        val adapter = CalendarDaysAdapter(
             onVisibleMonthChanged = { month ->
                 monthTextView.text = month
             },
@@ -46,13 +46,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         recyclerView.setHasFixedSize(true)
         recyclerView.scrollToPosition(Int.MAX_VALUE / 2)
 
-        observePoints(adapter)
-    }
-
-    private fun observePoints(adapter: DaysAdapter) {
         lifecycleScope.launch {
-            viewModel.observePointsColors { points ->
-                adapter.setItems(points)
+            viewModel.pointsColorsOfEpochDaysMapFlow.collect { map ->
+                adapter.setItems(map)
             }
         }
     }

@@ -10,12 +10,12 @@ import java.time.Month
 import java.time.temporal.WeekFields
 import java.util.*
 
-class DaysAdapter(
+class CalendarDaysAdapter(
     private val onVisibleYearChanged: (String) -> Unit,
     private val onVisibleMonthChanged: (String) -> Unit
-) : RecyclerView.Adapter<DayViewHolder>() {
+) : RecyclerView.Adapter<CalendarDayViewHolder>() {
 
-    private var pointsColorsOfEpochDays = mutableMapOf<Long, List<Int>>()
+    private var pointsColorsOfEpochDays = mapOf<Long, List<Int>>()
 
     private val today = LocalDate.now()
     private val firstDayOfCurrentWeek = today.with(
@@ -25,19 +25,19 @@ class DaysAdapter(
     private var visibleMonth: Month = today.month
     private var visibleYear: Int = today.year
 
-    private val emptyList: List<Int> = emptyList()
+    private val emptyList: List<Int> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarDayViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.day_view_holder, parent, false)
-        return DayViewHolder(view)
+        val view = inflater.inflate(R.layout.calendar_day_view_holder, parent, false)
+        return CalendarDayViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
     }
 
-    override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CalendarDayViewHolder, position: Int) {
         val diffToCurrentDay = position - Int.MAX_VALUE / 2L
         val currentPositionDay = firstDayOfCurrentWeek.plusDays(diffToCurrentDay)
         val currentPositionEpochDay = currentPositionDay.toEpochDay()
@@ -50,7 +50,7 @@ class DaysAdapter(
         )
     }
 
-    fun setItems(pointsColorsOfEpochDays: MutableMap<Long, List<Int>>) {
+    fun setItems(pointsColorsOfEpochDays: Map<Long, List<Int>>) {
         this.pointsColorsOfEpochDays = pointsColorsOfEpochDays
         notifyDataSetChanged()
     }

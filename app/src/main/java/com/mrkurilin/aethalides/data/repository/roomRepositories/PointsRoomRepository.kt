@@ -5,20 +5,20 @@ import com.mrkurilin.aethalides.data.repository.PointsRepository
 import com.mrkurilin.aethalides.data.room.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.map
 
 class PointsRoomRepository(
     private val pointsDao: PointsDao
 ) : PointsRepository {
 
-    override fun addPoint(point: Point) {
-        pointsDao.addPoint(PointRoomEntity.fromPoint(point))
-    }
-
-    override fun getPointsListByDate(epochDay: Long): List<Point> {
-        return pointsDao.getPointsListByDate(epochDay).map { pointRoomEntity ->
+    override fun getAllPoints(): List<Point> {
+        return pointsDao.getAllPointRoomEntities().map{ pointRoomEntity ->
             pointRoomEntity.toPoint()
         }
+    }
+
+    override fun addPoint(point: Point) {
+        pointsDao.addPoint(PointRoomEntity.fromPoint(point))
     }
 
     override fun updatePoint(point: Point) {
@@ -29,23 +29,19 @@ class PointsRoomRepository(
         pointsDao.deletePoint(PointRoomEntity.fromPoint(point))
     }
 
-    override fun getAllPlanEpochDaysFromDb(): List<Long> {
-        return pointsDao.getAllPlanDatesFromDb()
-    }
-
-    override fun getAllPointsColorsByEpochDay(epochDay: Long): List<Int> {
-        return pointsDao.getAllPointsColorsByEpochDay(epochDay)
-    }
-
-    override fun deletePointByTag(tag: String) {
+    override fun deletePointsByTag(tag: String) {
         pointsDao.deletePointsByTag(tag)
     }
 
-    override fun getAllPointsFlow(): Flow<List<Point>> {
-        return pointsDao.getAllPointRoomEntitiesFlow().transform { pointRoomEntities ->
-            pointRoomEntities.map { pointRoomEntity ->
-                pointRoomEntity.toPoint()
+    override suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>> {
+        return pointsDao.getEpochDaysToPointsRoomEntitiesMapFlow().map { pointRoomEntityMap ->
+            pointRoomEntityMap.mapValues { list ->
+                list.value.map { it.toPoint() }
             }
         }
+    }
+
+    override suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>> {
+        return pointsDao.getEpochDaysToColorsMapFlow()
     }
 }

@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import java.time.Month
 
-class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CalendarDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val dayOfMonthTextView: TextView = view.findViewById(R.id.day_number_text_view)
     private val pointsGridLayout: GridLayout = view.findViewById(R.id.points_grid_layout)
     private val gridLayoutChildren = pointsGridLayout.children.toList()
     private var color: Int = Color.WHITE
 
-    fun bind(dayNumber: String, isToday: Boolean, points: List<Int>, month: Month) {
+    fun bind(dayNumber: String, isToday: Boolean, pointsColors: List<Int>, month: Month) {
         dayOfMonthTextView.text = dayNumber
 
         if (isToday) {
-            itemView.setBackgroundColor(Color.RED)
+            itemView.setBackgroundColor(Color.YELLOW)
         } else if (month.value % 2 == 0) {
             itemView.setBackgroundColor(Color.WHITE)
         } else {
@@ -29,7 +29,7 @@ class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         for (i in gridLayoutChildren.indices) {
             try {
-                color = points[i]
+                color = pointsColors[i]
                 gridLayoutChildren[i].visibility = View.VISIBLE
                 gridLayoutChildren[i].background.setTint(color)
             } catch (e: IndexOutOfBoundsException) {

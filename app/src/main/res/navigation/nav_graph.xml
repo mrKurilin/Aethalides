@@ -37,5 +37,9 @@
         android:name="com.mrkurilin.aethalides.presentation.main.calendar_fragment.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/toDoListFragment"
+        android:name="com.mrkurilin.aethalides.presentation.main.to_do_list_fragment.ToDoListFragment"
+        android:label="ToDoListFragment" />
 
 </navigation>

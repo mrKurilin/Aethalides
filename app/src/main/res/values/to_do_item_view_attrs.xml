@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToDoItemView">
+        <attr name="is_done" format="boolean" />
+        <attr name="time" format="string" />
+        <attr name="description" format="string" />
+    </declare-styleable>
+</resources>

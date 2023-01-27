@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import app.cash.turbine.test
 import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
 import com.mrkurilin.aethalides.data.room.PointsDao
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,7 +42,6 @@ class PointsRoomRepositoryTest {
     fun writeAndRead() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val secondEpochSecond: Long = firstEpochSecond + 1
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -53,15 +55,15 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
 
-        val pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        val pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint, secondPoint), pointsFromDb)
     }
 
     @Test
     fun readEmptyList() {
-        val epochDay = LocalDate.now().toEpochDay()
-        val pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        LocalDate.now().toEpochDay()
+        val pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(emptyList<Note>(), pointsFromDb)
     }
@@ -70,7 +72,6 @@ class PointsRoomRepositoryTest {
     fun delete() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val secondEpochSecond: Long = firstEpochSecond + 1
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -84,13 +85,13 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
 
-        var pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        var pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint, secondPoint), pointsFromDb)
 
         pointsRoomRepository.deletePoint(secondPoint)
 
-        pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        pointsFromDb = pointsRoomRepository.getAllPoints()
 
 
         assertEquals(listOf(firstPoint), pointsFromDb)
@@ -99,7 +100,6 @@ class PointsRoomRepositoryTest {
     @Test
     fun update() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -108,7 +108,7 @@ class PointsRoomRepositoryTest {
 
         pointsRoomRepository.addPoint(firstPoint)
 
-        var pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        var pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint), pointsFromDb)
 
@@ -116,8 +116,57 @@ class PointsRoomRepositoryTest {
 
         pointsRoomRepository.updatePoint(updatedPoint)
 
-        pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(updatedPoint), pointsFromDb)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun pointsMapFlow() = runTest {
+        val epochDaysToPointsMapFlow = pointsRoomRepository.getEpochDaysToPointsMapFlow()
+
+        epochDaysToPointsMapFlow.test {
+            assertEquals(emptyMap<Long, List<Point>>(), awaitItem())
+            cancel()
+        }
+
+        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+        val point = Point(
+            planEpochSeconds = firstEpochSecond,
+            description = "Lorem Ipsum",
+            color = Color.RED
+        )
+
+        pointsRoomRepository.addPoint(point)
+
+        epochDaysToPointsMapFlow.test {
+            assertEquals(mapOf(point.planEpochDays to listOf(point)), awaitItem())
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun colorsMapFlow() = runTest {
+        val epochDaysToColorsMapFlow = pointsRoomRepository.getEpochDaysToPointsColorsMapFlow()
+
+        epochDaysToColorsMapFlow.test {
+            assertEquals(emptyMap<Long, List<Int>>(), awaitItem())
+            cancel()
+        }
+
+        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+
+        val firstPoint = Point(
+            planEpochSeconds = firstEpochSecond,
+            description = "Lorem Ipsum",
+            color = Color.RED
+        )
+
+        pointsRoomRepository.addPoint(firstPoint)
+
+        epochDaysToColorsMapFlow.test {
+            assertEquals(mapOf(firstPoint.planEpochDays to listOf(firstPoint.color)), awaitItem())
+        }
     }
 }
