@@ -113,6 +113,6 @@
         app:layout_constraintTop_toBottomOf="@id/days_names"
         app:spanCount="7"
         tools:itemCount="50"
-        tools:listitem="@layout/day_view_holder" />
+        tools:listitem="@layout/calendar_day_view_holder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.data.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.RoomConstants
 
@@ -10,6 +11,9 @@ import com.mrkurilin.aethalides.data.room.RoomConstants
     primaryKeys = [
         RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME,
         RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME
+    ],
+    indices = [
+        Index(value = [RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME, RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME], unique = true)
     ]
 )
 data class PointRoomEntity(

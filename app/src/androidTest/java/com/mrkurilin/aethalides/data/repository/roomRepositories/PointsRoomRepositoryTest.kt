@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import app.cash.turbine.test
 import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
 import com.mrkurilin.aethalides.data.room.PointsDao
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -22,6 +25,7 @@ class PointsRoomRepositoryTest {
     private lateinit var points: PointsDao
     private lateinit var pointsRoomRepository: PointsRoomRepository
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -119,5 +123,54 @@ class PointsRoomRepositoryTest {
         pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
 
         assertEquals(listOf(updatedPoint), pointsFromDb)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun pointsMapFlow() = runTest {
+        val epochDaysToPointsMapFlow = pointsRoomRepository.getEpochDaysToPointsMapFlow()
+
+        epochDaysToPointsMapFlow.test {
+            assertEquals(emptyMap<Long, List<Point>>(), awaitItem())
+            cancel()
+        }
+
+        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+        val point = Point(
+            planEpochSeconds = firstEpochSecond,
+            description = "Lorem Ipsum",
+            color = Color.RED
+        )
+
+        pointsRoomRepository.addPoint(point)
+
+        epochDaysToPointsMapFlow.test {
+            assertEquals(mapOf(point.planEpochDays to listOf(point)), awaitItem())
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun colorsMapFlow() = runTest {
+        val epochDaysToColorsMapFlow = pointsRoomRepository.getEpochDaysToPointsColorsMapFlow()
+
+        epochDaysToColorsMapFlow.test {
+            assertEquals(emptyMap<Long, List<Int>>(), awaitItem())
+            cancel()
+        }
+
+        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+
+        val firstPoint = Point(
+            planEpochSeconds = firstEpochSecond,
+            description = "Lorem Ipsum",
+            color = Color.RED
+        )
+
+        pointsRoomRepository.addPoint(firstPoint)
+
+        epochDaysToColorsMapFlow.test {
+            assertEquals(mapOf(firstPoint.planEpochDays to listOf(firstPoint.color)), awaitItem())
+        }
     }
 }

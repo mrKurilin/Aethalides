@@ -20,4 +20,10 @@ interface PointsRepository {
     fun deletePointByTag(tag: String): Unit
 
     fun getAllPointsFlow(): Flow<List<Point>>
+
+    fun getAllPointsByEpochDay(epochDay: Long): List<Point>
+
+    suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>>
+
+    suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>>
 }

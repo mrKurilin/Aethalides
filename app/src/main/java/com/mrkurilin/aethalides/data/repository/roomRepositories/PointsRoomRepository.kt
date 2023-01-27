@@ -5,6 +5,7 @@ import com.mrkurilin.aethalides.data.repository.PointsRepository
 import com.mrkurilin.aethalides.data.room.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 
 class PointsRoomRepository(
@@ -47,5 +48,23 @@ class PointsRoomRepository(
                 pointRoomEntity.toPoint()
             }
         }
+    }
+
+    override fun getAllPointsByEpochDay(epochDay: Long): List<Point> {
+        return pointsDao.getAllPointsByEpochDay(epochDay).map { pointRoomEntity ->
+            pointRoomEntity.toPoint()
+        }
+    }
+
+    override suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>> {
+        return pointsDao.getEpochDaysToPointsRoomEntitiesMapFlow().map { pointRoomEntityMap ->
+            pointRoomEntityMap.mapValues { list ->
+                list.value.map { it.toPoint() }
+            }
+        }
+    }
+
+    override suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>> {
+        return pointsDao.getEpochDaysToColorsMapFlow()
     }
 }
