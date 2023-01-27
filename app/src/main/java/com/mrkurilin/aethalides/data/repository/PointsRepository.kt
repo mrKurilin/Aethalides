@@ -5,23 +5,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface PointsRepository {
 
-    fun addPoint(point: Point): Unit
+    fun getAllPoints(): List<Point>
 
-    fun getPointsListByDate(epochDay: Long): List<Point>
+    fun addPoint(point: Point): Unit
 
     fun updatePoint(point: Point): Unit
 
     fun deletePoint(point: Point): Unit
 
-    fun getAllPlanEpochDaysFromDb(): List<Long>
-
-    fun getAllPointsColorsByEpochDay(epochDay: Long): List<Int>
-
-    fun deletePointByTag(tag: String): Unit
-
-    fun getAllPointsFlow(): Flow<List<Point>>
-
-    fun getAllPointsByEpochDay(epochDay: Long): List<Point>
+    fun deletePointsByTag(tag: String): Unit
 
     suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>>
 

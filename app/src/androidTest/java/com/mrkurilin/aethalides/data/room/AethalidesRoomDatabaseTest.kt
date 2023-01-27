@@ -50,7 +50,7 @@ class AethalidesRoomDatabaseTest {
             tag = ""
         )
         pointsDao.addPoint(pointRoomEntity)
-        val pointRoomEntityFromDb = pointsDao.getPointsListByDate(epochDay)
+        val pointRoomEntityFromDb = pointsDao.getAllPointRoomEntities()
 
         assertEquals(listOf(pointRoomEntity), pointRoomEntityFromDb)
     }

@@ -14,14 +14,15 @@ import com.mrkurilin.aethalides.presentation.views.ToDoItemView
 class ToDoDayViewHolder(
     view: View,
     private val updatePointListener: (Point) -> Unit
-
 ) : RecyclerView.ViewHolder(view) {
 
     private var currentDayTextView: TextView = itemView.findViewById(R.id.date)
 
     fun bind(currentDay: String, points: List<Point>) {
         clearAllToDoItems()
+
         currentDayTextView.text = currentDay
+
         points.forEach { point ->
             if (itemView is LinearLayout) {
                 addToDoItemView(point)
@@ -30,8 +31,7 @@ class ToDoDayViewHolder(
     }
 
     private fun clearAllToDoItems() {
-        val children = (itemView as LinearLayout).children.toList()
-        children.forEach { view ->
+        (itemView as LinearLayout).children.forEach { view ->
             if (view !is TextView) {
                 (itemView as LinearLayout).removeView(view)
             }
@@ -40,8 +40,10 @@ class ToDoDayViewHolder(
 
     private fun addToDoItemView(point: Point) {
         val toDoItemView = ToDoItemView(itemView.context, null)
-        toDoItemView.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        toDoItemView.layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT
+        )
         toDoItemView.setIsDone(point.isDone)
         toDoItemView.setDescription(point.description)
 

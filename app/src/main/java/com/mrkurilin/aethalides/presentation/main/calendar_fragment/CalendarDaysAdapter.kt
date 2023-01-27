@@ -25,7 +25,7 @@ class CalendarDaysAdapter(
     private var visibleMonth: Month = today.month
     private var visibleYear: Int = today.year
 
-    private val emptySet: List<Int> = listOf()
+    private val emptyList: List<Int> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarDayViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -45,7 +45,7 @@ class CalendarDaysAdapter(
         holder.bind(
             NumbersToStringUtil.getStringFromInt(currentPositionDay.dayOfMonth),
             currentPositionDay.isEqual(today),
-            pointsColorsOfEpochDays[currentPositionEpochDay] ?: emptySet,
+            pointsColorsOfEpochDays[currentPositionEpochDay] ?: emptyList,
             currentPositionDay.month
         )
     }

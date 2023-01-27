@@ -25,7 +25,6 @@ class PointsRoomRepositoryTest {
     private lateinit var points: PointsDao
     private lateinit var pointsRoomRepository: PointsRoomRepository
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -43,7 +42,6 @@ class PointsRoomRepositoryTest {
     fun writeAndRead() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val secondEpochSecond: Long = firstEpochSecond + 1
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -57,15 +55,15 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
 
-        val pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        val pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint, secondPoint), pointsFromDb)
     }
 
     @Test
     fun readEmptyList() {
-        val epochDay = LocalDate.now().toEpochDay()
-        val pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        LocalDate.now().toEpochDay()
+        val pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(emptyList<Note>(), pointsFromDb)
     }
@@ -74,7 +72,6 @@ class PointsRoomRepositoryTest {
     fun delete() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val secondEpochSecond: Long = firstEpochSecond + 1
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -88,13 +85,13 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
 
-        var pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        var pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint, secondPoint), pointsFromDb)
 
         pointsRoomRepository.deletePoint(secondPoint)
 
-        pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        pointsFromDb = pointsRoomRepository.getAllPoints()
 
 
         assertEquals(listOf(firstPoint), pointsFromDb)
@@ -103,7 +100,6 @@ class PointsRoomRepositoryTest {
     @Test
     fun update() {
         val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val epochDay = firstEpochSecond / 60 / 60 / 24
         val firstPoint = Point(
             planEpochSeconds = firstEpochSecond,
             description = "Lorem Ipsum",
@@ -112,7 +108,7 @@ class PointsRoomRepositoryTest {
 
         pointsRoomRepository.addPoint(firstPoint)
 
-        var pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        var pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(firstPoint), pointsFromDb)
 
@@ -120,7 +116,7 @@ class PointsRoomRepositoryTest {
 
         pointsRoomRepository.updatePoint(updatedPoint)
 
-        pointsFromDb = pointsRoomRepository.getPointsListByDate(epochDay)
+        pointsFromDb = pointsRoomRepository.getAllPoints()
 
         assertEquals(listOf(updatedPoint), pointsFromDb)
     }
