@@ -23,5 +23,11 @@
     <string name="friday_short">ПТ</string>
     <string name="saturday_short">СБ</string>
     <string name="sunday_short">ВС</string>
+    <string name="when">Когда</string>
+    <string name="at_what_time">Во сколько</string>
+    <string name="no_specific_time">Без конкретного времени</string>
+    <string name="repeat">Повтор</string>
+    <string name="point">Задача</string>
+    <string name="amount">Количество</string>
 
 </resources>

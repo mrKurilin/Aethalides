@@ -1,9 +1,10 @@
-package com.mrkurilin.aethalides.presentation.main.calendar_fragment
+package com.mrkurilin.aethalides.presentation.views
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mrkurilin.aethalides.presentation.main.calendar_fragment.CalendarDaysAdapter
 
 class GridCalendarRecyclerView : RecyclerView {
 
@@ -22,8 +23,10 @@ class GridCalendarRecyclerView : RecyclerView {
 
         if (adapter is CalendarDaysAdapter) {
             if (layoutManager is LinearLayoutManager) {
-                val first = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().toLong()
-                val last = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition().toLong()
+                val first =
+                    (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().toLong()
+                val last =
+                    (layoutManager as LinearLayoutManager).findLastVisibleItemPosition().toLong()
                 val middle = (last + first) / 2
                 (adapter as CalendarDaysAdapter).setMiddleVisiblePosition(middle.toInt())
             }

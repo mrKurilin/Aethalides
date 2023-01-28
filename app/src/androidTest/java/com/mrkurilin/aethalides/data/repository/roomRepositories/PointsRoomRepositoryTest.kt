@@ -16,8 +16,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class PointsRoomRepositoryTest {
 
@@ -40,15 +38,13 @@ class PointsRoomRepositoryTest {
 
     @Test
     fun writeAndRead() {
-        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val secondEpochSecond: Long = firstEpochSecond + 1
         val firstPoint = Point(
-            planEpochSeconds = firstEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay(),
             description = "Lorem Ipsum",
             color = Color.RED
         )
         val secondPoint = Point(
-            planEpochSeconds = secondEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay() + 1,
             description = "Lorem Ipsum",
             color = Color.RED
         )
@@ -70,15 +66,13 @@ class PointsRoomRepositoryTest {
 
     @Test
     fun delete() {
-        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val secondEpochSecond: Long = firstEpochSecond + 1
         val firstPoint = Point(
-            planEpochSeconds = firstEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay(),
             description = "Lorem Ipsum",
             color = Color.RED
         )
         val secondPoint = Point(
-            planEpochSeconds = secondEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay() + 1,
             description = "Lorem Ipsum",
             color = Color.RED
         )
@@ -99,18 +93,17 @@ class PointsRoomRepositoryTest {
 
     @Test
     fun update() {
-        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val firstPoint = Point(
-            planEpochSeconds = firstEpochSecond,
+        val point = Point(
+            planEpochDay = LocalDate.now().toEpochDay(),
             description = "Lorem Ipsum",
             color = Color.RED
         )
 
-        pointsRoomRepository.addPoint(firstPoint)
+        pointsRoomRepository.addPoint(point)
 
         var pointsFromDb = pointsRoomRepository.getAllPoints()
 
-        assertEquals(listOf(firstPoint), pointsFromDb)
+        assertEquals(listOf(point), pointsFromDb)
 
         val updatedPoint = pointsFromDb.first().copy(tag = "new tag")
 
@@ -131,9 +124,8 @@ class PointsRoomRepositoryTest {
             cancel()
         }
 
-        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val point = Point(
-            planEpochSeconds = firstEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay(),
             description = "Lorem Ipsum",
             color = Color.RED
         )
@@ -141,7 +133,7 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(point)
 
         epochDaysToPointsMapFlow.test {
-            assertEquals(mapOf(point.planEpochDays to listOf(point)), awaitItem())
+            assertEquals(mapOf(point.planEpochDay to listOf(point)), awaitItem())
         }
     }
 
@@ -155,10 +147,8 @@ class PointsRoomRepositoryTest {
             cancel()
         }
 
-        val firstEpochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-
         val firstPoint = Point(
-            planEpochSeconds = firstEpochSecond,
+            planEpochDay = LocalDate.now().toEpochDay(),
             description = "Lorem Ipsum",
             color = Color.RED
         )
@@ -166,7 +156,7 @@ class PointsRoomRepositoryTest {
         pointsRoomRepository.addPoint(firstPoint)
 
         epochDaysToColorsMapFlow.test {
-            assertEquals(mapOf(firstPoint.planEpochDays to listOf(firstPoint.color)), awaitItem())
+            assertEquals(mapOf(firstPoint.planEpochDay to listOf(firstPoint.color)), awaitItem())
         }
     }
 }
