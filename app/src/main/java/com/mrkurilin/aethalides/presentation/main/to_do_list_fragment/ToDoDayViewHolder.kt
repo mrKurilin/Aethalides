@@ -49,7 +49,7 @@ class ToDoDayViewHolder(
 
         toDoItemView.setTime(
             EpochSecondsUtil.epochSecondsToHoursAndMinutesString(
-                point.planEpochSeconds
+                point.planEpochSecond
             )
         )
 

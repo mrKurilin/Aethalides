@@ -2,7 +2,8 @@ package com.mrkurilin.aethalides.presentation.auth_screen.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.AuthCredential

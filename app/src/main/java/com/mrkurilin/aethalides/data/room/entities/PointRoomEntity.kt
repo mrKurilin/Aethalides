@@ -10,10 +10,13 @@ import com.mrkurilin.aethalides.data.room.RoomConstants
     tableName = RoomConstants.POINTS_TABLE_NAME,
     primaryKeys = [
         RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME,
-        RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME
+        RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME,
     ],
     indices = [
-        Index(value = [RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME, RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME], unique = true)
+        Index(
+            value = [RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME, RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME],
+            unique = true
+        )
     ]
 )
 data class PointRoomEntity(
@@ -26,7 +29,14 @@ data class PointRoomEntity(
 ) {
 
     fun toPoint(): Point {
-        return Point(planEpochSecond, description, color, isDone, tag, planEpochDay)
+        return Point(
+            planEpochDay = planEpochDay,
+            planEpochSecond = planEpochSecond,
+            description = description,
+            color = color,
+            isDone = isDone,
+            tag = tag,
+        )
     }
 
     companion object {
@@ -34,8 +44,8 @@ data class PointRoomEntity(
         fun fromPoint(point: Point): PointRoomEntity {
             return PointRoomEntity(
                 color = point.color,
-                planEpochDay = point.planEpochDays,
-                planEpochSecond = point.planEpochSeconds,
+                planEpochDay = point.planEpochDay,
+                planEpochSecond = point.planEpochSecond,
                 description = point.description,
                 isDone = point.isDone,
                 tag = point.tag

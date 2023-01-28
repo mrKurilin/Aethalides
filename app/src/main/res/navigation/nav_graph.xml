@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/calendarFragment">
+    app:startDestination="@id/addPointFragment">
 
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.mrkurilin.aethalides.presentation.auth_screen.fragments.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -27,7 +27,7 @@
         android:id="@+id/signUpFragment"
         android:name="com.mrkurilin.aethalides.presentation.auth_screen.fragments.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -41,5 +41,10 @@
         android:id="@+id/toDoListFragment"
         android:name="com.mrkurilin.aethalides.presentation.main.to_do_list_fragment.ToDoListFragment"
         android:label="ToDoListFragment" />
+    <fragment
+        android:id="@+id/addPointFragment"
+        android:name="com.mrkurilin.aethalides.presentation.main.add_point_fragment.AddPointFragment"
+        android:label="fragment_add_point"
+        tools:layout="@layout/fragment_add_point" />
 
 </navigation>

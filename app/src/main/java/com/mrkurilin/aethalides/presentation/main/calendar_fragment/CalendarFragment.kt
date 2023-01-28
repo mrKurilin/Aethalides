@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.presentation.views.GridCalendarRecyclerView
 import kotlinx.coroutines.launch
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {

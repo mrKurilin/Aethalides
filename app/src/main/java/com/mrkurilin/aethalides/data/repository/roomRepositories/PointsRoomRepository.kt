@@ -12,7 +12,7 @@ class PointsRoomRepository(
 ) : PointsRepository {
 
     override fun getAllPoints(): List<Point> {
-        return pointsDao.getAllPointRoomEntities().map{ pointRoomEntity ->
+        return pointsDao.getAllPointRoomEntities().map { pointRoomEntity ->
             pointRoomEntity.toPoint()
         }
     }

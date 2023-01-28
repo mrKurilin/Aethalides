@@ -14,9 +14,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.AuthCredential
-import com.mrkurilin.aethalides.presentation.auth_screen.AuthUiState
 import com.mrkurilin.aethalides.data.util.setErrorIfEmpty
 import com.mrkurilin.aethalides.data.util.showLongToast
+import com.mrkurilin.aethalides.presentation.auth_screen.AuthUiState
 import com.mrkurilin.aethalides.presentation.auth_screen.GoogleSignInActivityResultContract
 
 abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {

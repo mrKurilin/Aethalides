@@ -102,7 +102,7 @@
 
     </LinearLayout>
 
-    <com.mrkurilin.aethalides.presentation.main.calendar_fragment.GridCalendarRecyclerView
+    <com.mrkurilin.aethalides.presentation.views.GridCalendarRecyclerView
         android:id="@+id/recycler_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
