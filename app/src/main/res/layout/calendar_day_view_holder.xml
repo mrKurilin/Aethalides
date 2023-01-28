@@ -110,7 +110,6 @@
             android:background="@drawable/circle"
             android:visibility="gone" />
 
-
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
