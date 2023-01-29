@@ -6,6 +6,7 @@ import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.room.entities.EventRoomEntity.Companion.NAME_COLUMN_NAME
 import com.mrkurilin.aethalides.data.room.entities.EventRoomEntity.Companion.TABLE_NAME
 import com.mrkurilin.aethalides.data.room.entities.EventRoomEntity.Companion.UTC_EPOCH_SECOND_COLUMN_NAME
+import java.time.LocalDate
 
 @Entity(
     tableName = TABLE_NAME,
@@ -21,6 +22,9 @@ data class EventRoomEntity(
     @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int,
     @ColumnInfo(name = IS_EVERY_YEAR_COLUMN_NAME) val isEveryYear: Boolean,
     @ColumnInfo(name = UTC_EPOCH_SECOND_COLUMN_NAME) val utcEpochSecond: Long = 0,
+    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val epochDay: Long = LocalDate.of(
+        year, month, day
+    ).toEpochDay()
 ) {
 
     fun toEvent(): Event {
@@ -42,7 +46,8 @@ data class EventRoomEntity(
         const val MONTH_COLUMN_NAME = "month"
         const val DAY_COLUMN_NAME = "day"
         const val IS_EVERY_YEAR_COLUMN_NAME = "is_every_year"
-        const val UTC_EPOCH_SECOND_COLUMN_NAME = "UTC_epoch_second"
+        const val UTC_EPOCH_SECOND_COLUMN_NAME = "event_UTC_epoch_second"
+        const val EPOCH_DAY_COLUMN_NAME = "event_epoch_day"
 
         fun fromEvent(event: Event): EventRoomEntity {
             return EventRoomEntity(

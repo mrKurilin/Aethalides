@@ -1,6 +1,7 @@
 package com.mrkurilin.aethalides.data.room.daos
 
 import androidx.room.*
+import com.mrkurilin.aethalides.data.room.RoomConstants
 import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +13,7 @@ interface NotesDao {
 
     @Query(
         "SELECT * FROM ${NoteRoomEntity.TABLE_NAME} " +
-                "WHERE ${NoteRoomEntity.DATE_COLUMN_NAME} = :epochDay"
+                "WHERE ${RoomConstants.EPOCH_DAY_COLUMN_NAME} = :epochDay"
     )
     fun getNotesListFlowByDate(epochDay: Long): Flow<List<NoteRoomEntity>>
 

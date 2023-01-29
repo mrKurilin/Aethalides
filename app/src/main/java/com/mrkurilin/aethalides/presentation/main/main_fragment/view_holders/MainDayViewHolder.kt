@@ -4,10 +4,16 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.model.Event
+import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.EventsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.PointsRecyclerViewAdapter
 
-class MainDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class MainDayViewHolder(
+    view: View,
+    deletePoint: (Point) -> Unit,
+    editPoint: (Point) -> Unit,
+) : RecyclerView.ViewHolder(view) {
 
     private lateinit var dayTextView: TextView
     private lateinit var moneyCountTextView: TextView
@@ -17,15 +23,18 @@ class MainDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private lateinit var toDoListTextView: TextView
     private lateinit var toDoListRecyclerView: RecyclerView
     private val eventsRecyclerViewAdapter = EventsRecyclerViewAdapter()
-    private val toDoListRecyclerViewAdapter = PointsRecyclerViewAdapter()
+    private val pointsRecyclerViewAdapter = PointsRecyclerViewAdapter(deletePoint, editPoint)
 
     init {
         initViews()
         setRecyclerViewAdapters()
     }
 
-    fun bind() {
-
+    fun bind(spending: Int, calories: Int, events: List<Event>, points: List<Point>) {
+        moneyCountTextView.text = spending.toString()
+        kcalCountTextView.text = calories.toString()
+        eventsRecyclerViewAdapter.setItems(events)
+        pointsRecyclerViewAdapter.setItems(points)
     }
 
     private fun initViews() {
@@ -40,6 +49,6 @@ class MainDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private fun setRecyclerViewAdapters() {
         eventsRecyclerView.adapter = eventsRecyclerViewAdapter
-        toDoListRecyclerView.adapter = toDoListRecyclerViewAdapter
+        toDoListRecyclerView.adapter = pointsRecyclerViewAdapter
     }
 }

@@ -25,7 +25,7 @@ class ToDoListFragment : Fragment() {
 
     private fun initViews() {
         val view = requireView()
-        viewPager = view.findViewById(R.id.to_do_days_view_pager)
+        viewPager = view.findViewById(R.id.main_view_pager)
     }
 
     private fun initRecyclerView() {

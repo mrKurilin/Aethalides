@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.DESCRIPTION_COLUMN_NAME
-import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.PLAN_EPOCH_DAY_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.EPOCH_DAY_COLUMN_NAME
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.PLAN_TIME_COLUMN_NAME
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.TABLE_NAME
 
@@ -18,36 +18,36 @@ import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.TAB
     indices = [
         Index(
             value = [
-                PLAN_EPOCH_DAY_COLUMN_NAME,
+                EPOCH_DAY_COLUMN_NAME,
             ]
         )
     ]
 )
 data class PointRoomEntity(
-    @ColumnInfo(name = COLOR_COLUMN_NAME) val color: Int,
-    @ColumnInfo(name = PLAN_EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long,
-    @ColumnInfo(name = PLAN_TIME_COLUMN_NAME) val planEpochSecond: Long,
-    @ColumnInfo(name = DESCRIPTION_COLUMN_NAME) val description: String,
-    @ColumnInfo(name = IS_DONE_COLUMN_NAME) val isDone: Boolean,
-    @ColumnInfo(name = TAG_COLUMN_NAME) val tag: String,
+    @ColumnInfo(name = COLOR_COLUMN_NAME) val color: Int? = 0,
+    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long? = 0,
+    @ColumnInfo(name = PLAN_TIME_COLUMN_NAME) val planEpochSecond: Long = 0,
+    @ColumnInfo(name = DESCRIPTION_COLUMN_NAME) val description: String = "test",
+    @ColumnInfo(name = IS_DONE_COLUMN_NAME) val isDone: Boolean? = false,
+    @ColumnInfo(name = TAG_COLUMN_NAME) val tag: String? = "",
 ) {
 
     fun toPoint(): Point {
         return Point(
-            planEpochDay = planEpochDay,
+            planEpochDay = planEpochDay!!,
             planEpochSecond = planEpochSecond,
             description = description,
-            color = color,
-            isDone = isDone,
-            tag = tag,
+            color = color!!,
+            isDone = isDone!!,
+            tag = tag!!,
         )
     }
 
     companion object {
 
         const val TABLE_NAME = "points"
-        const val PLAN_EPOCH_DAY_COLUMN_NAME = "plan_date"
         const val COLOR_COLUMN_NAME = "color"
+        const val EPOCH_DAY_COLUMN_NAME = "point_epoch_day"
         const val PLAN_TIME_COLUMN_NAME = "plan_time"
         const val DESCRIPTION_COLUMN_NAME = "description"
         const val TAG_COLUMN_NAME = "tag"

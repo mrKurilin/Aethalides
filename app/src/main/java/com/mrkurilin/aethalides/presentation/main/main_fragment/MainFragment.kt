@@ -1,26 +1,47 @@
 package com.mrkurilin.aethalides.presentation.main.main_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.MainDaysAdapter
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<MainViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+    private lateinit var viewPager: ViewPager2
+    private lateinit var mainDaysAdapter: MainDaysAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+
+        setAdapter()
+
+        observeFlows()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    private fun observeFlows() {
+
+    }
+
+    private fun initViews() {
+        viewPager = requireView().findViewById(R.id.main_view_pager)
+    }
+
+    private fun setAdapter() {
+        mainDaysAdapter = MainDaysAdapter(
+            deletePoint = {
+
+            },
+            editPoint = {
+            }
+        )
+        viewPager.adapter = mainDaysAdapter
+        viewPager.setCurrentItem(Int.MAX_VALUE / 2, false)
     }
 }

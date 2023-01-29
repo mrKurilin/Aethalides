@@ -10,9 +10,6 @@ import java.time.ZoneOffset
 
 @Entity(
     tableName = TABLE_NAME,
-    primaryKeys = [
-
-    ]
 )
 data class SpendingRoomEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -38,7 +35,7 @@ data class SpendingRoomEntity(
         const val NAME_COLUMN_NAME = "name"
         const val COST_COLUMN_NAME = "cost"
         const val EPOCH_SECOND_COLUMN_NAME = "utc_epoch_second"
-        const val EPOCH_DAY_COLUMN_NAME = "epoch_day"
+        const val EPOCH_DAY_COLUMN_NAME = "spending_epoch_day"
 
         fun fromSpending(spending: Spending): SpendingRoomEntity {
             return SpendingRoomEntity(

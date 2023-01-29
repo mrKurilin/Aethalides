@@ -13,7 +13,7 @@ interface PointsDao {
     @Query("SELECT * FROM ${PointRoomEntity.TABLE_NAME}")
     fun getAllPointRoomEntities(): List<PointRoomEntity>
 
-    @MapInfo(keyColumn = PointRoomEntity.PLAN_EPOCH_DAY_COLUMN_NAME)
+    @MapInfo(keyColumn = PointRoomEntity.EPOCH_DAY_COLUMN_NAME)
     @Query(
         "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
                 "ORDER BY ${PointRoomEntity.PLAN_TIME_COLUMN_NAME} ASC"
@@ -21,12 +21,12 @@ interface PointsDao {
     fun getEpochDaysToPointsRoomEntitiesMapFlow(): Flow<Map<Long, List<PointRoomEntity>>>
 
     @MapInfo(
-        keyColumn = PointRoomEntity.PLAN_EPOCH_DAY_COLUMN_NAME,
+        keyColumn = PointRoomEntity.EPOCH_DAY_COLUMN_NAME,
         valueColumn = PointRoomEntity.COLOR_COLUMN_NAME
     )
     @Query(
         "SELECT DISTINCT ${PointRoomEntity.COLOR_COLUMN_NAME}, " +
-                "${PointRoomEntity.PLAN_EPOCH_DAY_COLUMN_NAME} FROM ${PointRoomEntity.TABLE_NAME} " +
+                "${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} FROM ${PointRoomEntity.TABLE_NAME} " +
                 "ORDER BY ${PointRoomEntity.PLAN_TIME_COLUMN_NAME} ASC"
     )
     fun getEpochDaysToColorsMapFlow(): Flow<Map<Long, List<Int>>>

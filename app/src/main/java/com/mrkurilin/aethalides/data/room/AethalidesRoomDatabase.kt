@@ -2,8 +2,7 @@ package com.mrkurilin.aethalides.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.mrkurilin.aethalides.data.room.daos.NotesDao
-import com.mrkurilin.aethalides.data.room.daos.PointsDao
+import com.mrkurilin.aethalides.data.room.daos.*
 import com.mrkurilin.aethalides.data.room.entities.*
 
 @Database(
@@ -20,4 +19,12 @@ abstract class AethalidesRoomDatabase : RoomDatabase() {
 
     abstract fun getNotesDao(): NotesDao
     abstract fun getPointsDao(): PointsDao
+
+    abstract fun getDayDao(): DayDao
+
+    abstract fun getEatenFoodDao(): EatenFoodDao
+
+    abstract fun getSpendingDao(): SpendingDao
+
+    abstract fun getEventsDao(): EventsDao
 }

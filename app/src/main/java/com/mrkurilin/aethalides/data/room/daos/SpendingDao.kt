@@ -11,14 +11,14 @@ interface SpendingDao {
     fun addSpending(spendingRoomEntity: SpendingRoomEntity): Unit
 
     @Query(
-        "SELECT * FROM ${SpendingRoomEntity.TABLE_NAME}" +
+        "SELECT * FROM ${SpendingRoomEntity.TABLE_NAME} " +
                 "WHERE ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} = :epochDay"
     )
     fun getSpendingListFlowByEpochDay(epochDay: Long): Flow<List<SpendingRoomEntity>>
 
     @Query(
-        "SELECT SUM(${SpendingRoomEntity.COST_COLUMN_NAME})" +
-                "FROM ${SpendingRoomEntity.TABLE_NAME}" +
+        "SELECT SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) " +
+                "FROM ${SpendingRoomEntity.TABLE_NAME} " +
                 "WHERE ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} = :epochDay"
     )
     fun getSpendingCostFlowByEpochDay(epochDay: Long): Flow<Int>
