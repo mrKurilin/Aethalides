@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.mrkurilin.aethalides.R
 import kotlinx.coroutines.launch
 
-class ToDoListFragment : Fragment(R.layout.fragment_to_do_list) {
+class ToDoListFragment : Fragment() {
 
     private val viewModel by viewModels<ToDoListViewModel>()
 

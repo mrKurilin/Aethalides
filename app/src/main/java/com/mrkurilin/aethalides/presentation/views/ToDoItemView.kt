@@ -18,7 +18,7 @@ class ToDoItemView(context: Context, attrs: AttributeSet?) : LinearLayout(contex
     private lateinit var moreButton: ImageButton
 
     init {
-        View.inflate(context, R.layout.view_to_do_item, this)
+        View.inflate(context, R.layout.view_holder_point, this)
         orientation = HORIZONTAL
         gravity = Gravity.CENTER
 

@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.presentation.main
+package com.mrkurilin.aethalides.presentation.main.main_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

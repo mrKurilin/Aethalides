@@ -2,7 +2,7 @@ package com.mrkurilin.aethalides.data.repository.roomRepositories
 
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.repository.PointsRepository
-import com.mrkurilin.aethalides.data.room.PointsDao
+import com.mrkurilin.aethalides.data.room.daos.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

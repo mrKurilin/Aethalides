@@ -8,7 +8,6 @@ import com.mrkurilin.aethalides.data.repository.PointsRepository
 import com.mrkurilin.aethalides.data.repository.roomRepositories.NotesRoomRepository
 import com.mrkurilin.aethalides.data.repository.roomRepositories.PointsRoomRepository
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
-import com.mrkurilin.aethalides.data.room.RoomConstants
 
 class AethalidesApp : Application() {
 
@@ -18,7 +17,7 @@ class AethalidesApp : Application() {
         Room.databaseBuilder(
             this,
             AethalidesRoomDatabase::class.java,
-            RoomConstants.AETHALIDES_ROOM_DATABASE_NAME
+            "Aethalides Room Database"
         ).allowMainThreadQueries().build()
     }
 

@@ -19,7 +19,7 @@ class ToDoDaysAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoDayViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.to_do_day_item_view_holder, parent, false)
+        val view = inflater.inflate(R.layout.view_holder_main_day, parent, false)
         return ToDoDayViewHolder(
             view,
             updatePointListener = { point ->

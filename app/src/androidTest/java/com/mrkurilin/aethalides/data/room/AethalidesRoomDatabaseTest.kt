@@ -5,6 +5,8 @@ import android.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mrkurilin.aethalides.data.room.daos.NotesDao
+import com.mrkurilin.aethalides.data.room.daos.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import org.junit.After
@@ -65,7 +67,7 @@ class AethalidesRoomDatabaseTest {
             text = "Lorem Ipsum"
         )
         notesDao.addNote(noteRoomEntity)
-        val noteEntitiesListFromDb = notesDao.getNotesListByDate(epochDay)
+        val noteEntitiesListFromDb = notesDao.getNotesListFlowByDate(epochDay)
 
         assertEquals(listOf(noteRoomEntity), noteEntitiesListFromDb)
     }

@@ -4,28 +4,32 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import com.mrkurilin.aethalides.data.model.Point
-import com.mrkurilin.aethalides.data.room.RoomConstants
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.DESCRIPTION_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.PLAN_EPOCH_DAY_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.PLAN_TIME_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.TABLE_NAME
 
 @Entity(
-    tableName = RoomConstants.POINTS_TABLE_NAME,
+    tableName = TABLE_NAME,
     primaryKeys = [
-        RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME,
-        RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME,
+        PLAN_TIME_COLUMN_NAME,
+        DESCRIPTION_COLUMN_NAME,
     ],
     indices = [
         Index(
-            value = [RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME, RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME],
-            unique = true
+            value = [
+                PLAN_EPOCH_DAY_COLUMN_NAME,
+            ]
         )
     ]
 )
 data class PointRoomEntity(
-    @ColumnInfo(name = RoomConstants.POINTS_COLOR_COLUMN_NAME) val color: Int,
-    @ColumnInfo(name = RoomConstants.POINTS_PLAN_EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long,
-    @ColumnInfo(name = RoomConstants.POINTS_PLAN_TIME_COLUMN_NAME) val planEpochSecond: Long,
-    @ColumnInfo(name = RoomConstants.POINTS_DESCRIPTION_COLUMN_NAME) val description: String,
-    @ColumnInfo(name = "is_done") val isDone: Boolean,
-    @ColumnInfo(name = "tag") val tag: String,
+    @ColumnInfo(name = COLOR_COLUMN_NAME) val color: Int,
+    @ColumnInfo(name = PLAN_EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long,
+    @ColumnInfo(name = PLAN_TIME_COLUMN_NAME) val planEpochSecond: Long,
+    @ColumnInfo(name = DESCRIPTION_COLUMN_NAME) val description: String,
+    @ColumnInfo(name = IS_DONE_COLUMN_NAME) val isDone: Boolean,
+    @ColumnInfo(name = TAG_COLUMN_NAME) val tag: String,
 ) {
 
     fun toPoint(): Point {
@@ -40,6 +44,14 @@ data class PointRoomEntity(
     }
 
     companion object {
+
+        const val TABLE_NAME = "points"
+        const val PLAN_EPOCH_DAY_COLUMN_NAME = "plan_date"
+        const val COLOR_COLUMN_NAME = "color"
+        const val PLAN_TIME_COLUMN_NAME = "plan_time"
+        const val DESCRIPTION_COLUMN_NAME = "description"
+        const val TAG_COLUMN_NAME = "tag"
+        const val IS_DONE_COLUMN_NAME = "is_done"
 
         fun fromPoint(point: Point): PointRoomEntity {
             return PointRoomEntity(

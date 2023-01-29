@@ -3,16 +3,18 @@ package com.mrkurilin.aethalides.data.room.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.mrkurilin.aethalides.data.model.Note
-import com.mrkurilin.aethalides.data.room.RoomConstants
+import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity.Companion.DATE_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity.Companion.TABLE_NAME
+import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity.Companion.TIME_COLUMN_NAME
 
 @Entity(
-    tableName = RoomConstants.NOTES_TABLE_NAME,
-    primaryKeys = [RoomConstants.NOTES_DATE_COLUMN_NAME, RoomConstants.NOTES_TIME_COLUMN_NAME]
+    tableName = TABLE_NAME,
+    primaryKeys = [DATE_COLUMN_NAME, TIME_COLUMN_NAME]
 )
 data class NoteRoomEntity(
-    @ColumnInfo(name = RoomConstants.NOTES_DATE_COLUMN_NAME) val epochDay: Long,
-    @ColumnInfo(name = RoomConstants.NOTES_TIME_COLUMN_NAME) val epochSecond: Long,
-    @ColumnInfo(name = RoomConstants.NOTES_TEXT_COLUMN_NAME) val text: String
+    @ColumnInfo(name = DATE_COLUMN_NAME) val epochDay: Long,
+    @ColumnInfo(name = TIME_COLUMN_NAME) val epochSecond: Long,
+    @ColumnInfo(name = TEXT_COLUMN_NAME) val text: String
 ) {
 
     fun toNote(): Note {
@@ -20,6 +22,11 @@ data class NoteRoomEntity(
     }
 
     companion object {
+
+        const val TABLE_NAME = "notes"
+        const val DATE_COLUMN_NAME = "date"
+        const val TIME_COLUMN_NAME = "time"
+        const val TEXT_COLUMN_NAME = "text"
 
         fun fromNote(note: Note): NoteRoomEntity {
             return NoteRoomEntity(

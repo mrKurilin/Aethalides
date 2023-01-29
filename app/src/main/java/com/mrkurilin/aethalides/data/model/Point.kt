@@ -7,4 +7,6 @@ data class Point(
     val color: Int,
     val isDone: Boolean = false,
     val tag: String = "",
+    val needToRemind: Boolean = true,
+    val remindTime: Long = planEpochSecond
 )

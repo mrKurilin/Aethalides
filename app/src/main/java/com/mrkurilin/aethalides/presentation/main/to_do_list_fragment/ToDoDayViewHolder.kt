@@ -16,7 +16,7 @@ class ToDoDayViewHolder(
     private val updatePointListener: (Point) -> Unit
 ) : RecyclerView.ViewHolder(view) {
 
-    private var currentDayTextView: TextView = itemView.findViewById(R.id.date)
+    private var currentDayTextView: TextView = itemView.findViewById(R.id.date_text_view)
 
     fun bind(currentDay: String, points: List<Point>) {
         clearAllToDoItems()
