@@ -18,6 +18,7 @@ import com.mrkurilin.aethalides.data.room.entities.*
 abstract class AethalidesRoomDatabase : RoomDatabase() {
 
     abstract fun getNotesDao(): NotesDao
+
     abstract fun getPointsDao(): PointsDao
 
     abstract fun getDayDao(): DayDao

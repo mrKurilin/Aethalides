@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.data.repository.roomRepositories
+package com.mrkurilin.aethalides.data.room.repositories
 
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.repository.PointsRepository
@@ -35,8 +35,8 @@ class PointsRoomRepository(
 
     override suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>> {
         return pointsDao.getEpochDaysToPointsRoomEntitiesMapFlow().map { pointRoomEntityMap ->
-            pointRoomEntityMap.mapValues { list ->
-                list.value.map { it.toPoint() }
+            pointRoomEntityMap.mapValues { entry ->
+                entry.value.map { it.toPoint() }
             }
         }
     }

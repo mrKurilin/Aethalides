@@ -3,17 +3,13 @@ package com.mrkurilin.aethalides.data.room.daos
 import androidx.room.*
 import com.mrkurilin.aethalides.data.room.entities.*
 import com.mrkurilin.aethalides.data.room.entities.DayRoomEntity.Companion.EPOCH_DAY_COLUMN_NAME
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DayDao {
 
-    @Insert
-    fun addPoint(pointRoomEntity: PointRoomEntity): Unit
-
     @Transaction
-    @MapInfo(
-        keyColumn = "day_epoch_day"
-    )
+    @MapInfo(keyColumn = "day_epoch_day")
     @Query(
         "SELECT ${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${PointRoomEntity.TABLE_NAME}" +
                 " UNION " +
@@ -29,5 +25,11 @@ interface DayDao {
                 "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as new_epoch_day, SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME})" +
                 " ON (new_epoch_day = $EPOCH_DAY_COLUMN_NAME)"
     )
-    fun getAllEpochDays(): Map<Long, DayRoomEntity>
+    fun getDayRoomEntitiesToEpochDaysMapFlow(): Flow<Map<Long, DayRoomEntity>>
+
+    @Insert
+    fun addPoint(pointRoomEntity: PointRoomEntity)
+
+    @Insert
+    fun addNote(noteRoomEntity: NoteRoomEntity)
 }

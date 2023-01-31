@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.data.room.entities
 
 import androidx.room.Entity
 import androidx.room.Relation
+import com.mrkurilin.aethalides.data.model.Day
 
 @Entity
 data class DayRoomEntity(
@@ -24,6 +25,20 @@ data class DayRoomEntity(
     val caloriesCount: Int? = 0,
     val moneyCount: Int? = 0,
 ) {
+
+    fun toDay(): Day {
+        return Day(
+            epochDay = day_epoch_day,
+            points = points.map { pointRoomEntity ->
+                pointRoomEntity.toPoint()
+            },
+            events = events.map { eventRoomEntity ->
+                eventRoomEntity.toEvent()
+            },
+            caloriesCount = caloriesCount ?: 0,
+            moneyCount = moneyCount ?: 0
+        )
+    }
 
     companion object {
 

@@ -55,11 +55,11 @@ class PointViewHolder(
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.edit -> {
-                    deletePoint(point)
+                    editPoint(point)
                     return@setOnMenuItemClickListener true
                 }
                 R.id.delete -> {
-                    editPoint(point)
+                    deletePoint(point)
                     return@setOnMenuItemClickListener true
                 }
                 else -> {

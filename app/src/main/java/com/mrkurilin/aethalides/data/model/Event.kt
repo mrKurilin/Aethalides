@@ -7,4 +7,5 @@ data class Event(
     val day: Int,
     val isEveryYear: Boolean,
     val utcEpochSecond: Long = 0,
+    val epochDay: Long = 0,
 )

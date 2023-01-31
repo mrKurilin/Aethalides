@@ -35,6 +35,7 @@ data class EventRoomEntity(
             day = day,
             isEveryYear = isEveryYear,
             utcEpochSecond = utcEpochSecond,
+            epochDay = epochDay
         )
     }
 
@@ -57,6 +58,7 @@ data class EventRoomEntity(
                 day = event.day,
                 isEveryYear = event.isEveryYear,
                 utcEpochSecond = event.utcEpochSecond,
+                epochDay = event.epochDay
             )
         }
     }

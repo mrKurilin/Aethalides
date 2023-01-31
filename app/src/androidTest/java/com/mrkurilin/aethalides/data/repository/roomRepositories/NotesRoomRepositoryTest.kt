@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
-import com.mrkurilin.aethalides.data.room.daos.NotesDao
+import com.mrkurilin.aethalides.data.room.repositories.NotesRoomRepository
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -17,15 +17,13 @@ import java.time.ZoneOffset
 class NotesRoomRepositoryTest {
 
     private lateinit var db: AethalidesRoomDatabase
-    private lateinit var notesDao: NotesDao
     private lateinit var notesRoomRepository: NotesRoomRepository
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AethalidesRoomDatabase::class.java).build()
-        notesDao = db.getNotesDao()
-        notesRoomRepository = NotesRoomRepository(notesDao)
+        notesRoomRepository = NotesRoomRepository(db.getNotesDao())
     }
 
     @After
@@ -49,7 +47,7 @@ class NotesRoomRepositoryTest {
         notesRoomRepository.addNote(firstNote)
         notesRoomRepository.addNote(secondNote)
 
-        val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
+        val notesFromDb = notesRoomRepository.getNotesListFlowByEpochDay(epochDay)
 
         assertEquals(listOf(firstNote, secondNote), notesFromDb)
     }
@@ -57,7 +55,7 @@ class NotesRoomRepositoryTest {
     @Test
     fun readEmptyList() {
         val epochDay = LocalDate.now().toEpochDay()
-        val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
+        val notesFromDb = notesRoomRepository.getNotesListFlowByEpochDay(epochDay)
 
         assertEquals(emptyList<Note>(), notesFromDb)
     }
@@ -81,7 +79,7 @@ class NotesRoomRepositoryTest {
 
         notesRoomRepository.deleteNote(noteToDelete)
 
-        val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
+        val notesFromDb = notesRoomRepository.getNotesListFlowByEpochDay(epochDay)
 
         assertEquals(listOf(firstNote), notesFromDb)
     }
@@ -102,7 +100,7 @@ class NotesRoomRepositoryTest {
 
         notesRoomRepository.updateNote(updatedNote)
 
-        val notesFromDb = notesRoomRepository.getNotesListByDate(epochDay)
+        val notesFromDb = notesRoomRepository.getNotesListFlowByEpochDay(epochDay)
 
         assertEquals(listOf(updatedNote), notesFromDb)
     }

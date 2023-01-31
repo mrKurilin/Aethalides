@@ -31,5 +31,20 @@
     <string name="amount">Количество</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
+    <string name="events">Мероприятия</string>
+    <string name="to_do_list">Список дел</string>
+    <string name="add_button_description">Add something</string>
+    <string name="no_points_at_current_day">No points at current day</string>
+    <string name="no_events_at_current_day">No events at current day</string>
+    <string name="kcal_count">ккал: %1$d</string>
+    <string name="add_point">Добавить задачу</string>
+    <string name="add_event">Добавить событие</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="add_spending">Добавить траты</string>
+    <string name="add_eaten_food">Добавить калории</string>
+    <string name="sample_time">14:45</string>
+    <string name="more">more</string>
+    <string name="sample_date">28 JAN 2023</string>
+    <string name="sample_count">2300</string>
 
 </resources>

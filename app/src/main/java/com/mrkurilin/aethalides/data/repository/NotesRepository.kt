@@ -7,7 +7,7 @@ interface NotesRepository {
 
     fun addNote(note: Note): Unit
 
-    fun getNotesListByDate(epochDay: Long): Flow<List<Note>>
+    fun getNotesListFlowByEpochDay(epochDay: Long): Flow<List<Note>>
 
     fun deleteNote(note: Note): Unit
 

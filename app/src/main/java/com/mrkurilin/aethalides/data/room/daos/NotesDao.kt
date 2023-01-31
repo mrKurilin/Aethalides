@@ -15,7 +15,7 @@ interface NotesDao {
         "SELECT * FROM ${NoteRoomEntity.TABLE_NAME} " +
                 "WHERE ${RoomConstants.EPOCH_DAY_COLUMN_NAME} = :epochDay"
     )
-    fun getNotesListFlowByDate(epochDay: Long): Flow<List<NoteRoomEntity>>
+    fun getNotesListFlowByEpochDay(epochDay: Long): Flow<List<NoteRoomEntity>>
 
     @Update
     fun updateNote(note: NoteRoomEntity): Unit

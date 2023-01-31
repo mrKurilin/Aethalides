@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.data.repository.roomRepositories
+package com.mrkurilin.aethalides.data.room.repositories
 
 import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.repository.NotesRepository
@@ -15,8 +15,8 @@ class NotesRoomRepository(
         notesDao.addNote(NoteRoomEntity.fromNote(note))
     }
 
-    override fun getNotesListByDate(epochDay: Long): Flow<List<Note>> {
-        return notesDao.getNotesListFlowByDate(epochDay).map { list ->
+    override fun getNotesListFlowByEpochDay(epochDay: Long): Flow<List<Note>> {
+        return notesDao.getNotesListFlowByEpochDay(epochDay).map { list ->
             list.map { noteRoomEntity -> noteRoomEntity.toNote() }
         }
     }

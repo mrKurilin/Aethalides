@@ -67,7 +67,7 @@ class AethalidesRoomDatabaseTest {
             text = "Lorem Ipsum"
         )
         notesDao.addNote(noteRoomEntity)
-        val noteEntitiesListFromDb = notesDao.getNotesListFlowByDate(epochDay)
+        val noteEntitiesListFromDb = notesDao.getNotesListFlowByEpochDay(epochDay)
 
         assertEquals(listOf(noteRoomEntity), noteEntitiesListFromDb)
     }

@@ -3,11 +3,15 @@ package com.mrkurilin.aethalides
 import android.app.Application
 import androidx.navigation.NavController
 import androidx.room.Room
+import com.mrkurilin.aethalides.data.repository.DaysRepository
+import com.mrkurilin.aethalides.data.repository.EventsRepository
 import com.mrkurilin.aethalides.data.repository.NotesRepository
 import com.mrkurilin.aethalides.data.repository.PointsRepository
-import com.mrkurilin.aethalides.data.repository.roomRepositories.NotesRoomRepository
-import com.mrkurilin.aethalides.data.repository.roomRepositories.PointsRoomRepository
+import com.mrkurilin.aethalides.data.room.repositories.DaysRoomRepository
+import com.mrkurilin.aethalides.data.room.repositories.NotesRoomRepository
+import com.mrkurilin.aethalides.data.room.repositories.PointsRoomRepository
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
+import com.mrkurilin.aethalides.data.room.repositories.EventsRoomRepository
 
 class AethalidesApp : Application() {
 
@@ -26,9 +30,19 @@ class AethalidesApp : Application() {
         return@lazy NotesRoomRepository(dao)
     }
 
+    private val eventsRepository: EventsRepository by lazy {
+        val dao = roomDatabase.getEventsDao()
+        return@lazy EventsRoomRepository(dao)
+    }
+
     private val pointsRepository: PointsRepository by lazy {
         val dao = roomDatabase.getPointsDao()
         return@lazy PointsRoomRepository(dao)
+    }
+
+    private val daysRepository: DaysRepository by lazy {
+        val dao = roomDatabase.getDayDao()
+        return@lazy DaysRoomRepository(dao)
     }
 
     fun setNavController(navController: NavController) {
@@ -45,5 +59,13 @@ class AethalidesApp : Application() {
 
     fun provideNotesRepository(): NotesRepository {
         return notesRepository
+    }
+
+    fun provideDaysRepository(): DaysRepository {
+        return daysRepository
+    }
+
+    fun provideEventsRepository(): EventsRepository {
+        return eventsRepository
     }
 }
