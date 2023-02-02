@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.map
 
 class DaysRoomRepository(private val dayDao: DayDao) : DaysRepository {
 
-    override fun getDaysToEpochDaysMapFlow(): Flow<Map<Long, Day>> {
-        return dayDao.getDayRoomEntitiesToEpochDaysMapFlow().map { mapDayRoomEntity ->
-            mapDayRoomEntity.mapValues { entry ->
-                entry.value.toDay()
+    override fun getDaysToEpochDaysMapFlow(): Flow<List<Day>> {
+        return dayDao.getDayRoomEntitiesToEpochDaysMapFlow().map { list ->
+            list.map { dayRoomEntity ->
+                dayRoomEntity.toDay()
             }
         }
     }

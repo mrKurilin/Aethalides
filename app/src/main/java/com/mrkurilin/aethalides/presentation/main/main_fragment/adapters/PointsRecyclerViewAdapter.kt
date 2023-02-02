@@ -31,7 +31,9 @@ class PointsRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: PointViewHolder, position: Int) {
-        holder.bind(points[position])
+        if (points.isNotEmpty()) {
+            holder.bind(points[position])
+        }
     }
 
     fun setItems(points: List<Point>) {

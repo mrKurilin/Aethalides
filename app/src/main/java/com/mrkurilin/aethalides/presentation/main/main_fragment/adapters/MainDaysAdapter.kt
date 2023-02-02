@@ -2,13 +2,11 @@ package com.mrkurilin.aethalides.presentation.main.main_fragment.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Day
 import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.model.Point
-import com.mrkurilin.aethalides.data.util.DiffUtilCallback
 import com.mrkurilin.aethalides.presentation.main.main_fragment.view_holders.MainDayViewHolder
 import java.time.LocalDate
 
@@ -38,17 +36,11 @@ class MainDaysAdapter(
 
         val currentDay = map[currentPositionEpochDay] ?: Day(currentPositionEpochDay)
 
-        holder.bind(currentDay)
+        holder.bind(currentDay, position)
     }
 
-    fun setItems(map: Map<Long, Day>) {
-        val diffResult = DiffUtil.calculateDiff(
-            DiffUtilCallback(
-                this.map.values.toList(),
-                map.values.toList(),
-            )
-        )
-        this.map = map
-        diffResult.dispatchUpdatesTo(this)
+    fun setItems(list: List<Day>) {
+        map = list.associateBy { it.epochDay }
+        notifyDataSetChanged()
     }
 }

@@ -8,7 +8,7 @@ import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Day
 import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.model.Point
-import com.mrkurilin.aethalides.presentation.main.main_fragment.NoDataRecyclerViewObserver
+import com.mrkurilin.aethalides.presentation.main.main_fragment.EmptyAdapterObserver
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.EventsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.PointsRecyclerViewAdapter
 
@@ -18,7 +18,6 @@ class MainDayViewHolder(
     editPoint: (Point) -> Unit,
     deleteEvent: (Event) -> Unit,
     editEvent: (Event) -> Unit,
-
 ) : RecyclerView.ViewHolder(view) {
 
     private lateinit var dayTextView: TextView
@@ -28,18 +27,18 @@ class MainDayViewHolder(
     private lateinit var eventsRecyclerView: RecyclerView
     private lateinit var pointsTextView: TextView
     private lateinit var pointsRecyclerView: RecyclerView
-    private lateinit var noEventsImageView: ImageView
-    private lateinit var noPointsImageView: ImageView
     private val eventsRecyclerViewAdapter = EventsRecyclerViewAdapter(deleteEvent, editEvent)
     private val pointsRecyclerViewAdapter = PointsRecyclerViewAdapter(deletePoint, editPoint)
+    private lateinit var noEventsImageView: ImageView
+    private lateinit var noPointsImageView: ImageView
 
     init {
         initViews()
         setRecyclerViewAdapters()
     }
 
-    fun bind(day: Day) {
-        dayTextView.text = day.dateString
+    fun bind(day: Day, position: Int) {
+        dayTextView.text = day.dateString + " " + position.toString()
         moneyCountTextView.text = day.moneyCount.toString()
         kcalCountTextView.text = day.caloriesCount.toString()
         eventsRecyclerViewAdapter.setItems(day.events)
@@ -63,17 +62,17 @@ class MainDayViewHolder(
         pointsRecyclerView.adapter = pointsRecyclerViewAdapter
 
         eventsRecyclerViewAdapter.registerAdapterDataObserver(
-            NoDataRecyclerViewObserver(
-                eventsRecyclerView,
+            EmptyAdapterObserver(
                 eventsTextView,
+                eventsRecyclerView,
                 noEventsImageView
             )
         )
 
         pointsRecyclerViewAdapter.registerAdapterDataObserver(
-            NoDataRecyclerViewObserver(
-                pointsRecyclerView,
+            EmptyAdapterObserver(
                 pointsTextView,
+                pointsRecyclerView,
                 noPointsImageView
             )
         )

@@ -45,15 +45,6 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="kcal_text_view, money_text_view" />
 
-    <ImageView
-        android:id="@+id/no_events_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@drawable/no_events"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/money_and_kcal_barrier"
-        android:contentDescription="@string/no_events_at_current_day" />
-
     <TextView
         android:id="@+id/events_text_view"
         android:layout_width="match_parent"
@@ -99,19 +90,27 @@
         android:id="@+id/points_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/points_text_view" />
 
     <ImageView
+        android:id="@+id/no_events_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/no_events_at_current_day"
+        android:src="@drawable/no_events"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/money_and_kcal_barrier" />
+
+    <ImageView
         android:id="@+id/no_points_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:contentDescription="@string/no_points_at_current_day"
-        android:paddingBottom="150dp"
         android:src="@drawable/no_points"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/events_barrier" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

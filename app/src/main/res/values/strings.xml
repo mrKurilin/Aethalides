@@ -44,7 +44,21 @@
     <string name="add_eaten_food">Добавить калории</string>
     <string name="sample_time">14:45</string>
     <string name="more">more</string>
+
     <string name="sample_date">28 JAN 2023</string>
     <string name="sample_count">2300</string>
+
+    <string name="cancel">Отменить</string>
+    <string name="add">Добавить</string>
+
+    <string name="never">Однократно</string>
+    <string name="daily">Ежедневно</string>
+    <string name="weekly">Еженедельно</string>
+    <string name="monthly">Ежемесячно</string>
+    <string name="annually">Ежегодно</string>
+    <string name="special">Особый</string>
+    <string name="what_need_to_do">Что нужно сделать</string>
+    <string name="repeat_for">Повторять</string>
+    <string name="for_days">Дней</string>
 
 </resources>
