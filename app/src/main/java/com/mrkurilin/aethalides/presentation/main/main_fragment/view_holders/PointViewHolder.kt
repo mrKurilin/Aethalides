@@ -5,16 +5,15 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
-import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.EpochSecondsUtil
 
-class PointViewHolder(
+open class PointViewHolder(
     view: View,
     val deletePoint: (Point) -> Unit,
     val editPoint: (Point) -> Unit,
-) : RecyclerView.ViewHolder(view) {
+) : AbstractPointViewHolder(view) {
 
     private lateinit var isDoneCheckBox: CheckBox
     private lateinit var timeTextView: TextView
@@ -30,7 +29,7 @@ class PointViewHolder(
         }
     }
 
-    fun bind(point: Point) {
+    override fun bind(point: Point) {
         this.point = point
 
         isDoneCheckBox.isChecked = point.isDone
@@ -50,7 +49,7 @@ class PointViewHolder(
     }
 
     private fun showPopupMenu() {
-        val popupMenu = PopupMenu(itemView.context, itemView)
+        val popupMenu = PopupMenu(itemView.context, moreButton)
         popupMenu.inflate(R.menu.edit_delete_popup_menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {

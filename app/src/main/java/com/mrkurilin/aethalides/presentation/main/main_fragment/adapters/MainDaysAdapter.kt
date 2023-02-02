@@ -36,7 +36,7 @@ class MainDaysAdapter(
 
         val currentDay = map[currentPositionEpochDay] ?: Day(currentPositionEpochDay)
 
-        holder.bind(currentDay, position)
+        holder.bind(currentDay)
     }
 
     fun setItems(list: List<Day>) {

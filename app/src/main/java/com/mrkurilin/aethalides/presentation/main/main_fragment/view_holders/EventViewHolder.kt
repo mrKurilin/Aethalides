@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
-import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.util.EpochSecondsUtil
@@ -13,7 +12,7 @@ class EventViewHolder(
     view: View,
     val deleteEvent: (Event) -> Unit,
     val editEvent: (Event) -> Unit,
-) : RecyclerView.ViewHolder(view) {
+) : AbstractEventViewHolder(view) {
 
     private val timeTextView: TextView = view.findViewById(R.id.time_text_view)
     private val eventTextView: TextView = view.findViewById(R.id.event_text_view)
@@ -26,7 +25,7 @@ class EventViewHolder(
         }
     }
 
-    fun bind(event: Event) {
+    override fun bind(event: Event) {
         this.event = event
         timeTextView.text = EpochSecondsUtil.epochSecondsToHoursAndMinutesString(
             event.utcEpochSecond
