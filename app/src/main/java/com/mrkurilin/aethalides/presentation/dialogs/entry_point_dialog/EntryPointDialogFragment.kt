@@ -5,7 +5,6 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,7 +35,10 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 pointDescriptionEditText.text.toString(),
-                LocalDate.parse(dateTextView.text.toString(), DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)),
+                LocalDate.parse(
+                    dateTextView.text.toString(),
+                    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+                ),
                 LocalTime.parse(timeTextView.text.toString(), DateTimeFormatter.ofPattern("HH:mm"))
             )
             dismiss()
@@ -58,37 +60,34 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
             timeTextView.isEnabled = !isChecked
         }
 
-        repeatSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                when (repeatSpinner.selectedItem.toString()) {
-                    resources.getString(R.string.never) -> {
+        repeatSpinner.onItemSelectedListener = RepeatSpinnerItemSelectedListener {
+            handleRepeatSpinnerSelectedItemString(repeatSpinner.selectedItem.toString())
+        }
 
-                    }
-                    resources.getString(R.string.never) -> {
+        observeData()
+    }
 
-                    }
-                    resources.getString(R.string.never) -> {
-
-                    }
-                    resources.getString(R.string.never) -> {
-
-                    }
-                    resources.getString(R.string.never) -> {
-
-                    }
-                }
+    private fun handleRepeatSpinnerSelectedItemString(selectedItem: String) {
+        when (selectedItem) {
+            resources.getString(R.string.once) -> {
+                // TODO:
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
+            resources.getString(R.string.daily) -> {
+                // TODO:
+            }
+            resources.getString(R.string.weekly) -> {
+                // TODO:
+            }
+            resources.getString(R.string.monthly) -> {
+                // TODO:
+            }
+            resources.getString(R.string.annually) -> {
+                // TODO:
+            }
+            resources.getString(R.string.special) -> {
+                // TODO:
             }
         }
-        observeData()
     }
 
     private fun showTimePickerDialog() {
@@ -125,10 +124,9 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     }
 
     private fun showDatePickerDialog() {
-        val onDateSetListener =
-            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                viewModel.currentLocalDate.value = LocalDate.of(year, month, dayOfMonth)
-            }
+        val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            viewModel.currentLocalDate.value = LocalDate.of(year, month, dayOfMonth)
+        }
         val dialog = DatePickerDialog(
             requireContext(),
             R.style.MySpinnerDatePickerStyle,
