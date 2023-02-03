@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="repeat_options_string_array">
-        <item>@string/never</item>
+        <item>@string/once</item>
         <item>@string/daily</item>
         <item>@string/weekly</item>
         <item>@string/monthly</item>
