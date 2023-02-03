@@ -22,7 +22,11 @@
         android:id="@+id/mainFragment"
         android:name="com.mrkurilin.aethalides.presentation.main.main_fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_addPointDialog"
+            app:destination="@id/addPointDialog" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.mrkurilin.aethalides.presentation.auth_screen.fragments.SignUpFragment"
@@ -37,14 +41,9 @@
         android:name="com.mrkurilin.aethalides.presentation.main.calendar_fragment.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
-    <fragment
-        android:id="@+id/toDoListFragment"
-        android:name="com.mrkurilin.aethalides.presentation.main.to_do_list_fragment.ToDoListFragment"
-        android:label="ToDoListFragment" />
-    <fragment
-        android:id="@+id/addPointFragment"
-        android:name="com.mrkurilin.aethalides.presentation.main.add_point_fragment.AddPointFragment"
-        android:label="fragment_add_point"
-        tools:layout="@layout/fragment_add_point" />
+    <dialog
+        android:id="@+id/addPointDialog"
+        android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog.EntryPointDialogFragment"
+        android:label="AddPointDialog" />
 
 </navigation>

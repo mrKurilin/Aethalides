@@ -20,7 +20,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel by viewModels<MainViewModel>()
 
-    private lateinit var viewPager: ViewPager2
+    private lateinit var viewPager2: ViewPager2
     private lateinit var mainDaysAdapter: MainDaysAdapter
     private lateinit var addButton: ImageButton
 
@@ -35,11 +35,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             showPopupMenu()
         }
 
-        lifecycleScope.launch { observeFlows() }
+        lifecycleScope.launch {
+            observeFlows()
+        }
     }
 
     private fun showPopupMenu() {
-        val diff = viewPager.currentItem - Int.MAX_VALUE
+        val diff = viewPager2.currentItem
         val currentShownEpochDay = LocalDate.now().toEpochDay() + diff
         val currentEpochSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 
@@ -48,7 +50,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.add_point -> {
-                    // TODO: show add point dialog
+                    viewModel.addPointPressed()
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_note -> {
@@ -76,14 +78,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private suspend fun observeFlows() {
-        viewModel.daysToEpochDaysMapFlow.collect { map ->
-            mainDaysAdapter.setItems(map)
+        viewModel.daysToEpochDaysMapFlow.collect { list ->
+            mainDaysAdapter.setItems(list)
         }
     }
 
     private fun initViews() {
         val view = requireView()
-        viewPager = view.findViewById(R.id.main_view_pager)
+        viewPager2 = view.findViewById(R.id.main_recycler_view)
         addButton = view.findViewById(R.id.add_button)
     }
 
@@ -102,7 +104,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.editEvent(event)
             }
         )
-        viewPager.adapter = mainDaysAdapter
-        viewPager.setCurrentItem(Int.MAX_VALUE / 2, false)
+        viewPager2.offscreenPageLimit = 10
+        viewPager2.adapter = mainDaysAdapter
+        viewPager2.setCurrentItem(Int.MAX_VALUE / 2, false)
     }
 }

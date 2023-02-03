@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface DayDao {
 
     @Transaction
-    @MapInfo(keyColumn = "day_epoch_day")
     @Query(
         "SELECT ${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${PointRoomEntity.TABLE_NAME}" +
                 " UNION " +
@@ -25,7 +24,7 @@ interface DayDao {
                 "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as new_epoch_day, SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME})" +
                 " ON (new_epoch_day = $EPOCH_DAY_COLUMN_NAME)"
     )
-    fun getDayRoomEntitiesToEpochDaysMapFlow(): Flow<Map<Long, DayRoomEntity>>
+    fun getDayRoomEntitiesToEpochDaysMapFlow(): Flow<List<DayRoomEntity>>
 
     @Insert
     fun addPoint(pointRoomEntity: PointRoomEntity)

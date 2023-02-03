@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface DaysRepository {
 
-    fun getDaysToEpochDaysMapFlow(): Flow<Map<Long, Day>>
+    fun getDaysToEpochDaysMapFlow(): Flow<List<Day>>
 }
