@@ -10,25 +10,19 @@ interface DayDao {
 
     @Transaction
     @Query(
-        "SELECT ${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${PointRoomEntity.TABLE_NAME}" +
+        "(SELECT ${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${PointRoomEntity.TABLE_NAME})" +
                 " UNION " +
-                "SELECT ${EventRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${EventRoomEntity.TABLE_NAME}" +
+                "(SELECT ${EventRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${EventRoomEntity.TABLE_NAME})" +
                 " UNION " +
-                "SELECT ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${EatenFoodRoomEntity.TABLE_NAME}" +
+                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY} as $EPOCH_DAY_COLUMN_NAME FROM ${EatenFoodRoomEntity.TABLE_NAME})" +
                 " UNION " +
-                "SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${SpendingRoomEntity.TABLE_NAME}" +
+                "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${SpendingRoomEntity.TABLE_NAME})" +
                 " LEFT JOIN " +
-                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME}, SUM(${EatenFoodRoomEntity.KCAL_COUNT_COLUMN_NAME}) as caloriesCount FROM ${EatenFoodRoomEntity.TABLE_NAME} GROUP BY ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME})" +
-                " ON ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME} = $EPOCH_DAY_COLUMN_NAME" +
+                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY}, SUM(${EatenFoodRoomEntity.KCAL_COUNT}) as caloriesCount FROM ${EatenFoodRoomEntity.TABLE_NAME} GROUP BY ${EatenFoodRoomEntity.EPOCH_DAY}) AS f" +
+                " ON $EPOCH_DAY_COLUMN_NAME = f.${EatenFoodRoomEntity.EPOCH_DAY}" +
                 " LEFT JOIN " +
-                "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as new_epoch_day, SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME})" +
-                " ON (new_epoch_day = $EPOCH_DAY_COLUMN_NAME)"
+                "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as t, SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY t) AS s" +
+                " ON $EPOCH_DAY_COLUMN_NAME = s.t"
     )
     fun getDayRoomEntitiesToEpochDaysMapFlow(): Flow<List<DayRoomEntity>>
-
-    @Insert
-    fun addPoint(pointRoomEntity: PointRoomEntity)
-
-    @Insert
-    fun addNote(noteRoomEntity: NoteRoomEntity)
 }

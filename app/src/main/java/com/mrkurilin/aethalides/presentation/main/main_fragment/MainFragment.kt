@@ -35,9 +35,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             showPopupMenu()
         }
 
-        lifecycleScope.launch {
             observeFlows()
-        }
     }
 
     private fun showPopupMenu() {
@@ -61,8 +59,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     // TODO: show dialog
                     return@setOnMenuItemClickListener true
                 }
-                R.id.add_kcal -> {
-                    // TODO: show dialog
+                R.id.add_eaten_food -> {
+                    viewModel.addEatenFoodPressed()
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_spending -> {
@@ -77,9 +75,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         popupMenu.show()
     }
 
-    private suspend fun observeFlows() {
-        viewModel.daysToEpochDaysMapFlow.collect { list ->
-            mainDaysAdapter.setItems(list)
+    private fun observeFlows() {
+        lifecycleScope.launch{
+            viewModel.daysToEpochDaysMapFlow.collect { list ->
+                mainDaysAdapter.setItems(list)
+            }
         }
     }
 

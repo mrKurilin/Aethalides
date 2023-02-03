@@ -36,6 +36,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addPointPressed() {
-        navController.navigate(R.id.action_mainFragment_to_addPointDialog)
+        navController.navigate(R.id.action_mainFragment_to_entryPointDialogFragment)
+    }
+
+    fun addEatenFoodPressed() {
+        navController.navigate(R.id.action_mainFragment_to_entryEatenFoodDialogFragment)
     }
 }

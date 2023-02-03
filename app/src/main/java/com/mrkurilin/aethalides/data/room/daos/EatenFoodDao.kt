@@ -13,14 +13,14 @@ interface EatenFoodDao {
     @Query(
         "SELECT * " +
                 "FROM ${EatenFoodRoomEntity.TABLE_NAME} " +
-                "WHERE ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME} = :epochDay"
+                "WHERE ${EatenFoodRoomEntity.EPOCH_DAY} = :epochDay"
     )
     fun getEatenFoodListFlowByEpochDay(epochDay: Long): Flow<List<EatenFoodRoomEntity>>
 
     @Query(
-        "SELECT SUM(${EatenFoodRoomEntity.KCAL_COUNT_COLUMN_NAME}) " +
+        "SELECT SUM(${EatenFoodRoomEntity.KCAL_COUNT}) " +
                 "FROM ${EatenFoodRoomEntity.TABLE_NAME} " +
-                "WHERE ${EatenFoodRoomEntity.EPOCH_DAY_COLUMN_NAME} = :epochDay"
+                "WHERE ${EatenFoodRoomEntity.EPOCH_DAY} = :epochDay"
     )
     fun getEatenFoodCaloriesFlowByEpochDay(epochDay: Long): Flow<Int>
 

@@ -9,6 +9,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.LocalDateUtil
+import com.mrkurilin.aethalides.data.util.LocalTimeUtil
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -35,11 +37,8 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 pointDescriptionEditText.text.toString(),
-                LocalDate.parse(
-                    dateTextView.text.toString(),
-                    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-                ),
-                LocalTime.parse(timeTextView.text.toString(), DateTimeFormatter.ofPattern("HH:mm"))
+                LocalDateUtil.fromTextView(dateTextView),
+                LocalTimeUtil.fromTextView(timeTextView),
             )
             dismiss()
         }
@@ -91,13 +90,13 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     }
 
     private fun showTimePickerDialog() {
-        val onDateSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+        val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             viewModel.currentLocalTime.value = LocalTime.of(hourOfDay, minute)
         }
         val dialog = TimePickerDialog(
             requireContext(),
             R.style.MySpinnerTimePickerStyle,
-            onDateSetListener,
+            onTimeSetListener,
             viewModel.currentLocalTime.value.hour,
             viewModel.currentLocalTime.value.minute,
             true
@@ -125,7 +124,7 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
 
     private fun showDatePickerDialog() {
         val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.currentLocalDate.value = LocalDate.of(year, month, dayOfMonth)
+            viewModel.currentLocalDate.value = LocalDate.of(year, month + 1, dayOfMonth)
         }
         val dialog = DatePickerDialog(
             requireContext(),

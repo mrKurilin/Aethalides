@@ -1,12 +1,13 @@
 package com.mrkurilin.aethalides.data.room.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Relation
 import com.mrkurilin.aethalides.data.model.Day
 
 @Entity
 data class DayRoomEntity(
-    val day_epoch_day: Long,
+    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val day_epoch_day: Long,
 
     @Relation(
         entity = PointRoomEntity::class,
@@ -22,7 +23,18 @@ data class DayRoomEntity(
     )
     val events: List<EventRoomEntity> = listOf(),
 
+    @Relation(
+        entity = EatenFoodRoomEntity::class,
+        parentColumn = "day_epoch_day",
+        entityColumn = EventRoomEntity.EPOCH_DAY_COLUMN_NAME
+    )
     val caloriesCount: Int? = 0,
+
+    @Relation(
+        entity = SpendingRoomEntity::class,
+        parentColumn = "day_epoch_day",
+        entityColumn = EventRoomEntity.EPOCH_DAY_COLUMN_NAME
+    )
     val moneyCount: Int? = 0,
 ) {
 
