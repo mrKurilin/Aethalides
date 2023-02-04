@@ -13,6 +13,6 @@
         android:id="@+id/add_spending"
         android:title="@string/add_spending" />
     <item
-        android:id="@+id/add_kcal"
+        android:id="@+id/add_eaten_food"
         android:title="@string/add_eaten_food" />
 </menu>

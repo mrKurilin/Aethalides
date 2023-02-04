@@ -1,7 +1,5 @@
 package com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -9,9 +7,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.AethalidesDatePickerDialog
+import com.mrkurilin.aethalides.data.util.AethalidesTimePickerDialog
+import com.mrkurilin.aethalides.data.util.LocalDateUtil
+import com.mrkurilin.aethalides.data.util.LocalTimeUtil
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -35,11 +35,8 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 pointDescriptionEditText.text.toString(),
-                LocalDate.parse(
-                    dateTextView.text.toString(),
-                    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-                ),
-                LocalTime.parse(timeTextView.text.toString(), DateTimeFormatter.ofPattern("HH:mm"))
+                LocalDateUtil.fromTextView(dateTextView),
+                LocalTimeUtil.fromTextView(timeTextView),
             )
             dismiss()
         }
@@ -91,18 +88,13 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     }
 
     private fun showTimePickerDialog() {
-        val onDateSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            viewModel.currentLocalTime.value = LocalTime.of(hourOfDay, minute)
-        }
-        val dialog = TimePickerDialog(
-            requireContext(),
-            R.style.MySpinnerTimePickerStyle,
-            onDateSetListener,
-            viewModel.currentLocalTime.value.hour,
-            viewModel.currentLocalTime.value.minute,
-            true
+        AethalidesTimePickerDialog.show(
+            context = requireContext(),
+            localTime = viewModel.currentLocalTime.value,
+            onTimeSet = { localTime ->
+                viewModel.currentLocalTime.value = localTime
+            }
         )
-        dialog.show()
     }
 
     private fun observeData() {
@@ -124,18 +116,13 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     }
 
     private fun showDatePickerDialog() {
-        val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.currentLocalDate.value = LocalDate.of(year, month, dayOfMonth)
-        }
-        val dialog = DatePickerDialog(
-            requireContext(),
-            R.style.MySpinnerDatePickerStyle,
-            onDateSetListener,
-            viewModel.currentLocalDate.value.year,
-            viewModel.currentLocalDate.value.monthValue - 1,
-            viewModel.currentLocalDate.value.dayOfMonth
+        AethalidesDatePickerDialog.show(
+            context = requireContext(),
+            localDate = viewModel.currentLocalDate.value,
+            onDateSet = { localDate ->
+                viewModel.currentLocalDate.value = localDate
+            }
         )
-        dialog.show()
     }
 
     private fun initViews(view: View) {

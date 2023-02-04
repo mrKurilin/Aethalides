@@ -40,7 +40,7 @@ class DaysRoomRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testReadDaysRepository() = runTest {
-        val daysToEpochDaysMapFlow = daysRoomRepository.getDaysToEpochDaysMapFlow()
+        val daysToEpochDaysMapFlow = daysRoomRepository.getDaysListFlow()
         var expectedMap = mapOf<Long, Day>()
 
         daysToEpochDaysMapFlow.test {
@@ -51,7 +51,7 @@ class DaysRoomRepositoryTest {
         val epochDay = epochSecond / 60 / 60 / 24
 
         val point = Point(
-            planEpochDay = epochDay,
+            localDateTime = LocalDateTime.now(),
             description = "Test"
         )
 

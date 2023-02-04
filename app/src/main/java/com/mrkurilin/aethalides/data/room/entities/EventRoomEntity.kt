@@ -22,7 +22,7 @@ data class EventRoomEntity(
     @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int,
     @ColumnInfo(name = IS_EVERY_YEAR_COLUMN_NAME) val isEveryYear: Boolean,
     @ColumnInfo(name = UTC_EPOCH_SECOND_COLUMN_NAME) val utcEpochSecond: Long = 0,
-    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val epochDay: Long = LocalDate.of(
+    @ColumnInfo(name = EPOCH_DAY) val epochDay: Long = LocalDate.of(
         year, month, day
     ).toEpochDay()
 ) {
@@ -48,7 +48,7 @@ data class EventRoomEntity(
         const val DAY_COLUMN_NAME = "day"
         const val IS_EVERY_YEAR_COLUMN_NAME = "is_every_year"
         const val UTC_EPOCH_SECOND_COLUMN_NAME = "event_UTC_epoch_second"
-        const val EPOCH_DAY_COLUMN_NAME = "event_epoch_day"
+        const val EPOCH_DAY = "event_epoch_day"
 
         fun fromEvent(event: Event): EventRoomEntity {
             return EventRoomEntity(

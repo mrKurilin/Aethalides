@@ -61,4 +61,8 @@
     <string name="repeat_for">Повторять</string>
     <string name="for_days">Дней</string>
 
+    <string name="liter_shor">л</string>
+    <string name="pieces_short">шт</string>
+    <string name="gram_short">гр</string>
+
 </resources>

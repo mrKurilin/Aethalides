@@ -24,8 +24,11 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_addPointDialog"
-            app:destination="@id/addPointDialog" />
+            android:id="@+id/action_mainFragment_to_entryPointDialogFragment"
+            app:destination="@id/entryPointDialogFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_entryEatenFoodDialogFragment"
+            app:destination="@id/entryEatenFoodDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -42,8 +45,12 @@
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
     <dialog
-        android:id="@+id/addPointDialog"
+        android:id="@+id/entryPointDialogFragment"
         android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog.EntryPointDialogFragment"
-        android:label="AddPointDialog" />
+        android:label="EntryPointDialogFragment" />
+    <dialog
+        android:id="@+id/entryEatenFoodDialogFragment"
+        android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_eaten_food_dialog.EntryEatenFoodDialogFragment"
+        android:label="EntryEatenFoodDialogFragment" />
 
 </navigation>

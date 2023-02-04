@@ -3,15 +3,9 @@ package com.mrkurilin.aethalides
 import android.app.Application
 import androidx.navigation.NavController
 import androidx.room.Room
-import com.mrkurilin.aethalides.data.repository.DaysRepository
-import com.mrkurilin.aethalides.data.repository.EventsRepository
-import com.mrkurilin.aethalides.data.repository.NotesRepository
-import com.mrkurilin.aethalides.data.repository.PointsRepository
-import com.mrkurilin.aethalides.data.room.repositories.DaysRoomRepository
-import com.mrkurilin.aethalides.data.room.repositories.NotesRoomRepository
-import com.mrkurilin.aethalides.data.room.repositories.PointsRoomRepository
+import com.mrkurilin.aethalides.data.repository.*
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
-import com.mrkurilin.aethalides.data.room.repositories.EventsRoomRepository
+import com.mrkurilin.aethalides.data.room.repositories.*
 
 class AethalidesApp : Application() {
 
@@ -45,6 +39,11 @@ class AethalidesApp : Application() {
         return@lazy DaysRoomRepository(dao)
     }
 
+    private val eatenFoodRepository: EatenFoodRepository by lazy {
+        val dao = roomDatabase.getEatenFoodDao()
+        return@lazy EatenFoodRoomRepository(dao)
+    }
+
     fun setNavController(navController: NavController) {
         this.navController = navController
     }
@@ -67,5 +66,9 @@ class AethalidesApp : Application() {
 
     fun provideEventsRepository(): EventsRepository {
         return eventsRepository
+    }
+
+    fun provideEatenFoodRepository(): EatenFoodRepository {
+        return eatenFoodRepository
     }
 }
