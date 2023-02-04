@@ -14,10 +14,10 @@ import java.time.ZoneOffset
 data class SpendingRoomEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = NAME_COLUMN_NAME) val name: String,
-    @ColumnInfo(name = COST_COLUMN_NAME) val cost: Float,
+    @ColumnInfo(name = COST) val cost: Float,
     @ColumnInfo(name = EPOCH_SECOND_COLUMN_NAME) val utcEpochSecond: Long = LocalDateTime.now()
         .toEpochSecond(ZoneOffset.UTC),
-    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val epochDay: Long = utcEpochSecond / 60 / 60 / 24
+    @ColumnInfo(name = EPOCH_DAY) val epochDay: Long = utcEpochSecond / 60 / 60 / 24
 ) {
 
     fun toSpending(): Spending {
@@ -33,9 +33,9 @@ data class SpendingRoomEntity(
 
         const val TABLE_NAME = "spending"
         const val NAME_COLUMN_NAME = "name"
-        const val COST_COLUMN_NAME = "cost"
+        const val COST = "cost"
         const val EPOCH_SECOND_COLUMN_NAME = "utc_epoch_second"
-        const val EPOCH_DAY_COLUMN_NAME = "spending_epoch_day"
+        const val EPOCH_DAY = "spending_epoch_day"
 
         fun fromSpending(spending: Spending): SpendingRoomEntity {
             return SpendingRoomEntity(

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.DESCRIPTION_COLUMN_NAME
-import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.EPOCH_DAY_COLUMN_NAME
+import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.EPOCH_DAY
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.PLAN_TIME_COLUMN_NAME
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.TABLE_NAME
 
@@ -15,10 +15,10 @@ import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity.Companion.TAB
         PLAN_TIME_COLUMN_NAME,
         DESCRIPTION_COLUMN_NAME,
     ],
-    indices = [Index(value = [EPOCH_DAY_COLUMN_NAME])]
+    indices = [Index(value = [EPOCH_DAY])]
 )
 data class PointRoomEntity(
-    @ColumnInfo(name = EPOCH_DAY_COLUMN_NAME) val planEpochDay: Long,
+    @ColumnInfo(name = EPOCH_DAY) val planEpochDay: Long,
     @ColumnInfo(name = DESCRIPTION_COLUMN_NAME) val description: String,
     @ColumnInfo(name = COLOR_COLUMN_NAME) val color: Int,
     @ColumnInfo(name = IS_DONE_COLUMN_NAME) val isDone: Boolean,
@@ -60,7 +60,7 @@ data class PointRoomEntity(
     companion object {
 
         const val TABLE_NAME = "points"
-        const val EPOCH_DAY_COLUMN_NAME = "point_epoch_day"
+        const val EPOCH_DAY = "point_epoch_day"
         const val DESCRIPTION_COLUMN_NAME = "description"
         const val COLOR_COLUMN_NAME = "color"
         const val IS_DONE_COLUMN_NAME = "is_done"

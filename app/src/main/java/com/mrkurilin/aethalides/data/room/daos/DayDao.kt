@@ -1,8 +1,8 @@
 package com.mrkurilin.aethalides.data.room.daos
 
 import androidx.room.*
+import com.mrkurilin.aethalides.data.room.RoomConstants
 import com.mrkurilin.aethalides.data.room.entities.*
-import com.mrkurilin.aethalides.data.room.entities.DayRoomEntity.Companion.EPOCH_DAY_COLUMN_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -10,19 +10,24 @@ interface DayDao {
 
     @Transaction
     @Query(
-        "(SELECT ${PointRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${PointRoomEntity.TABLE_NAME})" +
+        "SELECT * FROM (" +
+                "SELECT ${EatenFoodRoomEntity.EPOCH_DAY} as ${RoomConstants.EPOCH_DAY} FROM ${EatenFoodRoomEntity.TABLE_NAME}" +
                 " UNION " +
-                "(SELECT ${EventRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${EventRoomEntity.TABLE_NAME})" +
+                "SELECT ${EventRoomEntity.EPOCH_DAY} as ${RoomConstants.EPOCH_DAY} FROM ${EventRoomEntity.TABLE_NAME}" +
                 " UNION " +
-                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY} as $EPOCH_DAY_COLUMN_NAME FROM ${EatenFoodRoomEntity.TABLE_NAME})" +
+                "SELECT ${NoteRoomEntity.EPOCH_DAY} as ${RoomConstants.EPOCH_DAY} FROM ${NoteRoomEntity.TABLE_NAME}" +
                 " UNION " +
-                "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as $EPOCH_DAY_COLUMN_NAME FROM ${SpendingRoomEntity.TABLE_NAME})" +
+                "SELECT ${PointRoomEntity.EPOCH_DAY} as ${RoomConstants.EPOCH_DAY} FROM ${PointRoomEntity.TABLE_NAME}" +
+                " UNION " +
+                "SELECT ${SpendingRoomEntity.EPOCH_DAY} as ${RoomConstants.EPOCH_DAY} FROM ${SpendingRoomEntity.TABLE_NAME})" +
                 " LEFT JOIN " +
-                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY}, SUM(${EatenFoodRoomEntity.KCAL_COUNT}) as caloriesCount FROM ${EatenFoodRoomEntity.TABLE_NAME} GROUP BY ${EatenFoodRoomEntity.EPOCH_DAY}) AS f" +
-                " ON $EPOCH_DAY_COLUMN_NAME = f.${EatenFoodRoomEntity.EPOCH_DAY}" +
+                "(SELECT ${SpendingRoomEntity.EPOCH_DAY}, SUM(${SpendingRoomEntity.COST}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY ${SpendingRoomEntity.EPOCH_DAY})" +
+                " ON ${SpendingRoomEntity.EPOCH_DAY} = ${RoomConstants.EPOCH_DAY}" +
                 " LEFT JOIN " +
-                "(SELECT ${SpendingRoomEntity.EPOCH_DAY_COLUMN_NAME} as t, SUM(${SpendingRoomEntity.COST_COLUMN_NAME}) as moneyCount FROM ${SpendingRoomEntity.TABLE_NAME} GROUP BY t) AS s" +
-                " ON $EPOCH_DAY_COLUMN_NAME = s.t"
+                "(SELECT ${EatenFoodRoomEntity.EPOCH_DAY}, SUM(${EatenFoodRoomEntity.KCAL_COUNT}) as caloriesCount FROM ${EatenFoodRoomEntity.TABLE_NAME} GROUP BY ${EatenFoodRoomEntity.EPOCH_DAY})" +
+                " ON ${EatenFoodRoomEntity.EPOCH_DAY} = ${RoomConstants.EPOCH_DAY}" +
+                " LEFT JOIN ${PointRoomEntity.TABLE_NAME} ON ${PointRoomEntity.EPOCH_DAY} = ${RoomConstants.EPOCH_DAY}" +
+                " LEFT JOIN ${EventRoomEntity.TABLE_NAME} ON ${EventRoomEntity.EPOCH_DAY} = ${RoomConstants.EPOCH_DAY}"
     )
-    fun getDayRoomEntitiesToEpochDaysMapFlow(): Flow<List<DayRoomEntity>>
+    fun getDayRoomEntitiesListFlow(): Flow<List<DayRoomEntity>>
 }

@@ -17,7 +17,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val pointsRepository = aethalidesApp.providePointsRepository()
     private val eventsRepository = aethalidesApp.provideEventsRepository()
 
-    val daysToEpochDaysMapFlow: Flow<List<Day>> = daysRepository.getDaysToEpochDaysMapFlow()
+    val daysToEpochDaysMapFlow: Flow<List<Day>> = daysRepository.getDaysListFlow()
 
     fun deletePoint(point: Point) {
         pointsRepository.deletePoint(point)

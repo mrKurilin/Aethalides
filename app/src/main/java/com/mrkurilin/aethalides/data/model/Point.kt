@@ -7,7 +7,7 @@ import java.time.ZoneOffset
 data class Point constructor(
     val planEpochDay: Long,
     val description: String,
-    val color: Int,
+    val color: Int = Color.TRANSPARENT,
     val isDone: Boolean,
     val tag: String,
     val needToRemind: Boolean,
@@ -17,10 +17,10 @@ data class Point constructor(
     val dayOfMonth: Int,
     val month: Int,
     val year: Int,
-    val isDaily: Boolean,
-    val isWeekly: Boolean,
-    val isMonthly: Boolean,
-    val isAnnually: Boolean,
+    val isDaily: Boolean = false,
+    val isWeekly: Boolean = false,
+    val isMonthly: Boolean = false,
+    val isAnnually: Boolean = false,
 ) {
 
     constructor(
