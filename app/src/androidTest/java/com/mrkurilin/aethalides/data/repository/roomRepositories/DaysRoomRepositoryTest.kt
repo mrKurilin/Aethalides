@@ -40,7 +40,7 @@ class DaysRoomRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testReadDaysRepository() = runTest {
-        val daysToEpochDaysMapFlow = daysRoomRepository.getDaysListFlow()
+        val daysToEpochDaysMapFlow = daysRoomRepository.getDaysMapFlow()
         var expectedMap = mapOf<Long, Day>()
 
         daysToEpochDaysMapFlow.test {

@@ -3,22 +3,21 @@ package com.mrkurilin.aethalides.data.room.entities
 import androidx.room.ColumnInfo
 import androidx.room.Relation
 import com.mrkurilin.aethalides.data.model.Day
-import com.mrkurilin.aethalides.data.room.RoomConstants
 
 class DayRoomEntity(
-    @ColumnInfo(name = RoomConstants.EPOCH_DAY)
+    @ColumnInfo(name = EPOCH_DAY)
     var epoch_day: Long? = 0,
 
     @Relation(
         entity = PointRoomEntity::class,
-        parentColumn = "epoch_day",
+        parentColumn = EPOCH_DAY,
         entityColumn = PointRoomEntity.EPOCH_DAY
     )
     var points: List<PointRoomEntity>? = listOf(),
 
     @Relation(
         entity = EventRoomEntity::class,
-        parentColumn = "epoch_day",
+        parentColumn = EPOCH_DAY,
         entityColumn = EventRoomEntity.EPOCH_DAY
     )
     var events: List<EventRoomEntity>? = listOf(),
@@ -39,5 +38,10 @@ class DayRoomEntity(
             caloriesCount = caloriesCount ?: 0,
             moneyCount = moneyCount ?: 0
         )
+    }
+
+    companion object {
+
+        const val EPOCH_DAY = "epoch_day"
     }
 }
