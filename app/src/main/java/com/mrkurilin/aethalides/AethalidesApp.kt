@@ -44,6 +44,11 @@ class AethalidesApp : Application() {
         return@lazy EatenFoodRoomRepository(dao)
     }
 
+    private val spendingRepository: SpendingRepository by lazy {
+        val dao = roomDatabase.getSpendingDao()
+        return@lazy SpendingRoomRepository(dao)
+    }
+
     fun setNavController(navController: NavController) {
         this.navController = navController
     }
@@ -70,5 +75,9 @@ class AethalidesApp : Application() {
 
     fun provideEatenFoodRepository(): EatenFoodRepository {
         return eatenFoodRepository
+    }
+
+    fun provideSpendingRepository(): SpendingRepository {
+        return spendingRepository
     }
 }

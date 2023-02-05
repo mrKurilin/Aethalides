@@ -36,7 +36,8 @@
     <string name="add_button_description">Add something</string>
     <string name="no_points_at_current_day">No points at current day</string>
     <string name="no_events_at_current_day">No events at current day</string>
-    <string name="kcal_count">ккал: %1$d</string>
+    <string name="kcal_count">%1$d ккал</string>
+    <string name="money_count">%1$d</string>
     <string name="add_point">Добавить задачу</string>
     <string name="add_event">Добавить событие</string>
     <string name="add_note">Добавить заметку</string>
@@ -64,5 +65,10 @@
     <string name="liter_shor">л</string>
     <string name="pieces_short">шт</string>
     <string name="gram_short">гр</string>
+    <string name="spending_name_sample">Ноутбук</string>
+    <string name="cost">Стоимость</string>
+    <string name="dumplings">Пельмени</string>
+    <string name="total_calories">Общая\nкалорийность</string>
+    <string name="kcal">ккал</string>
 
 </resources>

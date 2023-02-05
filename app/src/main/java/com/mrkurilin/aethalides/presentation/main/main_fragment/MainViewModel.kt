@@ -17,7 +17,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val pointsRepository = aethalidesApp.providePointsRepository()
     private val eventsRepository = aethalidesApp.provideEventsRepository()
 
-    val daysToEpochDaysMapFlow: Flow<List<Day>> = daysRepository.getDaysListFlow()
+    val daysToEpochDaysMapFlow: Flow<Map<Long, Day>> = daysRepository.getDaysListFlow()
 
     fun deletePoint(point: Point) {
         pointsRepository.deletePoint(point)
@@ -41,5 +41,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun addEatenFoodPressed() {
         navController.navigate(R.id.action_mainFragment_to_entryEatenFoodDialogFragment)
+    }
+
+    fun addSpendingPressed() {
+        navController.navigate(R.id.action_mainFragment_to_entrySpendingDialogFragment)
     }
 }

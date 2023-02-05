@@ -35,8 +35,14 @@ class MainDayViewHolder(
 
     fun bind(day: Day) {
         dayTextView.text = day.dateString
-        moneyCountTextView.text = day.moneyCount.toString()
-        kcalCountTextView.text = day.caloriesCount.toString()
+        moneyCountTextView.text = itemView.resources.getString(
+            R.string.money_count,
+            day.moneyCount
+        )
+        kcalCountTextView.text = itemView.resources.getString(
+            R.string.kcal_count,
+            day.caloriesCount
+        )
         eventsRecyclerViewAdapter.setItems(day.events)
         pointsRecyclerViewAdapter.setItems(day.points)
     }

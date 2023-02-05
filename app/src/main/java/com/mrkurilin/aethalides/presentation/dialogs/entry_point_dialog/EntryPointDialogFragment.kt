@@ -7,10 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.data.util.AethalidesDatePickerDialog
-import com.mrkurilin.aethalides.data.util.AethalidesTimePickerDialog
-import com.mrkurilin.aethalides.data.util.LocalDateUtil
-import com.mrkurilin.aethalides.data.util.LocalTimeUtil
+import com.mrkurilin.aethalides.data.util.*
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -57,7 +54,7 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
             timeTextView.isEnabled = !isChecked
         }
 
-        repeatSpinner.onItemSelectedListener = RepeatSpinnerItemSelectedListener {
+        repeatSpinner.onItemSelectedListener = AethalidesOnItemSelectedListener { _, _, _, _ ->
             handleRepeatSpinnerSelectedItemString(repeatSpinner.selectedItem.toString())
         }
 

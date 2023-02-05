@@ -7,18 +7,18 @@ import com.mrkurilin.aethalides.data.room.RoomConstants
 
 class DayRoomEntity(
     @ColumnInfo(name = RoomConstants.EPOCH_DAY)
-    var day_epoch_day: Long? = 0,
+    var epoch_day: Long? = 0,
 
     @Relation(
         entity = PointRoomEntity::class,
-        parentColumn = "day_epoch_day",
+        parentColumn = "epoch_day",
         entityColumn = PointRoomEntity.EPOCH_DAY
     )
     var points: List<PointRoomEntity>? = listOf(),
 
     @Relation(
         entity = EventRoomEntity::class,
-        parentColumn = "day_epoch_day",
+        parentColumn = "epoch_day",
         entityColumn = EventRoomEntity.EPOCH_DAY
     )
     var events: List<EventRoomEntity>? = listOf(),
@@ -29,7 +29,7 @@ class DayRoomEntity(
 
     fun toDay(): Day {
         return Day(
-            epochDay = day_epoch_day ?: 0,
+            epochDay = epoch_day ?: 0,
             points = points?.map { pointRoomEntity ->
                 pointRoomEntity.toPoint()
             } ?: listOf(),

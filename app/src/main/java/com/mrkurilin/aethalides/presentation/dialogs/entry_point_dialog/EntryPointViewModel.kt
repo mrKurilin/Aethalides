@@ -17,14 +17,6 @@ class EntryPointViewModel(app: Application) : AndroidViewModel(app) {
     var currentLocalDate: MutableStateFlow<LocalDate> = MutableStateFlow(LocalDate.now())
     var currentLocalTime: MutableStateFlow<LocalTime> = MutableStateFlow(LocalTime.now())
 
-    fun addPoint(point: Point) {
-        pointsRepository.addPoint(point)
-    }
-
-    fun updatePoint(point: Point) {
-        pointsRepository.updatePoint(point)
-    }
-
     fun doneButtonPressed(
         description: String,
         localDate: LocalDate,
