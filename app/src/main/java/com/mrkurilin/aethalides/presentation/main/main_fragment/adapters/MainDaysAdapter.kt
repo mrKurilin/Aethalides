@@ -39,8 +39,8 @@ class MainDaysAdapter(
         holder.bind(currentDay)
     }
 
-    fun setItems(list: List<Day>) {
-        map = list.associateBy { it.epochDay }
+    fun setItems(map: Map<Long, Day>) {
+        this.map = map
         notifyDataSetChanged()
     }
 }

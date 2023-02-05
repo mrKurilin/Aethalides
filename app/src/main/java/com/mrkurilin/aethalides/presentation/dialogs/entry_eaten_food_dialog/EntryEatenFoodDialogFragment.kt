@@ -53,10 +53,10 @@ class EntryEatenFoodDialogFragment : DialogFragment(R.layout.dialog_entry_eaten_
     private fun initViews() {
         val view = requireView()
         headerTextView = view.findViewById(R.id.header_text_view)
-        eatenFoodNameEditText = view.findViewById(R.id.eaten_food_name_edit_text)
+        eatenFoodNameEditText = view.findViewById(R.id.spending_name_edit_text)
         eatenFoodAmountEditText = view.findViewById(R.id.amount_edit_text)
         eatenFoodAmountSpinner = view.findViewById(R.id.amount_spinner)
-        eatenFoodKcalCountEditText = view.findViewById(R.id.kcal_count_edit_text_view)
+        eatenFoodKcalCountEditText = view.findViewById(R.id.count_edit_text_view)
         datePickerTextView = view.findViewById(R.id.date_picker_text_view)
         timePickerTextView = view.findViewById(R.id.time_picker_text_view)
         cancelButton = view.findViewById(R.id.cancel_button)

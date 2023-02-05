@@ -64,7 +64,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_spending -> {
-                    // TODO: show dialog
+                    viewModel.addSpendingPressed()
                     return@setOnMenuItemClickListener true
                 }
                 else -> {
@@ -77,8 +77,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun observeFlows() {
         lifecycleScope.launch{
-            viewModel.daysToEpochDaysMapFlow.collect { list ->
-                mainDaysAdapter.setItems(list)
+            viewModel.daysToEpochDaysMapFlow.collect { map ->
+                mainDaysAdapter.setItems(map)
             }
         }
     }

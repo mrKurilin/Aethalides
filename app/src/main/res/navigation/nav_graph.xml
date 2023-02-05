@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_mainFragment_to_entryEatenFoodDialogFragment"
             app:destination="@id/entryEatenFoodDialogFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_entrySpendingDialogFragment"
+            app:destination="@id/entrySpendingDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -52,5 +55,9 @@
         android:id="@+id/entryEatenFoodDialogFragment"
         android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_eaten_food_dialog.EntryEatenFoodDialogFragment"
         android:label="EntryEatenFoodDialogFragment" />
+    <dialog
+        android:id="@+id/entrySpendingDialogFragment"
+        android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_spending_dialog.EntrySpendingDialogFragment"
+        android:label="EntrySpendingDialogFragment" />
 
 </navigation>

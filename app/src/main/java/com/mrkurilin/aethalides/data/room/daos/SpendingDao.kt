@@ -1,31 +1,20 @@
 package com.mrkurilin.aethalides.data.room.daos
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Update
 import com.mrkurilin.aethalides.data.room.entities.SpendingRoomEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SpendingDao {
 
     @Insert
-    fun addSpending(spendingRoomEntity: SpendingRoomEntity): Unit
-
-    @Query(
-        "SELECT * FROM ${SpendingRoomEntity.TABLE_NAME} " +
-                "WHERE ${SpendingRoomEntity.EPOCH_DAY} = :epochDay"
-    )
-    fun getSpendingListFlowByEpochDay(epochDay: Long): Flow<List<SpendingRoomEntity>>
-
-    @Query(
-        "SELECT SUM(${SpendingRoomEntity.COST}) " +
-                "FROM ${SpendingRoomEntity.TABLE_NAME} " +
-                "WHERE ${SpendingRoomEntity.EPOCH_DAY} = :epochDay"
-    )
-    fun getSpendingCostFlowByEpochDay(epochDay: Long): Flow<Int>
+    fun addSpendingRoomEntity(spendingRoomEntity: SpendingRoomEntity): Unit
 
     @Update
-    fun updateSpending(spendingRoomEntity: SpendingRoomEntity): Unit
+    fun updateSpendingRoomEntity(spendingRoomEntity: SpendingRoomEntity): Unit
 
     @Delete
-    fun deleteSpending(spendingRoomEntity: SpendingRoomEntity)
+    fun deleteSpendingRoomEntity(spendingRoomEntity: SpendingRoomEntity): Unit
 }
