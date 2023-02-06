@@ -52,7 +52,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_note -> {
-                    // TODO: show dialog
+                    viewModel.addNotePressed()
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_event -> {

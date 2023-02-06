@@ -46,4 +46,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun addSpendingPressed() {
         navController.navigate(R.id.action_mainFragment_to_entrySpendingDialogFragment)
     }
+
+    fun addNotePressed() {
+        navController.navigate(R.id.action_mainFragment_to_entryNoteDialogFragment)
+    }
 }
