@@ -24,7 +24,9 @@ class EntryNoteViewModel(
 
     private fun addNote(text: String) {
         notesRepository.addNote(
-            Note(text = text)
+            Note(
+                text = text
+            )
         )
     }
 

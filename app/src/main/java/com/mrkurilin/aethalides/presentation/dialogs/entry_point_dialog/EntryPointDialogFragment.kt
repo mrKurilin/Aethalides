@@ -27,7 +27,7 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     private lateinit var doneButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews(view)
+        initViews()
 
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
@@ -122,7 +122,8 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         )
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
+        val view = requireView()
         dateTextView = view.findViewById(R.id.date_text_view)
         timeTextView = view.findViewById(R.id.time_text_view)
         pointDescriptionEditText = view.findViewById(R.id.point_description_edit_text)

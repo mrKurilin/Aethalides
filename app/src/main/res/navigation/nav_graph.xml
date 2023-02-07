@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_mainFragment_to_entryNoteDialogFragment"
             app:destination="@id/entryNoteDialogFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_entryEventDialogFragment"
+            app:destination="@id/entryEventDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -69,6 +72,16 @@
         <argument
             android:name="note"
             app:argType="com.mrkurilin.aethalides.data.model.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
+    <dialog
+        android:id="@+id/entryEventDialogFragment"
+        android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_event_dialog.EntryEventDialogFragment"
+        android:label="EntryEventDialogFragment" >
+        <argument
+            android:name="event"
+            app:argType="com.mrkurilin.aethalides.data.model.Event"
             app:nullable="true"
             android:defaultValue="@null" />
     </dialog>
