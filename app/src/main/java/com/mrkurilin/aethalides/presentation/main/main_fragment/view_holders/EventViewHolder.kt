@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Event
-import com.mrkurilin.aethalides.data.util.EpochSecondsUtil
 
 class EventViewHolder(
     view: View,
@@ -14,8 +13,8 @@ class EventViewHolder(
     val editEvent: (Event) -> Unit,
 ) : AbstractEventViewHolder(view) {
 
-    private val timeTextView: TextView = view.findViewById(R.id.time_text_view)
-    private val eventTextView: TextView = view.findViewById(R.id.event_text_view)
+    private val timeTextView: TextView = view.findViewById(R.id.time_picker_text_view)
+    private val eventNameTextView: TextView = view.findViewById(R.id.event_text_view)
     private val moreButton: ImageButton = view.findViewById(R.id.more_button)
     private lateinit var event: Event
 
@@ -27,14 +26,12 @@ class EventViewHolder(
 
     override fun bind(event: Event) {
         this.event = event
-        timeTextView.text = EpochSecondsUtil.epochSecondsToHoursAndMinutesString(
-            event.utcEpochSecond
-        )
-        eventTextView.text = event.name
+        timeTextView.text = event.timeText
+        eventNameTextView.text = event.name
     }
 
     private fun showPopupMenu() {
-        val popupMenu = PopupMenu(itemView.context, itemView)
+        val popupMenu = PopupMenu(itemView.context, moreButton)
         popupMenu.inflate(R.menu.edit_delete_popup_menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {

@@ -124,9 +124,9 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
 
     private fun initViews() {
         val view = requireView()
-        dateTextView = view.findViewById(R.id.date_text_view)
-        timeTextView = view.findViewById(R.id.time_text_view)
-        pointDescriptionEditText = view.findViewById(R.id.point_description_edit_text)
+        dateTextView = view.findViewById(R.id.date_picker_text_view)
+        timeTextView = view.findViewById(R.id.time_picker_text_view)
+        pointDescriptionEditText = view.findViewById(R.id.event_name_edit_text)
         noSpecificTimeCheckBox = view.findViewById(R.id.no_specific_time_checkBox)
         repeatSpinner = view.findViewById(R.id.repeat_spinner)
         repeatForEditText = view.findViewById(R.id.how_long_repeat_edit_text)

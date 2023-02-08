@@ -2,13 +2,17 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_event_dialog
 
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.data.util.AethalidesDatePickerDialog
-import com.mrkurilin.aethalides.data.util.AethalidesTimePickerDialog
+import com.mrkurilin.aethalides.data.util.*
+import kotlinx.coroutines.launch
 
 class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
 
@@ -17,11 +21,9 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
 
     private lateinit var dateTextView: TextView
     private lateinit var timeTextView: TextView
-    private lateinit var eventDescriptionEditText: EditText
+    private lateinit var eventNameEditText: EditText
     private lateinit var noSpecificTimeCheckBox: CheckBox
-    private lateinit var repeatSpinner: Spinner
-    private lateinit var repeatForEditText: EditText
-    private lateinit var repeatQuantityTextView: TextView
+    private lateinit var isAnnuallyCheckBox: CheckBox
     private lateinit var cancelButton: Button
     private lateinit var doneButton: Button
 
@@ -30,12 +32,46 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
 
         viewModel.checkArgsValue(args.event)
 
+        if (args.event != null) {
+            val event = args.event!!
+            eventNameEditText.setText(event.name)
+            dateTextView.text = EpochDayUtil.epochDayToDateString(event.epochDay)
+            timeTextView.text = event.timeText
+            noSpecificTimeCheckBox.isChecked = (event.timeText == "")
+            isAnnuallyCheckBox.isChecked = event.isAnnually
+        }
+
+        observeFlows()
+
         setListeners()
+    }
+
+    private fun observeFlows() {
+
+        lifecycleScope.launch {
+            viewModel.currentLocalDateFlow.collect { localDate ->
+                dateTextView.text = LocalDateUtil.toString(localDate)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.currentLocalTimeFlow.collect { localTime ->
+                if (!noSpecificTimeCheckBox.isChecked) {
+                    timeTextView.text = LocalTimeUtil.toString(localTime)
+                }
+            }
+        }
     }
 
     private fun setListeners() {
         doneButton.setOnClickListener {
-            viewModel.doneButtonPressed(eventDescriptionEditText.text.toString())
+            viewModel.doneButtonPressed(
+                eventNameEditText.text.toString(),
+                dateTextView.text.toString(),
+                timeTextView.text.toString(),
+                isAnnuallyCheckBox.isChecked,
+            )
+            dismiss()
         }
 
         cancelButton.setOnClickListener {
@@ -49,17 +85,26 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
         timeTextView.setOnClickListener {
             showTimePickerDialog()
         }
+
+        noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            timeTextView.isEnabled = !isChecked
+            if (isChecked) {
+                timeTextView.text = ""
+            } else {
+                timeTextView.text = LocalTimeUtil.toString(
+                    viewModel.currentLocalTimeFlow.value
+                )
+            }
+        }
     }
 
     private fun initViews() {
         val view = requireView()
-        dateTextView = view.findViewById(R.id.date_text_view)
-        timeTextView = view.findViewById(R.id.time_text_view)
-        eventDescriptionEditText = view.findViewById(R.id.point_description_edit_text)
+        dateTextView = view.findViewById(R.id.date_picker_text_view)
+        timeTextView = view.findViewById(R.id.time_picker_text_view)
+        eventNameEditText = view.findViewById(R.id.event_name_edit_text)
         noSpecificTimeCheckBox = view.findViewById(R.id.no_specific_time_checkBox)
-        repeatSpinner = view.findViewById(R.id.repeat_spinner)
-        repeatForEditText = view.findViewById(R.id.how_long_repeat_edit_text)
-        repeatQuantityTextView = view.findViewById(R.id.repeat_quantity_text_view)
+        isAnnuallyCheckBox = view.findViewById(R.id.is_annually_checkBox)
         cancelButton = view.findViewById(R.id.cancel_button)
         doneButton = view.findViewById(R.id.done_button)
     }

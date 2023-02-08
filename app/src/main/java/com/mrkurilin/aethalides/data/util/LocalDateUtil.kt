@@ -16,6 +16,13 @@ class LocalDateUtil {
             )
         }
 
+        fun fromString(string: String): LocalDate {
+            return LocalDate.parse(
+                string,
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+            )
+        }
+
         fun toString(localDate: LocalDate): String {
             return localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
         }

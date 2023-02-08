@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7d6056903517cbcc7793a9d85dea467b",
+    "identityHash": "65ffe9ea5d73f41da82e08987dd2ce80",
     "entities": [
       {
         "tableName": "eaten_food",
@@ -57,8 +57,14 @@
       },
       {
         "tableName": "events",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `year` INTEGER NOT NULL, `month` INTEGER NOT NULL, `day` INTEGER NOT NULL, `is_every_year` INTEGER NOT NULL, `event_UTC_epoch_second` INTEGER NOT NULL, `event_epoch_day` INTEGER NOT NULL, PRIMARY KEY(`event_UTC_epoch_second`, `name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`event_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `year` INTEGER NOT NULL, `month` INTEGER NOT NULL, `day` INTEGER NOT NULL, `is_every_year` INTEGER NOT NULL, `event_UTC_epoch_second` TEXT NOT NULL, `event_epoch_day` INTEGER NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "event_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -90,9 +96,9 @@
             "notNull": true
           },
           {
-            "fieldPath": "utcEpochSecond",
+            "fieldPath": "timeText",
             "columnName": "event_UTC_epoch_second",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -103,10 +109,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
-            "event_UTC_epoch_second",
-            "name"
+            "event_id"
           ]
         },
         "indices": [],
@@ -326,7 +331,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d6056903517cbcc7793a9d85dea467b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '65ffe9ea5d73f41da82e08987dd2ce80')"
     ]
   }
 }

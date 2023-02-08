@@ -6,11 +6,27 @@ import java.time.LocalDate
 
 @Parcelize
 data class Event(
+    val id: Long = 0,
     val name: String,
     val year: Int,
     val month: Int,
-    val day: Int,
-    val isEveryYear: Boolean = false,
-    val utcEpochSecond: Long = 0,
-    val epochDay: Long = LocalDate.of(year, month, day).toEpochDay(),
-) : Parcelable
+    val dayOfMonth: Int,
+    val isAnnually: Boolean = false,
+    val timeText: String = "",
+    val epochDay: Long = LocalDate.of(year, month, dayOfMonth).toEpochDay(),
+) : Parcelable {
+
+    constructor(
+        name: String,
+        localDate: LocalDate,
+        timeText: String,
+        isAnnually: Boolean,
+    ) : this(
+        name = name,
+        year = localDate.year,
+        month = localDate.monthValue,
+        dayOfMonth = localDate.dayOfMonth,
+        isAnnually = isAnnually,
+        timeText = timeText,
+    )
+}

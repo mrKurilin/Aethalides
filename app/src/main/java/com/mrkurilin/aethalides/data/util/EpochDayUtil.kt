@@ -1,6 +1,7 @@
 package com.mrkurilin.aethalides.data.util
 
 import android.widget.TextView
+import java.time.LocalDate
 
 class EpochDayUtil {
 
@@ -8,6 +9,10 @@ class EpochDayUtil {
 
         fun getEpochDayFromDateTextView(textView: TextView): Long {
             return LocalDateUtil.fromTextView(textView).toEpochDay()
+        }
+
+        fun epochDayToDateString(epochDay: Long): String {
+            return LocalDateUtil.toString(LocalDate.ofEpochDay(epochDay))
         }
     }
 }

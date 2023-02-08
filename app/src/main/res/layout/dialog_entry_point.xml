@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/point_description_edit_text"
+        android:id="@+id/event_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/what_need_to_do"
@@ -37,18 +37,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/when"
-        app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/date_picker_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/date_picker_text_view" />
 
     <TextView
         android:id="@+id/at_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/at_what_time"
-        app:layout_constraintBottom_toBottomOf="@+id/time_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/time_picker_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/time_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/time_picker_text_view" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -59,7 +59,7 @@
         tools:layout_editor_absoluteX="29dp" />
 
     <TextView
-        android:id="@+id/date_text_view"
+        android:id="@+id/date_picker_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
@@ -68,10 +68,10 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier"
-        app:layout_constraintTop_toBottomOf="@+id/point_description_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/event_name_edit_text" />
 
     <TextView
-        android:id="@+id/time_text_view"
+        android:id="@+id/time_picker_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -79,7 +79,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier"
-        app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/date_picker_text_view" />
 
     <CheckBox
         android:id="@+id/no_specific_time_checkBox"
@@ -92,7 +92,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toTopOf="@+id/repeat_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/time_picker_text_view" />
 
     <TextView
         android:id="@+id/repeat_for_text_view"

@@ -56,7 +56,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_event -> {
-                    // TODO: show dialog
+                    viewModel.addEventPressed()
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_eaten_food -> {
