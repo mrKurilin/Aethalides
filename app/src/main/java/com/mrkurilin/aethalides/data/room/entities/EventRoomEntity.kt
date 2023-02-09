@@ -16,7 +16,8 @@ data class EventRoomEntity(
     @ColumnInfo(name = NAME_COLUMN_NAME) val name: String,
     @ColumnInfo(name = YEAR_COLUMN_NAME) val year: Int,
     @ColumnInfo(name = MONTH_COLUMN_NAME) val month: Int,
-    @ColumnInfo(name = DAY_COLUMN_NAME) val day: Int,
+    @ColumnInfo(name = DAY_OF_MONTH_COLUMN_NAME) val dayOfMonth: Int,
+    @ColumnInfo(name = DAY_OF_WEEK_COLUMN_NAME) val dayOfWeek: Int,
     @ColumnInfo(name = IS_EVERY_YEAR_COLUMN_NAME) val isEveryYear: Boolean,
     @ColumnInfo(name = TIME_TEXT_COLUMN_NAME) val timeText: String,
     @ColumnInfo(name = EPOCH_DAY) val epochDay: Long,
@@ -28,7 +29,8 @@ data class EventRoomEntity(
             name = name,
             year = year,
             month = month,
-            dayOfMonth = day,
+            dayOfMonth = dayOfMonth,
+            dayOfWeek = dayOfWeek,
             isAnnually = isEveryYear,
             timeText = timeText,
             epochDay = epochDay
@@ -42,7 +44,8 @@ data class EventRoomEntity(
         const val NAME_COLUMN_NAME = "name"
         const val YEAR_COLUMN_NAME = "year"
         const val MONTH_COLUMN_NAME = "month"
-        const val DAY_COLUMN_NAME = "day"
+        const val DAY_OF_MONTH_COLUMN_NAME = "day_of_month"
+        const val DAY_OF_WEEK_COLUMN_NAME = "day_of_week"
         const val IS_EVERY_YEAR_COLUMN_NAME = "is_every_year"
         const val TIME_TEXT_COLUMN_NAME = "event_UTC_epoch_second"
         const val EPOCH_DAY = "event_epoch_day"
@@ -53,7 +56,8 @@ data class EventRoomEntity(
                 name = event.name,
                 year = event.year,
                 month = event.month,
-                day = event.dayOfMonth,
+                dayOfMonth = event.dayOfMonth,
+                dayOfWeek = event.dayOfWeek,
                 isEveryYear = event.isAnnually,
                 timeText = event.timeText,
                 epochDay = event.epochDay

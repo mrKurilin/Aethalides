@@ -8,11 +8,11 @@ class EpochDayUtil {
     companion object {
 
         fun getEpochDayFromDateTextView(textView: TextView): Long {
-            return LocalDateUtil.fromTextView(textView).toEpochDay()
+            return LocalDateUtil.localDateFromTextView(textView).toEpochDay()
         }
 
         fun epochDayToDateString(epochDay: Long): String {
-            return LocalDateUtil.toString(LocalDate.ofEpochDay(epochDay))
+            return LocalDateUtil.localDateToString(LocalDate.ofEpochDay(epochDay))
         }
     }
 }

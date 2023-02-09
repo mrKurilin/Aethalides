@@ -9,21 +9,21 @@ class LocalDateUtil {
 
     companion object {
 
-        fun fromTextView(textView: TextView): LocalDate {
+        fun localDateFromTextView(textView: TextView): LocalDate {
             return LocalDate.parse(
                 textView.text.toString(),
                 DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
             )
         }
 
-        fun fromString(string: String): LocalDate {
+        fun localDateFromDateString(string: String): LocalDate {
             return LocalDate.parse(
                 string,
                 DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
             )
         }
 
-        fun toString(localDate: LocalDate): String {
+        fun localDateToString(localDate: LocalDate): String {
             return localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))
         }
     }

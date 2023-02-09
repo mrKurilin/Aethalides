@@ -43,7 +43,7 @@ class EntryEventViewModel(app: Application) : EntryItemAndroidViewModel<Event>(a
         timeText: String,
         isAnnually: Boolean,
     ): Event {
-        val localDate = LocalDateUtil.fromString(dateText)
+        val localDate = LocalDateUtil.localDateFromDateString(dateText)
         return valueToEdit?.copy(
             name = eventName,
             year = localDate.year,

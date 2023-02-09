@@ -43,7 +43,7 @@ open class PointViewHolder(
 
     private fun initViews() {
         isDoneCheckBox = itemView.findViewById(R.id.is_done_checkbox)
-        timeTextView = itemView.findViewById(R.id.time_picker_text_view)
+        timeTextView = itemView.findViewById(R.id.time_text_view)
         descriptionTextView = itemView.findViewById(R.id.description_text_view)
         moreButton = itemView.findViewById(R.id.more_button)
     }

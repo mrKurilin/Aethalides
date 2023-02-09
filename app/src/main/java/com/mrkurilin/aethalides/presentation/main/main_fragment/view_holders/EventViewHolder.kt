@@ -13,7 +13,7 @@ class EventViewHolder(
     val editEvent: (Event) -> Unit,
 ) : AbstractEventViewHolder(view) {
 
-    private val timeTextView: TextView = view.findViewById(R.id.time_picker_text_view)
+    private val timeTextView: TextView = view.findViewById(R.id.time_text_view)
     private val eventNameTextView: TextView = view.findViewById(R.id.event_text_view)
     private val moreButton: ImageButton = view.findViewById(R.id.more_button)
     private lateinit var event: Event

@@ -32,7 +32,7 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 pointDescriptionEditText.text.toString(),
-                LocalDateUtil.fromTextView(dateTextView),
+                LocalDateUtil.localDateFromTextView(dateTextView),
                 LocalTimeUtil.fromTextView(timeTextView),
             )
             dismiss()

@@ -19,8 +19,8 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
     private val viewModel by viewModels<EntryEventViewModel>()
     private val args by navArgs<EntryEventDialogFragmentArgs>()
 
-    private lateinit var dateTextView: TextView
-    private lateinit var timeTextView: TextView
+    private lateinit var datePickerTextView: TextView
+    private lateinit var timePickerTextView: TextView
     private lateinit var eventNameEditText: EditText
     private lateinit var noSpecificTimeCheckBox: CheckBox
     private lateinit var isAnnuallyCheckBox: CheckBox
@@ -35,8 +35,8 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
         if (args.event != null) {
             val event = args.event!!
             eventNameEditText.setText(event.name)
-            dateTextView.text = EpochDayUtil.epochDayToDateString(event.epochDay)
-            timeTextView.text = event.timeText
+            datePickerTextView.text = EpochDayUtil.epochDayToDateString(event.epochDay)
+            timePickerTextView.text = event.timeText
             noSpecificTimeCheckBox.isChecked = (event.timeText == "")
             isAnnuallyCheckBox.isChecked = event.isAnnually
         }
@@ -50,14 +50,14 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
 
         lifecycleScope.launch {
             viewModel.currentLocalDateFlow.collect { localDate ->
-                dateTextView.text = LocalDateUtil.toString(localDate)
+                datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
             }
         }
 
         lifecycleScope.launch {
             viewModel.currentLocalTimeFlow.collect { localTime ->
                 if (!noSpecificTimeCheckBox.isChecked) {
-                    timeTextView.text = LocalTimeUtil.toString(localTime)
+                    timePickerTextView.text = LocalTimeUtil.toString(localTime)
                 }
             }
         }
@@ -67,8 +67,8 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 eventNameEditText.text.toString(),
-                dateTextView.text.toString(),
-                timeTextView.text.toString(),
+                datePickerTextView.text.toString(),
+                timePickerTextView.text.toString(),
                 isAnnuallyCheckBox.isChecked,
             )
             dismiss()
@@ -78,20 +78,20 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
             dismiss()
         }
 
-        dateTextView.setOnClickListener {
+        datePickerTextView.setOnClickListener {
             showDatePickerDialog()
         }
 
-        timeTextView.setOnClickListener {
+        timePickerTextView.setOnClickListener {
             showTimePickerDialog()
         }
 
         noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            timeTextView.isEnabled = !isChecked
+            timePickerTextView.isEnabled = !isChecked
             if (isChecked) {
-                timeTextView.text = ""
+                timePickerTextView.text = ""
             } else {
-                timeTextView.text = LocalTimeUtil.toString(
+                timePickerTextView.text = LocalTimeUtil.toString(
                     viewModel.currentLocalTimeFlow.value
                 )
             }
@@ -100,8 +100,8 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
 
     private fun initViews() {
         val view = requireView()
-        dateTextView = view.findViewById(R.id.date_picker_text_view)
-        timeTextView = view.findViewById(R.id.time_picker_text_view)
+        datePickerTextView = view.findViewById(R.id.date_picker_text_view)
+        timePickerTextView = view.findViewById(R.id.time_picker_text_view)
         eventNameEditText = view.findViewById(R.id.event_name_edit_text)
         noSpecificTimeCheckBox = view.findViewById(R.id.no_specific_time_checkBox)
         isAnnuallyCheckBox = view.findViewById(R.id.is_annually_checkBox)

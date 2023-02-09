@@ -48,7 +48,7 @@ class MainDayViewHolder(
     }
 
     private fun initViews() {
-        dayTextView = itemView.findViewById(R.id.date_picker_text_view)
+        dayTextView = itemView.findViewById(R.id.date_text_view)
         moneyCountTextView = itemView.findViewById(R.id.money_text_view)
         kcalCountTextView = itemView.findViewById(R.id.kcal_text_view)
         eventsTextView = itemView.findViewById(R.id.events_text_view)

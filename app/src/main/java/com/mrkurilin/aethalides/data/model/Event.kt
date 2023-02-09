@@ -11,6 +11,7 @@ data class Event(
     val year: Int,
     val month: Int,
     val dayOfMonth: Int,
+    val dayOfWeek: Int,
     val isAnnually: Boolean = false,
     val timeText: String = "",
     val epochDay: Long = LocalDate.of(year, month, dayOfMonth).toEpochDay(),
@@ -26,6 +27,7 @@ data class Event(
         year = localDate.year,
         month = localDate.monthValue,
         dayOfMonth = localDate.dayOfMonth,
+        dayOfWeek = localDate.dayOfWeek.value,
         isAnnually = isAnnually,
         timeText = timeText,
     )

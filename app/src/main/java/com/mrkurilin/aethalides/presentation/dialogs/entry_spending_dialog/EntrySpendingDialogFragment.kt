@@ -39,7 +39,7 @@ class EntrySpendingDialogFragment : DialogFragment(R.layout.dialog_entry_spendin
     private fun observeFlows() {
         lifecycleScope.launch {
             viewModel.currentLocalDateFlow.collect { localDate ->
-                datePickerTextView.text = LocalDateUtil.toString(localDate)
+                datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
             }
         }
 
