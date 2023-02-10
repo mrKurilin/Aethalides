@@ -17,6 +17,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class PointsRoomRepositoryTest {
 
@@ -39,15 +41,16 @@ class PointsRoomRepositoryTest {
 
     @Test
     fun writeAndRead() {
+        val epochSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val firstPoint = Point(
-            planEpochDay = LocalDate.now().toEpochDay(),
+            localDateTime = LocalDateTime.ofEpochSecond(epochSecond, 0, ZoneOffset.UTC),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
         val secondPoint = Point(
-            planEpochDay = LocalDate.now().toEpochDay() + 1,
+            localDateTime = LocalDateTime.ofEpochSecond(epochSecond, 1500, ZoneOffset.UTC),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
@@ -67,15 +70,16 @@ class PointsRoomRepositoryTest {
 
     @Test
     fun delete() {
+        val epochSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         val firstPoint = Point(
-            planEpochDay = LocalDate.now().toEpochDay(),
+            localDateTime = LocalDateTime.ofEpochSecond(epochSecond, 0, ZoneOffset.UTC),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
         val secondPoint = Point(
-            planEpochDay = LocalDate.now().toEpochDay() + 1,
+            localDateTime = LocalDateTime.ofEpochSecond(epochSecond, 1500, ZoneOffset.UTC),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
         pointsRoomRepository.addPoint(firstPoint)
         pointsRoomRepository.addPoint(secondPoint)
@@ -95,9 +99,9 @@ class PointsRoomRepositoryTest {
     @Test
     fun update() {
         val point = Point(
-            planEpochDay = LocalDate.now().toEpochDay(),
+            localDateTime = LocalDateTime.now(),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
 
         pointsRoomRepository.addPoint(point)
@@ -126,9 +130,9 @@ class PointsRoomRepositoryTest {
         }
 
         val point = Point(
-            planEpochDay = LocalDate.now().toEpochDay(),
+            localDateTime = LocalDateTime.now(),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
 
         pointsRoomRepository.addPoint(point)
@@ -149,9 +153,9 @@ class PointsRoomRepositoryTest {
         }
 
         val firstPoint = Point(
-            planEpochDay = LocalDate.now().toEpochDay(),
+            localDateTime = LocalDateTime.now(),
             description = "Lorem Ipsum",
-            color = Color.RED
+            color = Color.RED,
         )
 
         pointsRoomRepository.addPoint(firstPoint)
