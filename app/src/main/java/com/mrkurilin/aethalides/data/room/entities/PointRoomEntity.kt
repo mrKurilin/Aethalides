@@ -34,6 +34,7 @@ data class PointRoomEntity(
     @ColumnInfo(name = IS_WEEKLY_COLUMN_NAME) val isWeekly: Boolean,
     @ColumnInfo(name = IS_MONTHLY_COLUMN_NAME) val isMonthly: Boolean,
     @ColumnInfo(name = IS_ANNUALLY_COLUMN_NAME) val isAnnually: Boolean,
+    @ColumnInfo(name = TRACK_IN_HISTORY_COLUMN_NAME) val trackInHistory: Boolean,
 ) {
 
     fun toPoint(): Point {
@@ -54,6 +55,7 @@ data class PointRoomEntity(
             isWeekly = isWeekly,
             isMonthly = isMonthly,
             isAnnually = isAnnually,
+            trackInHistory = trackInHistory,
         )
     }
 
@@ -76,6 +78,7 @@ data class PointRoomEntity(
         const val IS_WEEKLY_COLUMN_NAME = "is_weekly"
         const val IS_MONTHLY_COLUMN_NAME = "is_monthly"
         const val IS_ANNUALLY_COLUMN_NAME = "is_annually"
+        const val TRACK_IN_HISTORY_COLUMN_NAME = "track_in_history"
 
         fun fromPoint(point: Point): PointRoomEntity {
             return PointRoomEntity(
@@ -95,6 +98,7 @@ data class PointRoomEntity(
                 isWeekly = point.isWeekly,
                 isMonthly = point.isMonthly,
                 isAnnually = point.isAnnually,
+                trackInHistory = point.trackInHistory,
             )
         }
     }

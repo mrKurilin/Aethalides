@@ -39,7 +39,7 @@ class EntryEatenFoodDialogFragment : DialogFragment(R.layout.dialog_entry_eaten_
     private fun observeFlows() {
         lifecycleScope.launch {
             viewModel.dateFlow.collect { localDate ->
-                datePickerTextView.text = LocalDateUtil.toString(localDate)
+                datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
             }
         }
 
@@ -81,7 +81,7 @@ class EntryEatenFoodDialogFragment : DialogFragment(R.layout.dialog_entry_eaten_
                     eatenFoodCount = eatenFoodAmountEditText.text.toString().toInt(),
                     utcEpochSecond = EpochSecondsUtil.fromTimeTextViewAndLocalDate(
                         timePickerTextView,
-                        LocalDateUtil.fromTextView(datePickerTextView),
+                        LocalDateUtil.localDateFromTextView(datePickerTextView),
                     ),
                     epochDay = EpochDayUtil.getEpochDayFromDateTextView(datePickerTextView),
                 )

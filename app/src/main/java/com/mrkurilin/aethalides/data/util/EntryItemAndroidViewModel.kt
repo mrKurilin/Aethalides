@@ -15,8 +15,8 @@ abstract class EntryItemAndroidViewModel<T>(
 
     fun checkArgsValue(value: T?) {
         if (value != null) {
-            entryStateFlow.value = EntryState.Edit
             valueToEdit = value
+            entryStateFlow.value = EntryState.Edit
         }
     }
 }

@@ -32,7 +32,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun editEvent(event: Event) {
-        // TODO: startDialog
+        val action = MainFragmentDirections.actionMainFragmentToEntryEventDialogFragment()
+        action.event = event
+        navController.navigate(action)
     }
 
     fun addPointPressed() {
@@ -49,5 +51,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun addNotePressed() {
         navController.navigate(R.id.action_mainFragment_to_entryNoteDialogFragment)
+    }
+
+    fun addEventPressed() {
+        navController.navigate(R.id.action_mainFragment_to_entryEventDialogFragment)
     }
 }

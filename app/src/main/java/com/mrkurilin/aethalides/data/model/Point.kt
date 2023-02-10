@@ -21,6 +21,7 @@ data class Point constructor(
     val isWeekly: Boolean,
     val isMonthly: Boolean,
     val isAnnually: Boolean,
+    val trackInHistory: Boolean,
 ) {
 
     constructor(
@@ -34,6 +35,7 @@ data class Point constructor(
         isWeekly: Boolean = false,
         isMonthly: Boolean = false,
         isAnnually: Boolean = false,
+        trackInHistory: Boolean = false,
     ) : this(
         planEpochDay = localDateTime.toLocalDate().toEpochDay(),
         description = description,
@@ -51,5 +53,6 @@ data class Point constructor(
         isWeekly = isWeekly,
         isMonthly = isMonthly,
         isAnnually = isAnnually,
+        trackInHistory = trackInHistory,
     )
 }

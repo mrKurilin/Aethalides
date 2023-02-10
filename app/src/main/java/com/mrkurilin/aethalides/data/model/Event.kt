@@ -1,11 +1,34 @@
 package com.mrkurilin.aethalides.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+
+@Parcelize
 data class Event(
+    val id: Long = 0,
     val name: String,
     val year: Int,
     val month: Int,
-    val day: Int,
-    val isEveryYear: Boolean,
-    val utcEpochSecond: Long = 0,
-    val epochDay: Long = 0,
-)
+    val dayOfMonth: Int,
+    val dayOfWeek: Int,
+    val isAnnually: Boolean = false,
+    val timeText: String = "",
+    val epochDay: Long = LocalDate.of(year, month, dayOfMonth).toEpochDay(),
+) : Parcelable {
+
+    constructor(
+        name: String,
+        localDate: LocalDate,
+        timeText: String,
+        isAnnually: Boolean,
+    ) : this(
+        name = name,
+        year = localDate.year,
+        month = localDate.monthValue,
+        dayOfMonth = localDate.dayOfMonth,
+        dayOfWeek = localDate.dayOfWeek.value,
+        isAnnually = isAnnually,
+        timeText = timeText,
+    )
+}
