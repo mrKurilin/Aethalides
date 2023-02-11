@@ -1,6 +1,7 @@
 package com.mrkurilin.aethalides.data.repository
 
 import com.mrkurilin.aethalides.data.model.Event
+import kotlinx.coroutines.flow.Flow
 
 interface EventsRepository {
 
@@ -9,4 +10,6 @@ interface EventsRepository {
     fun updateEvent(event: Event): Unit
 
     fun deleteEvent(event: Event): Unit
+
+    fun getEventsListFlowByEpochDay(epochDay: Long): Flow<List<Event>>
 }

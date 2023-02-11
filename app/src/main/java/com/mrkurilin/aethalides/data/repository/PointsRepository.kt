@@ -18,4 +18,6 @@ interface PointsRepository {
     suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>>
 
     suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>>
+
+    fun getPointsListFlowByEpochDay(epochDay: Long): Flow<List<Point>>
 }

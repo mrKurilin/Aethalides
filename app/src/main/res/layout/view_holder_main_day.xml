@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/money_text_view"
+        android:id="@+id/spending_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample_count"
@@ -35,7 +35,7 @@
         android:text="@string/kcal_count"
         app:layout_constraintBottom_toTopOf="@id/money_and_kcal_barrier"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/money_text_view"
+        app:layout_constraintStart_toEndOf="@id/spending_text_view"
         app:layout_constraintTop_toBottomOf="@id/date_text_view" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="kcal_text_view, money_text_view" />
+        app:constraint_referenced_ids="kcal_text_view, spending_text_view" />
 
     <TextView
         android:id="@+id/events_text_view"

@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mrkurilin.aethalides.presentation.main.calendar_fragment.CalendarDaysAdapter
+import com.mrkurilin.aethalides.presentation.main.CalendarDaysAdapter
 
-class GridCalendarRecyclerView : RecyclerView {
+class CalendarRecyclerView : RecyclerView {
 
     constructor(context: Context) : super(context)
 

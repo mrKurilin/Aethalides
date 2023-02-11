@@ -42,4 +42,20 @@ interface PointsDao {
                 "WHERE ${PointRoomEntity.TAG_COLUMN_NAME} = :tag"
     )
     fun deletePointsByTag(tag: String): Unit
+
+    @Query(
+        "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
+                "WHERE ${PointRoomEntity.EPOCH_DAY} = :epochDay"
+    )
+    fun getPointRoomEntitiesListFlowByEpochDay(epochDay: Long): Flow<List<PointRoomEntity>>
+    // TODO: conditions
+
+    @Query(
+        "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
+                "WHERE ${PointRoomEntity.EPOCH_DAY} = :epochDay"
+    )
+    fun getPointRoomEntitiesListByEpochDay(epochDay: Long): List<PointRoomEntity>
+    // TODO: conditions
+
+
 }

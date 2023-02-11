@@ -62,13 +62,18 @@ class EventsRecyclerViewAdapter(
     }
 
     fun setItems(events: List<Event>) {
-        val diffResult = DiffUtil.calculateDiff(
-            DiffUtilCallback(
-                this.events,
-                events,
+        if (this.events.isEmpty()) {
+            this.events = events
+            notifyItemRangeInserted(0, events.size - 1)
+        } else {
+            val diffResult = DiffUtil.calculateDiff(
+                DiffUtilCallback(
+                    this.events,
+                    events,
+                )
             )
-        )
-        this.events = events
-        diffResult.dispatchUpdatesTo(this)
+            this.events = events
+            diffResult.dispatchUpdatesTo(this)
+        }
     }
 }

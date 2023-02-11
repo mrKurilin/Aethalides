@@ -34,11 +34,6 @@ class AethalidesApp : Application() {
         return@lazy PointsRoomRepository(dao)
     }
 
-    private val daysRepository: DaysRepository by lazy {
-        val dao = roomDatabase.getDayDao()
-        return@lazy DaysRoomRepository(dao)
-    }
-
     private val eatenFoodRepository: EatenFoodRepository by lazy {
         val dao = roomDatabase.getEatenFoodDao()
         return@lazy EatenFoodRoomRepository(dao)
@@ -63,10 +58,6 @@ class AethalidesApp : Application() {
 
     fun provideNotesRepository(): NotesRepository {
         return notesRepository
-    }
-
-    fun provideDaysRepository(): DaysRepository {
-        return daysRepository
     }
 
     fun provideEventsRepository(): EventsRepository {
