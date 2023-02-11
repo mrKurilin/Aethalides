@@ -44,4 +44,12 @@ class PointsRoomRepository(
     override suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>> {
         return pointsDao.getEpochDaysToColorsMapFlow()
     }
+
+    override fun getPointsListFlowByEpochDay(epochDay: Long): Flow<List<Point>> {
+        return pointsDao.getPointRoomEntitiesListFlowByEpochDay(epochDay).map{ pointRoomEntities ->
+            pointRoomEntities.map { pointRoomEntity ->
+                pointRoomEntity.toPoint()
+            }
+        }
+    }
 }

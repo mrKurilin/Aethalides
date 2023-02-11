@@ -5,11 +5,11 @@ import android.view.View
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.presentation.main.CalendarDayViewHolder
 import java.time.Month
 
-class CalendarDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CalendarDayOfMonthViewHolder(view: View) : CalendarDayViewHolder(view) {
 
     private val dayOfMonthTextView: TextView = view.findViewById(R.id.day_number_text_view)
     private val pointsGridLayout: GridLayout = view.findViewById(R.id.points_grid_layout)
