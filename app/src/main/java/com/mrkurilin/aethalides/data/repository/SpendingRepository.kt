@@ -11,5 +11,5 @@ interface SpendingRepository {
 
     fun deleteSpending(spending: Spending): Unit
 
-    fun getSpendingFlowByEpochDay(epochDay: Long): Flow<Int>
+    fun getSpendingFlowByEpochDay(epochDay: Long): Flow<Int?>
 }

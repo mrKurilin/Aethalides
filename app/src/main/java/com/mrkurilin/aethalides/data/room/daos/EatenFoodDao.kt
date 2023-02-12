@@ -35,5 +35,5 @@ interface EatenFoodDao {
                 "FROM ${EatenFoodRoomEntity.TABLE_NAME} " +
                 "WHERE ${EatenFoodRoomEntity.EPOCH_DAY} = :epochDay"
     )
-    fun getCaloriesFlowByEpochDay(epochDay: Long): Flow<Int>
+    fun getCaloriesFlowByEpochDay(epochDay: Long): Flow<Int?>
 }

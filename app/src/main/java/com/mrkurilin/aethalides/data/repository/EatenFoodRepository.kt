@@ -11,5 +11,5 @@ interface EatenFoodRepository {
 
     fun deleteEatenFood(eatenFood: EatenFood): Unit
 
-    fun getCaloriesFlowByEpochDay(toEpochDay: Long): Flow<Int>
+    fun getCaloriesFlowByEpochDay(toEpochDay: Long): Flow<Int?>
 }
