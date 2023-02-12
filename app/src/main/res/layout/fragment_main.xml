@@ -10,8 +10,9 @@
         android:id="@+id/current_year_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2023"
+        android:text="@string/sample_year"
         android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="January"
+        android:text="@string/sample_month"
         android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/current_year_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_year_text_view"
@@ -42,6 +43,8 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="@string/sample_date"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendar_days_recycler_view" />
@@ -78,10 +81,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/points_recycler_view"
-        android:background="@drawable/card"
-        android:backgroundTint="@color/light_blue_400"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/card"
+        android:backgroundTint="@color/light_blue_400"
         android:paddingTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/add_button"

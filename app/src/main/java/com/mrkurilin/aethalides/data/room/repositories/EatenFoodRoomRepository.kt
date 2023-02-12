@@ -20,7 +20,7 @@ class EatenFoodRoomRepository(private val eatenFoodDao: EatenFoodDao) : EatenFoo
         eatenFoodDao.deleteEatenFood(EatenFoodRoomEntity.fromEatenFood(eatenFood))
     }
 
-    override fun getCaloriesFlowByEpochDay(toEpochDay: Long): Flow<Int> {
+    override fun getCaloriesFlowByEpochDay(toEpochDay: Long): Flow<Int?> {
         return eatenFoodDao.getCaloriesFlowByEpochDay(toEpochDay)
     }
 }

@@ -71,5 +71,9 @@
     <string name="total_calories">Общая\nкалорийность</string>
     <string name="kcal">ккал</string>
     <string name="event">Событие</string>
+    <string name="sample_day_of_week_short">ПН</string>
+    <string name="sample_day_of_month">15</string>
+    <string name="sample_month">Январь</string>
+    <string name="sample_year">2023</string>
 
 </resources>

@@ -12,4 +12,19 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+
+    <color name="JANUARY">#f5f5dc</color>
+    <color name="FEBRUARY">#e0b0ff</color>
+    <color name="MARCH">#0095b6</color>
+    <color name="APRIL">#5da130</color>
+    <color name="MAY">#de3163</color>
+    <color name="JUNE">#ffd700</color>
+    <color name="JULY">#ff7f50</color>
+    <color name="AUGUST">#ffa000</color>
+    <color name="SEPTEMBER">#004f84</color>
+    <color name="OCTOBER">#02f9f2</color>
+    <color name="NOVEMBER">#c8a98f</color>
+    <color name="DECEMBER">#116062</color>
+    <color name="today_color">#FF0000</color>
+
 </resources>

@@ -22,7 +22,7 @@ class SpendingRoomRepository(
         dao.deleteSpendingRoomEntity(SpendingRoomEntity.fromSpending(spending))
     }
 
-    override fun getSpendingFlowByEpochDay(epochDay: Long): Flow<Int> {
+    override fun getSpendingFlowByEpochDay(epochDay: Long): Flow<Int?> {
         return dao.getSpendingFlowByEpochDay(epochDay)
     }
 }
