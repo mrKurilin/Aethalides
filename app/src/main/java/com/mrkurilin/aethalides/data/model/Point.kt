@@ -1,9 +1,12 @@
 package com.mrkurilin.aethalides.data.model
 
 import android.graphics.Color
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
+@Parcelize
 data class Point constructor(
     val planEpochDay: Long,
     val description: String,
@@ -22,7 +25,7 @@ data class Point constructor(
     val isMonthly: Boolean,
     val isAnnually: Boolean,
     val trackInHistory: Boolean,
-) {
+) : Parcelable {
 
     constructor(
         localDateTime: LocalDateTime,

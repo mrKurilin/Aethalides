@@ -15,6 +15,9 @@ import java.time.Month
 import java.time.format.TextStyle
 import java.util.*
 
+const val SPACE_BETWEEN_ITEMS = 4 + ((4 + 4) * 6) + 4
+const val ITEM_COUNT = 7
+
 class WeekDaysAdapter(
     private val onVisibleYearChanged: (String) -> Unit,
     private val onVisibleMonthChanged: (Month) -> Unit,
@@ -31,7 +34,7 @@ class WeekDaysAdapter(
         val view = inflater.inflate(R.layout.view_holder_day_of_week, parent, false)
 
         val params = view.layoutParams
-        params.width = (parent.measuredWidth - 56) / 7
+        params.width = (parent.measuredWidth - SPACE_BETWEEN_ITEMS) / ITEM_COUNT
         (params as MarginLayoutParams).setMargins(4)
         view.layoutParams = params
         val calendarDayOfWeekViewHolder = CalendarDayOfWeekViewHolder(view)
@@ -70,10 +73,6 @@ class WeekDaysAdapter(
             ),
             isShownDay = currentShownDay.isEqual(currentPositionLocalDate)
         )
-    }
-
-    override fun getItemCount(): Int {
-        return Int.MAX_VALUE
     }
 
     override fun setMiddleVisiblePosition(middle: Int) {

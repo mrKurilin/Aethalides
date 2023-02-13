@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.data.repository
 
 import com.mrkurilin.aethalides.data.model.Event
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 interface EventsRepository {
 
@@ -11,5 +12,5 @@ interface EventsRepository {
 
     fun deleteEvent(event: Event): Unit
 
-    fun getEventsListFlowByEpochDay(epochDay: Long): Flow<List<Event>>
+    fun getEventsListFlowByLocalDate(localDate: LocalDate): Flow<List<Event>>
 }

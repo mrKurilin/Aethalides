@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sample_year"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:paddingStart="8dp"
         android:text="@string/sample_month"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/current_year_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,7 +84,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/card"
-        android:backgroundTint="@color/light_blue_400"
         android:paddingTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/add_button"

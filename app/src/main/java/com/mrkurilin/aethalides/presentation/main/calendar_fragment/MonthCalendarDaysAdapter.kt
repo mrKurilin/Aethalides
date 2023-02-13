@@ -27,14 +27,13 @@ class MonthCalendarDaysAdapter(
 
     private val emptyList: List<Int> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarDayOfMonthViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CalendarDayOfMonthViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.view_holder_day_of_month, parent, false)
         return CalendarDayOfMonthViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return Int.MAX_VALUE
     }
 
     override fun onBindViewHolder(holder: CalendarDayOfMonthViewHolder, position: Int) {

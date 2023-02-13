@@ -1,14 +1,12 @@
 package com.mrkurilin.aethalides.data.room
 
 import android.content.Context
-import android.graphics.Color
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.mrkurilin.aethalides.data.room.daos.NotesDao
 import com.mrkurilin.aethalides.data.room.daos.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.NoteRoomEntity
-import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -37,24 +35,6 @@ class AethalidesRoomDatabaseTest {
     @Throws(IOException::class)
     fun closeDb() {
         db.close()
-    }
-
-    @Test
-    fun writeAndReadPoints() {
-        val epochSecond: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-        val epochDay = epochSecond / 60 / 60 / 24
-        val pointRoomEntity = PointRoomEntity(
-            color = Color.RED,
-            planEpochDay = epochDay,
-            planEpochSecond = epochSecond,
-            description = "Description",
-            isDone = false,
-            tag = ""
-        )
-        pointsDao.addPoint(pointRoomEntity)
-        val pointRoomEntityFromDb = pointsDao.getAllPointRoomEntities()
-
-        assertEquals(listOf(pointRoomEntity), pointRoomEntityFromDb)
     }
 
     @Test

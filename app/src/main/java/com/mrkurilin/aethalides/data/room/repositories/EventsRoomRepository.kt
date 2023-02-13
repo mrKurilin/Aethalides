@@ -6,6 +6,7 @@ import com.mrkurilin.aethalides.data.room.daos.EventsDao
 import com.mrkurilin.aethalides.data.room.entities.EventRoomEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 
 class EventsRoomRepository(private val dao: EventsDao) : EventsRepository {
 
@@ -21,9 +22,16 @@ class EventsRoomRepository(private val dao: EventsDao) : EventsRepository {
         dao.deleteEvent(EventRoomEntity.fromEvent(event))
     }
 
-    override fun getEventsListFlowByEpochDay(epochDay: Long): Flow<List<Event>> {
-        return dao.getEventRoomEntitiesListFlowByEpochDay(epochDay).map { eventRoomEntites ->
-            eventRoomEntites.map { eventRoomEntity ->
+    override fun getEventsListFlowByLocalDate(
+        localDate: LocalDate
+    ): Flow<List<Event>> {
+        val eventsListFlowByDate = dao.getEventsListFlowByDate(
+            year = localDate.year,
+            month = localDate.monthValue,
+            dayOfMonth = localDate.dayOfMonth
+        )
+        return eventsListFlowByDate.map { eventRoomEntities ->
+            eventRoomEntities.map { eventRoomEntity ->
                 eventRoomEntity.toEvent()
             }
         }

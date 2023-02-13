@@ -9,7 +9,6 @@ import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.util.DiffUtilCallback
 import com.mrkurilin.aethalides.presentation.main.main_fragment.view_holders.AbstractEventViewHolder
 import com.mrkurilin.aethalides.presentation.main.main_fragment.view_holders.EventViewHolder
-import com.mrkurilin.aethalides.presentation.main.main_fragment.view_holders.NoEventsViewHolder
 
 class EventsRecyclerViewAdapter(
     private val deleteEvent: (Event) -> Unit,
@@ -20,60 +19,30 @@ class EventsRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbstractEventViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            R.layout.view_holder_no_events -> {
-                val view = inflater.inflate(R.layout.view_holder_no_events, parent, false)
-                NoEventsViewHolder(view)
-            }
-            R.layout.view_holder_event -> {
-                val view = inflater.inflate(R.layout.view_holder_event, parent, false)
-                EventViewHolder(
-                    view,
-                    deleteEvent = deleteEvent,
-                    editEvent = editEvent
-                )
-            }
-            else -> {
-                throw IllegalArgumentException()
-            }
-        }
+        val view = inflater.inflate(R.layout.view_holder_event, parent, false)
+        return EventViewHolder(
+            view,
+            deleteEvent = deleteEvent,
+            editEvent = editEvent
+        )
     }
 
     override fun getItemCount(): Int {
-        return if (events.isEmpty()) {
-            1
-        } else {
-            events.size
-        }
+        return events.size
     }
 
     override fun onBindViewHolder(holder: AbstractEventViewHolder, position: Int) {
-        if (events.isNotEmpty()) {
-            holder.bind(events[position])
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (events.isEmpty()) {
-            R.layout.view_holder_no_events
-        } else {
-            R.layout.view_holder_event
-        }
+        holder.bind(events[position])
     }
 
     fun setItems(events: List<Event>) {
-        if (this.events.isEmpty()) {
-            this.events = events
-            notifyItemRangeInserted(0, events.size - 1)
-        } else {
-            val diffResult = DiffUtil.calculateDiff(
-                DiffUtilCallback(
-                    this.events,
-                    events,
-                )
+        val diffResult = DiffUtil.calculateDiff(
+            DiffUtilCallback(
+                this.events,
+                events,
             )
-            this.events = events
-            diffResult.dispatchUpdatesTo(this)
-        }
+        )
+        this.events = events
+        diffResult.dispatchUpdatesTo(this)
     }
 }

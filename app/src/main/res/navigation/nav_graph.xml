@@ -56,7 +56,13 @@
     <dialog
         android:id="@+id/entryPointDialogFragment"
         android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog.EntryPointDialogFragment"
-        android:label="EntryPointDialogFragment" />
+        android:label="EntryPointDialogFragment" >
+        <argument
+            android:name="point"
+            app:argType="com.mrkurilin.aethalides.data.model.Point"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
     <dialog
         android:id="@+id/entryEatenFoodDialogFragment"
         android:name="com.mrkurilin.aethalides.presentation.dialogs.entry_eaten_food_dialog.EntryEatenFoodDialogFragment"

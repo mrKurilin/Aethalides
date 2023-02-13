@@ -43,13 +43,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         val epochDay = localDate.toEpochDay()
 
         launch {
-            eventsRepository.getEventsListFlowByEpochDay(epochDay).collect { list ->
+            eventsRepository.getEventsListFlowByLocalDate(localDate).collect { list ->
                 eventsFlow.value = list
             }
         }
 
         launch {
-            pointsRepository.getPointsListFlowByEpochDay(epochDay).collect { list ->
+            pointsRepository.getPointsListFlowByLocalDate(localDate).collect { list ->
                 pointsFlow.value = list
             }
         }
@@ -72,7 +72,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun editPoint(point: Point) {
-
+        val action = MainFragmentDirections.actionMainFragmentToEntryPointDialogFragment()
+        action.point = point
+        navController.navigate(action)
     }
 
     fun deleteEvent(event: Event) {

@@ -12,4 +12,8 @@ abstract class CalendarDaysAdapter<T : CalendarDayViewHolder> : RecyclerView.Ada
         val diff = todayEpochDay - oldEpochDay
         return (Int.MAX_VALUE / 2) - diff.toInt()
     }
+
+    override fun getItemCount(): Int {
+        return Int.MAX_VALUE
+    }
 }

@@ -28,13 +28,4 @@ interface EventsDao {
 
     @Delete
     fun deleteEvent(eventRoomEntity: EventRoomEntity): Unit
-
-    @Query(
-        "SELECT * FROM ${EventRoomEntity.TABLE_NAME} " +
-                "WHERE ${EventRoomEntity.EPOCH_DAY} = :epochDay"
-    )
-    fun getEventRoomEntitiesListFlowByEpochDay(epochDay: Long): Flow<List<EventRoomEntity>>
-    // TODO: conditions
-
-
 }

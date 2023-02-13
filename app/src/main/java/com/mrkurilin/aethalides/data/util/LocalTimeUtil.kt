@@ -8,11 +8,20 @@ class LocalTimeUtil {
 
     companion object {
 
-        fun fromTextView(
+        fun localTimeFromTextView(
             textView: TextView
         ): LocalTime {
             return LocalTime.parse(
                 textView.text.toString(),
+                DateTimeFormatter.ofPattern("HH:mm")
+            )
+        }
+
+        fun localTimeFromString(
+            string: String
+        ): LocalTime {
+            return LocalTime.parse(
+                string,
                 DateTimeFormatter.ofPattern("HH:mm")
             )
         }

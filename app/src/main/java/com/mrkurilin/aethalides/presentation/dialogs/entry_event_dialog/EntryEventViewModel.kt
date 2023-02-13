@@ -5,6 +5,7 @@ import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.util.EntryItemAndroidViewModel
 import com.mrkurilin.aethalides.data.util.EntryState
 import com.mrkurilin.aethalides.data.util.LocalDateUtil
+import com.mrkurilin.aethalides.data.util.LocalTimeUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.LocalDate
 import java.time.LocalTime
@@ -44,6 +45,7 @@ class EntryEventViewModel(app: Application) : EntryItemAndroidViewModel<Event>(a
         isAnnually: Boolean,
     ): Event {
         val localDate = LocalDateUtil.localDateFromDateString(dateText)
+        val localTime = LocalTimeUtil.localTimeFromString(timeText)
         return valueToEdit?.copy(
             name = eventName,
             year = localDate.year,
@@ -55,7 +57,7 @@ class EntryEventViewModel(app: Application) : EntryItemAndroidViewModel<Event>(a
         ) ?: Event(
             name = eventName,
             localDate = localDate,
-            timeText = timeText,
+            localTime = localTime,
             isAnnually = isAnnually
         )
     }

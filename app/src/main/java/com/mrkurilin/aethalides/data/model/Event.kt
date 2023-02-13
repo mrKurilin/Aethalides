@@ -1,8 +1,10 @@
 package com.mrkurilin.aethalides.data.model
 
 import android.os.Parcelable
+import com.mrkurilin.aethalides.data.util.LocalTimeUtil
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Parcelize
 data class Event(
@@ -20,8 +22,9 @@ data class Event(
     constructor(
         name: String,
         localDate: LocalDate,
-        timeText: String,
+        localTime: LocalTime,
         isAnnually: Boolean,
+        id: Long = 0
     ) : this(
         name = name,
         year = localDate.year,
@@ -29,6 +32,7 @@ data class Event(
         dayOfMonth = localDate.dayOfMonth,
         dayOfWeek = localDate.dayOfWeek.value,
         isAnnually = isAnnually,
-        timeText = timeText,
+        timeText = LocalTimeUtil.toString(localTime),
+        id = id
     )
 }

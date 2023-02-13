@@ -6,7 +6,9 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.*
 import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
@@ -15,6 +17,7 @@ import java.time.format.FormatStyle
 class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
 
     private val viewModel by viewModels<EntryPointViewModel>()
+    private val args by navArgs<EntryPointDialogFragmentArgs>()
 
     private lateinit var dateTextView: TextView
     private lateinit var timeTextView: TextView
@@ -29,11 +32,27 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViews()
 
+        viewModel.checkArgsValue(args.point)
+
+        if (args.point != null) {
+            updateUi(args.point!!)
+        }
+
+        setListeners()
+
+        observeData()
+    }
+
+    private fun updateUi(point: Point) {
+
+    }
+
+    private fun setListeners() {
         doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
                 pointDescriptionEditText.text.toString(),
                 LocalDateUtil.localDateFromTextView(dateTextView),
-                LocalTimeUtil.fromTextView(timeTextView),
+                LocalTimeUtil.localTimeFromTextView(timeTextView),
             )
             dismiss()
         }
@@ -57,8 +76,6 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
         repeatSpinner.onItemSelectedListener = AethalidesOnItemSelectedListener { _, _, _, _ ->
             handleRepeatSpinnerSelectedItemString(repeatSpinner.selectedItem.toString())
         }
-
-        observeData()
     }
 
     private fun handleRepeatSpinnerSelectedItemString(selectedItem: String) {

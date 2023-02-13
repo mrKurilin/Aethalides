@@ -45,17 +45,40 @@ interface PointsDao {
 
     @Query(
         "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
-                "WHERE ${PointRoomEntity.EPOCH_DAY} = :epochDay"
+                "WHERE " +
+                "( " +
+                    "${PointRoomEntity.IS_DAILY_COLUMN_NAME} = true " +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_WEEK_COLUMN_NAME} = :dayOfWeek " +
+                    "AND " +
+                    "${PointRoomEntity.IS_WEEKLY_COLUMN_NAME} = true " +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_MONTH_COLUMN_NAME} = :dayOfMonth " +
+                    "AND " +
+                    "${PointRoomEntity.IS_MONTHLY_COLUMN_NAME} = true" +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_MONTH_COLUMN_NAME} = :dayOfMonth " +
+                    "AND " +
+                    "${PointRoomEntity.MONTH_COLUMN_NAME} = :month " +
+                    "AND " +
+                    "( " +
+                        "${PointRoomEntity.YEAR_COLUMN_NAME} = :year " +
+                        "OR " +
+                        "${PointRoomEntity.IS_ANNUALLY_COLUMN_NAME} = true " +
+                    ") " +
+                ")"
+
     )
-    fun getPointRoomEntitiesListFlowByEpochDay(epochDay: Long): Flow<List<PointRoomEntity>>
-    // TODO: conditions
-
-    @Query(
-        "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
-                "WHERE ${PointRoomEntity.EPOCH_DAY} = :epochDay"
-    )
-    fun getPointRoomEntitiesListByEpochDay(epochDay: Long): List<PointRoomEntity>
-    // TODO: conditions
-
-
+    fun getPointRoomEntitiesListFlowByDate(
+        year: Int,
+        month: Int,
+        dayOfMonth: Int,
+        dayOfWeek: Int,
+    ): Flow<List<PointRoomEntity>>
 }

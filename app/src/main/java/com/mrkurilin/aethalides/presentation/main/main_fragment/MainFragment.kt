@@ -22,8 +22,6 @@ import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.WeekDay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Month
-import java.time.format.TextStyle
-import java.util.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -98,9 +96,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun updateCurrentVisibleMonth(month: Month) {
-        currentMonthTextView.text = month.getDisplayName(
-            TextStyle.FULL, Locale.getDefault()
-        )
+        currentMonthTextView.text = month.name
         currentMonthTextView.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
