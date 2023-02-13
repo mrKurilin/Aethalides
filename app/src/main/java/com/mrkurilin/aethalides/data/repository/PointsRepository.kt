@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.data.repository
 
 import com.mrkurilin.aethalides.data.model.Point
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 interface PointsRepository {
 
@@ -18,4 +19,6 @@ interface PointsRepository {
     suspend fun getEpochDaysToPointsMapFlow(): Flow<Map<Long, List<Point>>>
 
     suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>>
+
+    fun getPointsListFlowByLocalDate(localDate: LocalDate): Flow<List<Point>>
 }

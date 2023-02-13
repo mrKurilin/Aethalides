@@ -1,11 +1,10 @@
-package com.mrkurilin.aethalides.data.repository.roomRepositories
+package com.mrkurilin.aethalides.data.room.repositories
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
-import com.mrkurilin.aethalides.data.room.repositories.NotesRoomRepository
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before

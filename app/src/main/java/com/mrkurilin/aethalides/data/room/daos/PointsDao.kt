@@ -42,4 +42,43 @@ interface PointsDao {
                 "WHERE ${PointRoomEntity.TAG_COLUMN_NAME} = :tag"
     )
     fun deletePointsByTag(tag: String): Unit
+
+    @Query(
+        "SELECT * FROM ${PointRoomEntity.TABLE_NAME} " +
+                "WHERE " +
+                "( " +
+                    "${PointRoomEntity.IS_DAILY_COLUMN_NAME} = true " +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_WEEK_COLUMN_NAME} = :dayOfWeek " +
+                    "AND " +
+                    "${PointRoomEntity.IS_WEEKLY_COLUMN_NAME} = true " +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_MONTH_COLUMN_NAME} = :dayOfMonth " +
+                    "AND " +
+                    "${PointRoomEntity.IS_MONTHLY_COLUMN_NAME} = true" +
+                ") " +
+                "OR " +
+                "( " +
+                    "${PointRoomEntity.DAY_OF_MONTH_COLUMN_NAME} = :dayOfMonth " +
+                    "AND " +
+                    "${PointRoomEntity.MONTH_COLUMN_NAME} = :month " +
+                    "AND " +
+                    "( " +
+                        "${PointRoomEntity.YEAR_COLUMN_NAME} = :year " +
+                        "OR " +
+                        "${PointRoomEntity.IS_ANNUALLY_COLUMN_NAME} = true " +
+                    ") " +
+                ")"
+
+    )
+    fun getPointRoomEntitiesListFlowByDate(
+        year: Int,
+        month: Int,
+        dayOfMonth: Int,
+        dayOfWeek: Int,
+    ): Flow<List<PointRoomEntity>>
 }

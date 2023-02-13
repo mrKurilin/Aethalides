@@ -29,4 +29,11 @@ interface EatenFoodDao {
 
     @Delete
     fun deleteEatenFood(eatenFoodRoomEntity: EatenFoodRoomEntity): Unit
+
+    @Query(
+        "SELECT SUM(${EatenFoodRoomEntity.KCAL_COUNT}) " +
+                "FROM ${EatenFoodRoomEntity.TABLE_NAME} " +
+                "WHERE ${EatenFoodRoomEntity.EPOCH_DAY} = :epochDay"
+    )
+    fun getCaloriesFlowByEpochDay(epochDay: Long): Flow<Int?>
 }

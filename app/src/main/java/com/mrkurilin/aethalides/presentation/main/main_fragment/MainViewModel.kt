@@ -2,29 +2,79 @@ package com.mrkurilin.aethalides.presentation.main.main_fragment
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.mrkurilin.aethalides.AethalidesApp
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.data.model.Day
 import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.model.Point
-import kotlinx.coroutines.flow.Flow
+import com.mrkurilin.aethalides.data.util.Models
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val aethalidesApp = app as AethalidesApp
     private val navController = aethalidesApp.provideNavController()
-    private val daysRepository = aethalidesApp.provideDaysRepository()
     private val pointsRepository = aethalidesApp.providePointsRepository()
     private val eventsRepository = aethalidesApp.provideEventsRepository()
+    private val spendingRepository = aethalidesApp.provideSpendingRepository()
+    private val eatenFoodRepository = aethalidesApp.provideEatenFoodRepository()
 
-    val daysToEpochDaysMapFlow: Flow<Map<Long, Day>> = daysRepository.getDaysMapFlow()
+    val currentShownDayFlow = MutableStateFlow(LocalDate.now())
+    val pointsFlow = MutableStateFlow<List<Point>>(listOf())
+    val eventsFlow = MutableStateFlow<List<Event>>(listOf())
+    val spendingFlow = MutableStateFlow(0)
+    val caloriesCountFlow = MutableStateFlow(0)
+
+    private var job: Job? = null
+
+    init {
+        viewModelScope.launch {
+            currentShownDayFlow.collect { localDate ->
+                job?.cancel()
+                job = observeRepositories(localDate)
+            }
+        }
+    }
+
+    private suspend fun observeRepositories(localDate: LocalDate): Job = viewModelScope.launch {
+        val epochDay = localDate.toEpochDay()
+
+        launch {
+            eventsRepository.getEventsListFlowByLocalDate(localDate).collect { list ->
+                eventsFlow.value = list
+            }
+        }
+
+        launch {
+            pointsRepository.getPointsListFlowByLocalDate(localDate).collect { list ->
+                pointsFlow.value = list
+            }
+        }
+
+        launch {
+            spendingRepository.getSpendingFlowByEpochDay(epochDay).collect { spending ->
+                spendingFlow.value = spending ?: 0
+            }
+        }
+
+        launch {
+            eatenFoodRepository.getCaloriesFlowByEpochDay(epochDay).collect { calories ->
+                caloriesCountFlow.value = calories ?: 0
+            }
+        }
+    }
 
     fun deletePoint(point: Point) {
         pointsRepository.deletePoint(point)
     }
 
     fun editPoint(point: Point) {
-        // TODO: startDialog
+        val action = MainFragmentDirections.actionMainFragmentToEntryPointDialogFragment()
+        action.point = point
+        navController.navigate(action)
     }
 
     fun deleteEvent(event: Event) {
@@ -37,23 +87,28 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         navController.navigate(action)
     }
 
-    fun addPointPressed() {
-        navController.navigate(R.id.action_mainFragment_to_entryPointDialogFragment)
+    fun epochDaySelected(epochDay: Long) {
+        currentShownDayFlow.value = LocalDate.ofEpochDay(epochDay)
     }
 
-    fun addEatenFoodPressed() {
-        navController.navigate(R.id.action_mainFragment_to_entryEatenFoodDialogFragment)
-    }
-
-    fun addSpendingPressed() {
-        navController.navigate(R.id.action_mainFragment_to_entrySpendingDialogFragment)
-    }
-
-    fun addNotePressed() {
-        navController.navigate(R.id.action_mainFragment_to_entryNoteDialogFragment)
-    }
-
-    fun addEventPressed() {
-        navController.navigate(R.id.action_mainFragment_to_entryEventDialogFragment)
+    fun addItemPressed(modelToAdd: Models) {
+        val action = when (modelToAdd) {
+            Models.EatenFood -> {
+                R.id.action_mainFragment_to_entryEatenFoodDialogFragment
+            }
+            Models.Event -> {
+                R.id.action_mainFragment_to_entryEventDialogFragment
+            }
+            Models.Note -> {
+                R.id.action_mainFragment_to_entryNoteDialogFragment
+            }
+            Models.Point -> {
+                R.id.action_mainFragment_to_entryPointDialogFragment
+            }
+            Models.Spending -> {
+                R.id.action_mainFragment_to_entrySpendingDialogFragment
+            }
+        }
+        navController.navigate(action)
     }
 }

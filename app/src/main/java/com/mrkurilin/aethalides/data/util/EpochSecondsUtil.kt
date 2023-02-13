@@ -20,7 +20,7 @@ class EpochSecondsUtil {
             textView: TextView,
             localDate: LocalDate
         ): Long {
-            return LocalTimeUtil.fromTextView(textView).toEpochSecond(
+            return LocalTimeUtil.localTimeFromTextView(textView).toEpochSecond(
                 localDate,
                 ZoneOffset.UTC
             )

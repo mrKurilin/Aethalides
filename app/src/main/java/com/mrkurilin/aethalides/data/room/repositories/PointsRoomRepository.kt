@@ -6,6 +6,7 @@ import com.mrkurilin.aethalides.data.room.daos.PointsDao
 import com.mrkurilin.aethalides.data.room.entities.PointRoomEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 
 class PointsRoomRepository(
     private val pointsDao: PointsDao
@@ -43,5 +44,18 @@ class PointsRoomRepository(
 
     override suspend fun getEpochDaysToPointsColorsMapFlow(): Flow<Map<Long, List<Int>>> {
         return pointsDao.getEpochDaysToColorsMapFlow()
+    }
+
+    override fun getPointsListFlowByLocalDate(localDate: LocalDate): Flow<List<Point>> {
+        return pointsDao.getPointRoomEntitiesListFlowByDate(
+            year = localDate.year,
+            month = localDate.monthValue,
+            dayOfMonth = localDate.dayOfMonth,
+            dayOfWeek = localDate.dayOfWeek.value
+        ).map { pointRoomEntities ->
+            pointRoomEntities.map { pointRoomEntity ->
+                pointRoomEntity.toPoint()
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.data.repository.roomRepositories
+package com.mrkurilin.aethalides.data.room.repositories
 
 import android.content.Context
 import android.graphics.Color
@@ -9,7 +9,6 @@ import com.mrkurilin.aethalides.data.model.Note
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
 import com.mrkurilin.aethalides.data.room.daos.PointsDao
-import com.mrkurilin.aethalides.data.room.repositories.PointsRoomRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.junit.After

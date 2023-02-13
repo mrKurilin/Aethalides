@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/no_events_image_view"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:contentDescription="@string/no_events_at_current_day"
-    android:src="@drawable/no_events"/>

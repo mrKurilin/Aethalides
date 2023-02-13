@@ -21,8 +21,6 @@ abstract class AethalidesRoomDatabase : RoomDatabase() {
 
     abstract fun getPointsDao(): PointsDao
 
-    abstract fun getDayDao(): DayDao
-
     abstract fun getEatenFoodDao(): EatenFoodDao
 
     abstract fun getSpendingDao(): SpendingDao
