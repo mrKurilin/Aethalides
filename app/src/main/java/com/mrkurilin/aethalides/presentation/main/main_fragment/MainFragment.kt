@@ -148,6 +148,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.pointsRecyclerView.adapter = pointsAdapter
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun observeFlows() {
         lifecycleScope.launch {
             launch {
