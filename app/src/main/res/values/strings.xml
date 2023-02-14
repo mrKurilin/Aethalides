@@ -75,5 +75,7 @@
     <string name="sample_day_of_month">15</string>
     <string name="sample_month">Январь</string>
     <string name="sample_year">2023</string>
+    <string name="no_events_planned">Мероприятий не запланировано</string>
+    <string name="no_points_planned">Задачи не запланированы</string>
 
 </resources>
