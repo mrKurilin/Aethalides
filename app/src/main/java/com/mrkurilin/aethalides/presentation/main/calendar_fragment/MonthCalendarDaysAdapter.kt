@@ -3,8 +3,8 @@ package com.mrkurilin.aethalides.presentation.main.calendar_fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.CalendarDaysAdapter
 import com.mrkurilin.aethalides.data.util.NumbersToStringUtil
-import com.mrkurilin.aethalides.presentation.main.CalendarDaysAdapter
 import java.time.LocalDate
 import java.time.Month
 import java.time.temporal.WeekFields

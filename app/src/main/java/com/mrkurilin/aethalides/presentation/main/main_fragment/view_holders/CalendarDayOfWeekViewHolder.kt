@@ -6,8 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.presentation.main.CalendarDayViewHolder
-import kotlin.properties.Delegates
+import com.mrkurilin.aethalides.data.util.CalendarDayViewHolder
 
 class CalendarDayOfWeekViewHolder(view: View) : CalendarDayViewHolder(view) {
 
@@ -15,7 +14,7 @@ class CalendarDayOfWeekViewHolder(view: View) : CalendarDayViewHolder(view) {
     private val dayOfMonthTextView: TextView = view.findViewById(R.id.day_of_month)
     private val arrowDownImageView: ImageView = view.findViewById(R.id.arrow_down_image_view)
     private val arrowUpImageView: ImageView = view.findViewById(R.id.arrow_up_image_view)
-    var epochDay by Delegates.notNull<Long>()
+    var epochDay: Long = 0
         private set
 
     fun bind(

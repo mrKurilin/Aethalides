@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mrkurilin.aethalides.presentation.main.CalendarDaysAdapter
+import com.mrkurilin.aethalides.data.util.CalendarDaysAdapter
 
 class CalendarRecyclerView : RecyclerView {
 

@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.ColorOfMonthUtil
-import com.mrkurilin.aethalides.presentation.main.CalendarDaysAdapter
+import com.mrkurilin.aethalides.data.util.CalendarDaysAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.view_holders.CalendarDayOfWeekViewHolder
 import java.time.LocalDate
 import java.time.Month

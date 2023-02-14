@@ -6,7 +6,7 @@ import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.children
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.presentation.main.CalendarDayViewHolder
+import com.mrkurilin.aethalides.data.util.CalendarDayViewHolder
 import java.time.Month
 
 class CalendarDayOfMonthViewHolder(view: View) : CalendarDayViewHolder(view) {

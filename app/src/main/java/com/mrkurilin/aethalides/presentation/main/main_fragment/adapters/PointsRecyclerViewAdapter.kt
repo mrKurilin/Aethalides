@@ -17,6 +17,10 @@ class PointsRecyclerViewAdapter(
 
     private var points: List<Point> = listOf()
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbstractPointViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.view_holder_point, parent, false)
