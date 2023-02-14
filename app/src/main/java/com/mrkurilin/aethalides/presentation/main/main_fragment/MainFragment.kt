@@ -2,21 +2,21 @@ package com.mrkurilin.aethalides.presentation.main.main_fragment
 
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.ColorOfMonthUtil
 import com.mrkurilin.aethalides.data.util.LocalDateUtil
 import com.mrkurilin.aethalides.data.util.Models
 import com.mrkurilin.aethalides.data.util.RecyclerViewAdapterDataObserver
+import com.mrkurilin.aethalides.databinding.FragmentMainBinding
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.EventsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.PointsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.WeekDaysAdapter
@@ -27,21 +27,20 @@ import java.time.Month
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel by viewModels<MainViewModel>()
-
-    private lateinit var currentYearTextView: TextView
-    private lateinit var currentMonthTextView: TextView
-    private lateinit var currentDateTextView: TextView
-    private lateinit var currentDateSpendingTextView: TextView
-    private lateinit var currentDateCaloriesCountTextView: TextView
-    private lateinit var calendarDaysRecyclerView: RecyclerView
-    private lateinit var eventsRecyclerView: RecyclerView
-    private lateinit var pointsRecyclerView: RecyclerView
-    private lateinit var addButton: ImageButton
-    private lateinit var noEventsTextView: TextView
-    private lateinit var noPointsTextView: TextView
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var eventsAdapter: EventsRecyclerViewAdapter
     private lateinit var pointsAdapter: PointsRecyclerViewAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,32 +55,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun initViews() {
-        val view = requireView()
-        addButton = view.findViewById(R.id.add_button)
-        currentYearTextView = view.findViewById(R.id.current_year_text_view)
-        currentMonthTextView = view.findViewById(R.id.current_month_text_view)
-        currentDateTextView = view.findViewById(R.id.current_day_text_view)
-        currentDateSpendingTextView = view.findViewById(R.id.spending_text_view)
-        currentDateCaloriesCountTextView = view.findViewById(R.id.kcal_text_view)
-        calendarDaysRecyclerView = view.findViewById(R.id.calendar_days_recycler_view)
-        eventsRecyclerView = view.findViewById(R.id.events_recycler_view)
-        pointsRecyclerView = view.findViewById(R.id.points_recycler_view)
-        noEventsTextView = view.findViewById(R.id.no_events_text_view)
-        noPointsTextView = view.findViewById(R.id.no_points_text_view)
-
         val localDate = LocalDate.now()
-        currentYearTextView.text = localDate.year.toString()
+        binding.currentYearTextView.text = localDate.year.toString()
         updateCurrentVisibleMonth(localDate.month)
     }
 
     private fun addListeners() {
-        addButton.setOnClickListener {
+        binding.addButton.setOnClickListener {
             showPopupMenu()
         }
     }
 
     private fun showPopupMenu() {
-        val popupMenu = PopupMenu(requireContext(), addButton, Gravity.CENTER)
+        val popupMenu = PopupMenu(requireContext(), binding.addButton, Gravity.CENTER)
         popupMenu.menuInflater.inflate(R.menu.add_to_calendar_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             val modelToAdd: Models = when (menuItem.itemId) {
@@ -101,8 +87,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun updateCurrentVisibleMonth(month: Month) {
-        currentMonthTextView.text = month.name
-        currentMonthTextView.setTextColor(
+        binding.currentMonthTextView.text = month.name
+        binding.currentMonthTextView.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 ColorOfMonthUtil.getColorId(month = month)
@@ -111,19 +97,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setAdapters() {
-        calendarDaysRecyclerView.adapter = WeekDaysAdapter(
+        binding.calendarDaysRecyclerView.adapter = WeekDaysAdapter(
             onVisibleMonthChanged = { month ->
                 updateCurrentVisibleMonth(month)
             },
             onVisibleYearChanged = { year ->
-                currentYearTextView.text = year
+                binding.currentYearTextView.text = year
             },
             onDaySelected = { epochDay ->
                 viewModel.epochDaySelected(epochDay)
             }
         )
-        calendarDaysRecyclerView.scrollToPosition((Int.MAX_VALUE / 2) - 3)
-        LinearSnapHelper().attachToRecyclerView(calendarDaysRecyclerView)
+        binding.calendarDaysRecyclerView.scrollToPosition((Int.MAX_VALUE / 2) - 3)
+        LinearSnapHelper().attachToRecyclerView(binding.calendarDaysRecyclerView)
 
         eventsAdapter = EventsRecyclerViewAdapter(
             deleteEvent = { event ->
@@ -136,12 +122,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         eventsAdapter.registerAdapterDataObserver(
             RecyclerViewAdapterDataObserver(
-                noEventsTextView,
-                eventsRecyclerView
+                binding.noEventsTextView,
+                binding.eventsRecyclerView
             )
         )
 
-        eventsRecyclerView.adapter = eventsAdapter
+        binding.eventsRecyclerView.adapter = eventsAdapter
 
         pointsAdapter = PointsRecyclerViewAdapter(
             deletePoint = { point ->
@@ -154,19 +140,24 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         pointsAdapter.registerAdapterDataObserver(
             RecyclerViewAdapterDataObserver(
-                noPointsTextView,
-                pointsRecyclerView
+                binding.noPointsTextView,
+                binding.pointsRecyclerView
             )
         )
 
-        pointsRecyclerView.adapter = pointsAdapter
+        binding.pointsRecyclerView.adapter = pointsAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun observeFlows() {
         lifecycleScope.launch {
             launch {
                 viewModel.currentShownDayFlow.collect { localDate ->
-                    currentDateTextView.text = LocalDateUtil.localDateToString(localDate)
+                    binding.currentDayTextView.text = LocalDateUtil.localDateToString(localDate)
                 }
             }
 
@@ -184,13 +175,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             launch {
                 viewModel.caloriesCountFlow.collect { amount ->
-                    currentDateCaloriesCountTextView.text = getString(R.string.kcal_count, amount)
+                    binding.kcalTextView.text = getString(R.string.kcal_count, amount)
                 }
             }
 
             launch {
                 viewModel.spendingFlow.collect { amount ->
-                    currentDateSpendingTextView.text = amount.toString()
+                    binding.spendingTextView.text = amount.toString()
                 }
             }
         }
