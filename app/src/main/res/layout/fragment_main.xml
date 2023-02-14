@@ -68,16 +68,36 @@
         app:layout_constraintStart_toEndOf="@id/spending_text_view"
         app:layout_constraintTop_toBottomOf="@id/current_day_text_view" />
 
+    <TextView
+        android:id="@+id/no_events_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ramka"
+        android:padding="8dp"
+        android:text="@string/no_events_planned"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kcal_text_view" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/events_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="250dp"
+        android:paddingTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/kcal_text_view"
         tools:listitem="@layout/view_holder_event" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/events_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="events_recycler_view, no_events_text_view" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/points_recycler_view"
@@ -89,8 +109,22 @@
         app:layout_constraintBottom_toTopOf="@id/add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/events_recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/events_barrier"
         tools:listitem="@layout/view_holder_point" />
+
+    <TextView
+        android:id="@+id/no_points_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ramka"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/no_points_planned"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/events_barrier" />
+
 
     <ImageButton
         android:id="@+id/add_button"

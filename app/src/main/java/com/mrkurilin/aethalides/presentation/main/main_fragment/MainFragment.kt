@@ -16,6 +16,7 @@ import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.ColorOfMonthUtil
 import com.mrkurilin.aethalides.data.util.LocalDateUtil
 import com.mrkurilin.aethalides.data.util.Models
+import com.mrkurilin.aethalides.data.util.RecyclerViewAdapterDataObserver
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.EventsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.PointsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.WeekDaysAdapter
@@ -36,6 +37,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var eventsRecyclerView: RecyclerView
     private lateinit var pointsRecyclerView: RecyclerView
     private lateinit var addButton: ImageButton
+    private lateinit var noEventsTextView: TextView
+    private lateinit var noPointsTextView: TextView
 
     private lateinit var eventsAdapter: EventsRecyclerViewAdapter
     private lateinit var pointsAdapter: PointsRecyclerViewAdapter
@@ -63,6 +66,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         calendarDaysRecyclerView = view.findViewById(R.id.calendar_days_recycler_view)
         eventsRecyclerView = view.findViewById(R.id.events_recycler_view)
         pointsRecyclerView = view.findViewById(R.id.points_recycler_view)
+        noEventsTextView = view.findViewById(R.id.no_events_text_view)
+        noPointsTextView = view.findViewById(R.id.no_points_text_view)
 
         val localDate = LocalDate.now()
         currentYearTextView.text = localDate.year.toString()
@@ -128,6 +133,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.editEvent(event)
             }
         )
+
+        eventsAdapter.registerAdapterDataObserver(
+            RecyclerViewAdapterDataObserver(
+                noEventsTextView,
+                eventsRecyclerView
+            )
+        )
+
         eventsRecyclerView.adapter = eventsAdapter
 
         pointsAdapter = PointsRecyclerViewAdapter(
@@ -138,6 +151,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.editPoint(point)
             }
         )
+
+        pointsAdapter.registerAdapterDataObserver(
+            RecyclerViewAdapterDataObserver(
+                noPointsTextView,
+                pointsRecyclerView
+            )
+        )
+
         pointsRecyclerView.adapter = pointsAdapter
     }
 

@@ -1,4 +1,4 @@
-package com.mrkurilin.aethalides.presentation.main
+package com.mrkurilin.aethalides.data.util
 
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
