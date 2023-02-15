@@ -10,6 +10,8 @@ import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.Models
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -39,32 +41,22 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private suspend fun observeRepositories(localDate: LocalDate): Job = viewModelScope.launch {
+    private suspend fun observeRepositories(
+        localDate: LocalDate
+    ): Job = viewModelScope.launch {
         val epochDay = localDate.toEpochDay()
 
-        launch {
-            eventsRepository.getEventsListFlowByLocalDate(localDate).collect { list ->
-                eventsFlow.value = list
-            }
-        }
-
-        launch {
-            pointsRepository.getPointsListFlowByLocalDate(localDate).collect { list ->
-                pointsFlow.value = list
-            }
-        }
-
-        launch {
-            spendingRepository.getSpendingFlowByEpochDay(epochDay).collect { spending ->
-                spendingFlow.value = spending ?: 0
-            }
-        }
-
-        launch {
-            eatenFoodRepository.getCaloriesFlowByEpochDay(epochDay).collect { calories ->
-                caloriesCountFlow.value = calories ?: 0
-            }
-        }
+        combine(
+            eventsRepository.getEventsListFlowByLocalDate(localDate),
+            pointsRepository.getPointsListFlowByLocalDate(localDate),
+            spendingRepository.getSpendingFlowByEpochDay(epochDay),
+            eatenFoodRepository.getCaloriesFlowByEpochDay(epochDay),
+        ) { events, points, spending, caloriesCount ->
+            eventsFlow.value = events
+            pointsFlow.value = points
+            spendingFlow.value = spending ?: 0
+            caloriesCountFlow.value = caloriesCount ?: 0
+        }.collect()
     }
 
     fun deletePoint(point: Point) {

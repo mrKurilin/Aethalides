@@ -20,6 +20,8 @@ import com.mrkurilin.aethalides.databinding.FragmentMainBinding
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.EventsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.PointsRecyclerViewAdapter
 import com.mrkurilin.aethalides.presentation.main.main_fragment.adapters.WeekDaysAdapter
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Month
@@ -38,7 +40,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(
+            inflater,
+            container,
+            false
+        )
         return binding.root
     }
 
@@ -49,14 +55,28 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         setAdapters()
 
-        observeFlows()
-
         addListeners()
+
+        lifecycleScope.launch {
+            combine(
+                viewModel.currentShownDayFlow,
+                viewModel.pointsFlow,
+                viewModel.eventsFlow,
+                viewModel.spendingFlow,
+                viewModel.caloriesCountFlow,
+            ) { localDate, points, events, spending, caloriesCount ->
+                binding.currentDayTextView.text = LocalDateUtil.localDateToString(localDate)
+                pointsAdapter.setItems(points)
+                eventsAdapter.setItems(events)
+                binding.kcalTextView.text = getString(R.string.kcal_count, caloriesCount)
+                binding.spendingTextView.text = spending.toString()
+            }.collect()
+        }
     }
 
     private fun initViews() {
         val localDate = LocalDate.now()
-        binding.currentYearTextView.text = localDate.year.toString()
+        binding.currentCalendarYearTextView.text = localDate.year.toString()
         updateCurrentVisibleMonth(localDate.month)
     }
 
@@ -87,8 +107,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun updateCurrentVisibleMonth(month: Month) {
-        binding.currentMonthTextView.text = month.name
-        binding.currentMonthTextView.setTextColor(
+        binding.currentCalendarMonthTextView.text = month.name
+        binding.currentCalendarMonthTextView.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
                 ColorOfMonthUtil.getColorId(month = month)
@@ -102,7 +122,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 updateCurrentVisibleMonth(month)
             },
             onVisibleYearChanged = { year ->
-                binding.currentYearTextView.text = year
+                binding.currentCalendarYearTextView.text = year
             },
             onDaySelected = { epochDay ->
                 viewModel.epochDaySelected(epochDay)
@@ -151,39 +171,5 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun observeFlows() {
-        lifecycleScope.launch {
-            launch {
-                viewModel.currentShownDayFlow.collect { localDate ->
-                    binding.currentDayTextView.text = LocalDateUtil.localDateToString(localDate)
-                }
-            }
-
-            launch {
-                viewModel.pointsFlow.collect {
-                    pointsAdapter.setItems(it)
-                }
-            }
-
-            launch {
-                viewModel.eventsFlow.collect {
-                    eventsAdapter.setItems(it)
-                }
-            }
-
-            launch {
-                viewModel.caloriesCountFlow.collect { amount ->
-                    binding.kcalTextView.text = getString(R.string.kcal_count, amount)
-                }
-            }
-
-            launch {
-                viewModel.spendingFlow.collect { amount ->
-                    binding.spendingTextView.text = amount.toString()
-                }
-            }
-        }
     }
 }
