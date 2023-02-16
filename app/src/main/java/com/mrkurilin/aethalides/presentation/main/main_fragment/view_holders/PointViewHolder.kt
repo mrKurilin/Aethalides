@@ -22,15 +22,15 @@ open class PointViewHolder(
         private set
 
     override fun bind(item: Point) {
-        this.point = item
+        point = item
 
-        isDoneCheckBox.isChecked = item.isDone
+        isDoneCheckBox.isChecked = point.isDone
 
         timeTextView.text = EpochSecondsUtil.epochSecondsToHoursAndMinutesString(
-            item.planEpochSecond
+            point.planEpochSecond
         )
 
-        descriptionTextView.text = item.description
+        descriptionTextView.text = point.description
     }
 
     fun setOnMoreButtonClickListener(listener: View.OnClickListener) {
