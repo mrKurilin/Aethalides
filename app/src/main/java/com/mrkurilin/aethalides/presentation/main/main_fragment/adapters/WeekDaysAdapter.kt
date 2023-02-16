@@ -37,7 +37,9 @@ class WeekDaysAdapter(
         params.width = (parent.measuredWidth - SPACE_BETWEEN_ITEMS) / ITEM_COUNT
         (params as MarginLayoutParams).setMargins(4)
         view.layoutParams = params
+
         val calendarDayOfWeekViewHolder = CalendarDayOfWeekViewHolder(view)
+
         calendarDayOfWeekViewHolder.itemView.setOnClickListener {
             val oldEpochDay = currentShownDay.toEpochDay()
             val epochDay = calendarDayOfWeekViewHolder.epochDay
@@ -46,6 +48,7 @@ class WeekDaysAdapter(
             notifyItemChanged(calendarDayOfWeekViewHolder.adapterPosition)
             notifyItemChanged(getAdapterPositionByEpochDay(oldEpochDay))
         }
+
         return calendarDayOfWeekViewHolder
     }
 

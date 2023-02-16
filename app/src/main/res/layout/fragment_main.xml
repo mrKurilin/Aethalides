@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/current_year_text_view"
+        android:id="@+id/current_calendar_year_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample_year"
@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/current_month_text_view"
+        android:id="@+id/current_calendar_month_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
         android:text="@string/sample_month"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/current_year_text_view"
+        app:layout_constraintStart_toEndOf="@id/current_calendar_year_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.mrkurilin.aethalides.presentation.views.CalendarRecyclerView
@@ -34,7 +34,7 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_year_text_view"
+        app:layout_constraintTop_toBottomOf="@id/current_calendar_year_text_view"
         tools:listitem="@layout/view_holder_day_of_week" />
 
     <TextView
