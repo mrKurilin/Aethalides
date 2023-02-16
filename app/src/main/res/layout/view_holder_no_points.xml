@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:contentDescription="@string/no_points_at_current_day"
-    android:src="@drawable/no_points"/>
+    android:src="@drawable/no_points" />

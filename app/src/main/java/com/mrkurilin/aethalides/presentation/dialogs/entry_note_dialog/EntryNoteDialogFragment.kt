@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_note_dialog
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
@@ -22,6 +23,12 @@ class EntryNoteDialogFragment : DialogFragment(R.layout.dialog_entry_note) {
     private lateinit var cancelButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val displayWidth = resources.displayMetrics.widthPixels
+        dialog?.window?.setLayout(
+            (displayWidth * 0.95).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
         initViews()
 
         viewModel.checkArgsValue(args.note)

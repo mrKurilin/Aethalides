@@ -2,6 +2,7 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -30,6 +31,10 @@ class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
     private lateinit var doneButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val displayWidth = resources.displayMetrics.widthPixels
+        dialog?.window?.setLayout((displayWidth * 0.95).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT)
+
         initViews()
 
         viewModel.checkArgsValue(args.point)
