@@ -1,6 +1,6 @@
 package com.mrkurilin.aethalides.data.util
 
-interface Binding {
+interface Binding<T> {
 
-    fun bind(item: Any)
+    fun bind(item: T)
 }

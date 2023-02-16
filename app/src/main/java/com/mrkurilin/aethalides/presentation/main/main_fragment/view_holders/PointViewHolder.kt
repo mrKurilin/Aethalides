@@ -11,8 +11,8 @@ import com.mrkurilin.aethalides.data.util.Binding
 import com.mrkurilin.aethalides.data.util.EpochSecondsUtil
 
 open class PointViewHolder(
-    view: View
-) : RecyclerView.ViewHolder(view), Binding {
+    view: View,
+) : RecyclerView.ViewHolder(view), Binding<Point> {
 
     private val moreButton: ImageButton = view.findViewById(R.id.more_button)
     private val isDoneCheckBox: CheckBox = view.findViewById(R.id.is_done_checkbox)
@@ -21,11 +21,7 @@ open class PointViewHolder(
     lateinit var point: Point
         private set
 
-    override fun bind(item: Any) {
-        if (item !is Point) {
-            return
-        }
-
+    override fun bind(item: Point) {
         this.point = item
 
         isDoneCheckBox.isChecked = item.isDone

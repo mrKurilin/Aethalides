@@ -3,16 +3,13 @@ package com.mrkurilin.aethalides.data.util
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class ItemsRecyclerView<T : Any, VH : RecyclerView.ViewHolder>(
-
-) : RecyclerView.Adapter<VH>() {
+abstract class ItemsRecyclerView<T : Any, VH> : RecyclerView.Adapter<VH>()
+        where VH : RecyclerView.ViewHolder, VH : Binding<T> {
 
     private var items: List<T> = listOf()
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        if (holder is Binding) {
-            holder.bind(items[position])
-        }
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {

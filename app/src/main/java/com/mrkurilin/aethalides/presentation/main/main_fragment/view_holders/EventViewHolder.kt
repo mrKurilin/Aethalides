@@ -6,10 +6,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Event
+import com.mrkurilin.aethalides.data.util.Binding
 
 class EventViewHolder(
     view: View
-) : RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(view), Binding<Event> {
 
     private val timeTextView: TextView = view.findViewById(R.id.time_text_view)
     private val eventNameTextView: TextView = view.findViewById(R.id.event_text_view)
@@ -17,10 +18,10 @@ class EventViewHolder(
     lateinit var event: Event
         private set
 
-    fun bind(event: Event) {
-        this.event = event
-        timeTextView.text = event.timeText
-        eventNameTextView.text = event.name
+    override fun bind(item: Event) {
+        this.event = item
+        timeTextView.text = item.timeText
+        eventNameTextView.text = item.name
     }
 
     fun setOnMoreButtonClickListener(listener: View.OnClickListener) {
