@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/spending_name_edit_text"
+        android:id="@+id/name_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -46,12 +46,12 @@
         android:text="@string/amount"
         android:textColor="#546E7A"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_edit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/food_amount_edit_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amount_edit_text" />
+        app:layout_constraintTop_toTopOf="@+id/food_amount_edit_text" />
 
     <EditText
-        android:id="@+id/amount_edit_text"
+        android:id="@+id/food_amount_edit_text"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="6"
@@ -61,19 +61,19 @@
         android:paddingTop="16dp"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/amount_spinner"
+        app:layout_constraintEnd_toStartOf="@id/measure_spinner"
         app:layout_constraintStart_toEndOf="@id/text_views_barrier"
-        app:layout_constraintTop_toBottomOf="@id/spending_name_edit_text" />
+        app:layout_constraintTop_toBottomOf="@id/name_edit_text" />
 
     <Spinner
-        android:id="@+id/amount_spinner"
+        android:id="@+id/measure_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/eaten_food_measure_string_array"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/amount_edit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/food_amount_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amount_edit_text" />
+        app:layout_constraintTop_toTopOf="@+id/food_amount_edit_text" />
 
     <TextView
         android:id="@+id/count_text_view"
@@ -101,7 +101,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/kcal_count_spinner"
         app:layout_constraintStart_toStartOf="@id/text_views_barrier"
-        app:layout_constraintTop_toBottomOf="@id/amount_edit_text" />
+        app:layout_constraintTop_toBottomOf="@id/food_amount_edit_text" />
 
     <TextView
         android:id="@+id/kcal_count_spinner"

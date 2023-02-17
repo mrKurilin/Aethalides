@@ -12,7 +12,7 @@ class EntryEatenFoodViewModel(app: Application) : AndroidViewModel(app) {
 
     private val aethalidesApp = app as AethalidesApp
     private val eatenFoodRepository = aethalidesApp.provideEatenFoodRepository()
-    val dateFlow: MutableStateFlow<LocalDate> = MutableStateFlow(LocalDate.now())
+    val currentLocalDate: MutableStateFlow<LocalDate> = MutableStateFlow(LocalDate.now())
     val timeFlow: MutableStateFlow<LocalTime> = MutableStateFlow(LocalTime.now())
 
     fun addEatenFood(eatenFood: EatenFood) {

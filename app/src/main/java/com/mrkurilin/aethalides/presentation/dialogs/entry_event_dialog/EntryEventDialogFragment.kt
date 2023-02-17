@@ -1,43 +1,40 @@
 package com.mrkurilin.aethalides.presentation.dialogs.entry_event_dialog
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.*
+import com.mrkurilin.aethalides.databinding.DialogEntryEventBinding
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
-class EntryEventDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_event) {
+class EntryEventDialogFragment : EntryItemDialogFragment<DialogEntryEventBinding>(
+    R.layout.dialog_entry_event
+) {
 
     private val viewModel by viewModels<EntryEventViewModel>()
     private val args by navArgs<EntryEventDialogFragmentArgs>()
 
-    private lateinit var datePickerTextView: TextView
-    private lateinit var timePickerTextView: TextView
-    private lateinit var eventNameEditText: EditText
-    private lateinit var noSpecificTimeCheckBox: CheckBox
-    private lateinit var isAnnuallyCheckBox: CheckBox
-    private lateinit var cancelButton: Button
-    private lateinit var doneButton: Button
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews()
+        val epochDay = arguments?.getLong(
+            NavigationConstants.EPOCH_DAY_KEY
+        ) ?: LocalDate.now().toEpochDay()
+        viewModel.currentLocalDateFlow.value = LocalDate.ofEpochDay(epochDay)
 
         viewModel.checkArgsValue(args.event)
 
         if (args.event != null) {
             val event = args.event!!
-            eventNameEditText.setText(event.name)
-            datePickerTextView.text = EpochDayUtil.epochDayToDateString(event.epochDay)
-            timePickerTextView.text = event.timeText
-            noSpecificTimeCheckBox.isChecked = (event.timeText == "")
-            isAnnuallyCheckBox.isChecked = event.isAnnually
+            binding.eventNameEditText.setText(event.name)
+            binding.datePickerTextView.text = EpochDayUtil.epochDayToDateString(event.epochDay)
+            binding.timePickerTextView.text = event.timeText
+            binding.noSpecificTimeCheckBox.isChecked = (event.timeText == "")
+            binding.isAnnuallyCheckBox.isChecked = event.isAnnually
         }
 
         observeFlows()
@@ -49,63 +46,52 @@ class EntryEventDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_e
 
         lifecycleScope.launch {
             viewModel.currentLocalDateFlow.collect { localDate ->
-                datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+                binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
             }
         }
 
         lifecycleScope.launch {
             viewModel.currentLocalTimeFlow.collect { localTime ->
-                if (!noSpecificTimeCheckBox.isChecked) {
-                    timePickerTextView.text = LocalTimeUtil.toString(localTime)
+                if (!binding.noSpecificTimeCheckBox.isChecked) {
+                    binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
                 }
             }
         }
     }
 
     private fun setListeners() {
-        doneButton.setOnClickListener {
+        binding.doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
-                eventNameEditText.text.toString(),
-                datePickerTextView.text.toString(),
-                timePickerTextView.text.toString(),
-                isAnnuallyCheckBox.isChecked,
+                binding.eventNameEditText.text.toString(),
+                binding.datePickerTextView.text.toString(),
+                binding.timePickerTextView.text.toString(),
+                binding.isAnnuallyCheckBox.isChecked,
             )
             dismiss()
         }
 
-        cancelButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             dismiss()
         }
 
-        datePickerTextView.setOnClickListener {
+        binding.datePickerTextView.setOnClickListener {
             showDatePickerDialog()
         }
 
-        timePickerTextView.setOnClickListener {
+        binding.timePickerTextView.setOnClickListener {
             showTimePickerDialog()
         }
 
-        noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            timePickerTextView.isEnabled = !isChecked
+        binding.noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            binding.timePickerTextView.isEnabled = !isChecked
             if (isChecked) {
-                timePickerTextView.text = ""
+                binding.timePickerTextView.text = ""
             } else {
-                timePickerTextView.text = LocalTimeUtil.toString(
+                binding.timePickerTextView.text = LocalTimeUtil.toString(
                     viewModel.currentLocalTimeFlow.value
                 )
             }
         }
-    }
-
-    private fun initViews() {
-        val view = requireView()
-        datePickerTextView = view.findViewById(R.id.date_picker_text_view)
-        timePickerTextView = view.findViewById(R.id.time_picker_text_view)
-        eventNameEditText = view.findViewById(R.id.event_name_edit_text)
-        noSpecificTimeCheckBox = view.findViewById(R.id.no_specific_time_checkBox)
-        isAnnuallyCheckBox = view.findViewById(R.id.is_annually_checkBox)
-        cancelButton = view.findViewById(R.id.cancel_button)
-        doneButton = view.findViewById(R.id.done_button)
     }
 
     private fun showTimePickerDialog() {
@@ -126,5 +112,12 @@ class EntryEventDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_e
                 viewModel.currentLocalDateFlow.value = localDate
             }
         )
+    }
+
+    override fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): DialogEntryEventBinding {
+        return DialogEntryEventBinding.inflate(inflater, container, false)
     }
 }
