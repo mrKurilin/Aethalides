@@ -6,17 +6,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.data.util.AethalidesDatePickerDialog
-import com.mrkurilin.aethalides.data.util.AethalidesTimePickerDialog
-import com.mrkurilin.aethalides.data.util.LocalDateUtil
-import com.mrkurilin.aethalides.data.util.LocalTimeUtil
+import com.mrkurilin.aethalides.data.util.*
 import kotlinx.coroutines.launch
 
-class EntrySpendingDialogFragment : DialogFragment(R.layout.dialog_entry_spending) {
+class EntrySpendingDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_spending) {
 
     private val viewModel by viewModels<EntrySpendingViewModel>()
 

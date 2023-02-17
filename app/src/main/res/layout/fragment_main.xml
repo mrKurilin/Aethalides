@@ -20,10 +20,11 @@
         android:id="@+id/current_calendar_month_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="8dp"
         android:text="@string/sample_month"
         android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toEndOf="@id/current_calendar_year_text_view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample_count"
+        android:textColor="#546E7A"
         app:drawableStartCompat="@drawable/baseline_currency_ruble_24"
         app:layout_constraintEnd_toStartOf="@id/kcal_text_view"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kcal_count"
+        android:textColor="#546E7A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/spending_text_view"
         app:layout_constraintTop_toBottomOf="@id/current_day_text_view" />
@@ -76,6 +79,7 @@
         android:padding="8dp"
         android:text="@string/no_events_planned"
         android:textAlignment="center"
+        android:textColor="#757575"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/kcal_text_view" />
@@ -116,11 +120,12 @@
         android:id="@+id/no_points_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="@drawable/ramka"
         android:padding="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/no_points_planned"
         android:textAlignment="center"
+        android:textColor="#757575"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/events_barrier" />

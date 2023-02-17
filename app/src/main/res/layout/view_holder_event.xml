@@ -10,7 +10,8 @@
         android:id="@+id/time_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sample_time" />
+        android:text="@string/sample_time"
+        android:textColor="#546E7A" />
 
     <TextView
         android:id="@+id/event_text_view"

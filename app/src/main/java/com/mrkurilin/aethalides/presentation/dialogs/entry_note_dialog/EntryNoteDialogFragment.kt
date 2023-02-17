@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
+import com.mrkurilin.aethalides.data.util.EntryItemDialogFragment
 import com.mrkurilin.aethalides.data.util.EntryState
 import kotlinx.coroutines.launch
 
-class EntryNoteDialogFragment : DialogFragment(R.layout.dialog_entry_note) {
+class EntryNoteDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_note) {
 
     private val viewModel by viewModels<EntryNoteViewModel>()
     private val args by navArgs<EntryNoteDialogFragmentArgs>()

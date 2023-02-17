@@ -3,7 +3,6 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class EntryPointDialogFragment : DialogFragment(R.layout.dialog_entry_point) {
+class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_point) {
 
     private val viewModel by viewModels<EntryPointViewModel>()
     private val args by navArgs<EntryPointDialogFragmentArgs>()

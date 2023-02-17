@@ -77,5 +77,10 @@
     <string name="sample_year">2023</string>
     <string name="no_events_planned">Мероприятий не запланировано</string>
     <string name="no_points_planned">Задачи не запланированы</string>
+    <string name="_100">100</string>
+    <string name="add_to_eaten_food_list">Добавить в список съеденного</string>
+    <string name="_1">1</string>
+    <string name="no_network_image_button">No network image button</string>
+    <string name="no_network_image">No network image</string>
 
 </resources>
