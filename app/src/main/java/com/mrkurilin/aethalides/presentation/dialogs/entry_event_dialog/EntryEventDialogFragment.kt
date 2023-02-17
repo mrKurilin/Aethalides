@@ -2,12 +2,10 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_event_dialog
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -15,7 +13,7 @@ import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.*
 import kotlinx.coroutines.launch
 
-class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
+class EntryEventDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_event) {
 
     private val viewModel by viewModels<EntryEventViewModel>()
     private val args by navArgs<EntryEventDialogFragmentArgs>()
@@ -29,12 +27,6 @@ class EntryEventDialogFragment : DialogFragment(R.layout.dialog_entry_event) {
     private lateinit var doneButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val displayWidth = resources.displayMetrics.widthPixels
-        dialog?.window?.setLayout(
-            (displayWidth * 0.95).toInt(),
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
         initViews()
 
         viewModel.checkArgsValue(args.event)

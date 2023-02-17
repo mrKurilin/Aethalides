@@ -2,22 +2,17 @@ package com.mrkurilin.aethalides.presentation.dialogs.entry_spending_dialog
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.data.util.AethalidesDatePickerDialog
-import com.mrkurilin.aethalides.data.util.AethalidesTimePickerDialog
-import com.mrkurilin.aethalides.data.util.LocalDateUtil
-import com.mrkurilin.aethalides.data.util.LocalTimeUtil
+import com.mrkurilin.aethalides.data.util.*
 import kotlinx.coroutines.launch
 
-class EntrySpendingDialogFragment : DialogFragment(R.layout.dialog_entry_spending) {
+class EntrySpendingDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_spending) {
 
     private val viewModel by viewModels<EntrySpendingViewModel>()
 
@@ -32,12 +27,6 @@ class EntrySpendingDialogFragment : DialogFragment(R.layout.dialog_entry_spendin
     private lateinit var doneButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val displayWidth = resources.displayMetrics.widthPixels
-        dialog?.window?.setLayout(
-            (displayWidth * 0.95).toInt(),
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
         initViews()
 
         observeFlows()
