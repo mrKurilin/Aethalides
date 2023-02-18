@@ -91,5 +91,4 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </dialog>
-
 </navigation>

@@ -1,29 +1,26 @@
 package com.mrkurilin.aethalides.presentation.dialogs.entry_note_dialog
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.EntryItemDialogFragment
 import com.mrkurilin.aethalides.data.util.EntryState
+import com.mrkurilin.aethalides.databinding.DialogEntryNoteBinding
 import kotlinx.coroutines.launch
 
-class EntryNoteDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_note) {
+class EntryNoteDialogFragment : EntryItemDialogFragment<DialogEntryNoteBinding>(
+    R.layout.dialog_entry_note
+) {
 
     private val viewModel by viewModels<EntryNoteViewModel>()
     private val args by navArgs<EntryNoteDialogFragmentArgs>()
 
-    private lateinit var editText: EditText
-    private lateinit var doneButton: Button
-    private lateinit var cancelButton: Button
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews()
-
         viewModel.checkArgsValue(args.note)
 
         observeEntryState()
@@ -42,32 +39,32 @@ class EntryNoteDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_no
     private fun updateUi(entryState: EntryState) {
         when (entryState) {
             is EntryState.Add -> {
-                doneButton.setText(R.string.add)
+                binding.doneButton.setText(R.string.add)
             }
             is EntryState.Edit -> {
-                doneButton.setText(R.string.edit)
-                editText.setText(
+                binding.doneButton.setText(R.string.edit)
+                binding.noteEditText.setText(
                     args.note?.text
                 )
             }
         }
     }
 
-    private fun initViews() {
-        val view = requireView()
-        editText = view.findViewById(R.id.note_edit_text)
-        doneButton = view.findViewById(R.id.done_button)
-        cancelButton = view.findViewById(R.id.cancel_button)
+    private fun setListeners() {
+        binding.doneButton.setOnClickListener {
+            viewModel.doneButtonPressed(binding.noteEditText.text.toString())
+            dismiss()
+        }
+
+        binding.cancelButton.setOnClickListener {
+            dismiss()
+        }
     }
 
-    private fun setListeners() {
-        doneButton.setOnClickListener {
-            viewModel.doneButtonPressed(editText.text.toString())
-            dismiss()
-        }
-
-        cancelButton.setOnClickListener {
-            dismiss()
-        }
+    override fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): DialogEntryNoteBinding {
+        return DialogEntryNoteBinding.inflate(layoutInflater, container, false)
     }
 }

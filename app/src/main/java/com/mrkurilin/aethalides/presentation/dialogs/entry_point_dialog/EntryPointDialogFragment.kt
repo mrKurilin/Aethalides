@@ -1,37 +1,34 @@
 package com.mrkurilin.aethalides.presentation.dialogs.entry_point_dialog
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.*
+import com.mrkurilin.aethalides.data.util.NavigationConstants.Companion.EPOCH_DAY_KEY
+import com.mrkurilin.aethalides.databinding.DialogEntryPointBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.time.LocalDate
 
-class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_point) {
+class EntryPointDialogFragment : EntryItemDialogFragment<DialogEntryPointBinding>(
+    R.layout.dialog_entry_point
+) {
 
     private val viewModel by viewModels<EntryPointViewModel>()
     private val args by navArgs<EntryPointDialogFragmentArgs>()
 
-    private lateinit var dateTextView: TextView
-    private lateinit var timeTextView: TextView
-    private lateinit var pointDescriptionEditText: EditText
-    private lateinit var noSpecificTimeCheckBox: CheckBox
-    private lateinit var repeatSpinner: Spinner
-    private lateinit var repeatForEditText: EditText
-    private lateinit var repeatQuantityTextView: TextView
-    private lateinit var cancelButton: Button
-    private lateinit var doneButton: Button
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews()
-
         viewModel.checkArgsValue(args.point)
+
+        val epochDay = arguments?.getLong(EPOCH_DAY_KEY) ?: LocalDate.now().toEpochDay()
+        viewModel.currentLocalDate.value = LocalDate.ofEpochDay(epochDay)
 
         if (args.point != null) {
             updateUi(args.point!!)
@@ -39,7 +36,7 @@ class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_p
 
         setListeners()
 
-        observeData()
+        observeFlows()
     }
 
     private fun updateUi(point: Point) {
@@ -47,34 +44,35 @@ class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_p
     }
 
     private fun setListeners() {
-        doneButton.setOnClickListener {
+        binding.doneButton.setOnClickListener {
             viewModel.doneButtonPressed(
-                pointDescriptionEditText.text.toString(),
-                LocalDateUtil.localDateFromTextView(dateTextView),
-                LocalTimeUtil.localTimeFromTextView(timeTextView),
+                binding.pointNameEditText.text.toString(),
+                LocalDateUtil.localDateFromTextView(binding.datePickerTextView),
+                LocalTimeUtil.localTimeFromTextView(binding.timePickerTextView),
             )
             dismiss()
         }
 
-        cancelButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             dismiss()
         }
 
-        dateTextView.setOnClickListener {
+        binding.datePickerTextView.setOnClickListener {
             showDatePickerDialog()
         }
 
-        timeTextView.setOnClickListener {
+        binding.timePickerTextView.setOnClickListener {
             showTimePickerDialog()
         }
 
-        noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            timeTextView.isEnabled = !isChecked
+        binding.noSpecificTimeCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            binding.timePickerTextView.isEnabled = !isChecked
         }
 
-        repeatSpinner.onItemSelectedListener = AethalidesOnItemSelectedListener { _, _, _, _ ->
-            handleRepeatSpinnerSelectedItemString(repeatSpinner.selectedItem.toString())
-        }
+        binding.repeatSpinner.onItemSelectedListener =
+            AethalidesOnItemSelectedListener { _, _, _, _ ->
+                handleRepeatSpinnerSelectedItemString(binding.repeatSpinner.selectedItem.toString())
+            }
     }
 
     private fun handleRepeatSpinnerSelectedItemString(selectedItem: String) {
@@ -110,22 +108,14 @@ class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_p
         )
     }
 
-    private fun observeData() {
-        lifecycleScope.launch {
-            viewModel.currentLocalDate.collect { localDate ->
-                dateTextView.text = localDate.format(
-                    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-                )
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.currentLocalTime.collect { localTime ->
-                timeTextView.text = localTime.format(
-                    DateTimeFormatter.ofPattern("HH:mm")
-                )
-            }
-        }
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalDate,
+            viewModel.currentLocalTime
+        ) { localDate, localTime ->
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+        }.collect()
     }
 
     private fun showDatePickerDialog() {
@@ -138,16 +128,10 @@ class EntryPointDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_p
         )
     }
 
-    private fun initViews() {
-        val view = requireView()
-        dateTextView = view.findViewById(R.id.date_picker_text_view)
-        timeTextView = view.findViewById(R.id.time_picker_text_view)
-        pointDescriptionEditText = view.findViewById(R.id.event_name_edit_text)
-        noSpecificTimeCheckBox = view.findViewById(R.id.no_specific_time_checkBox)
-        repeatSpinner = view.findViewById(R.id.repeat_spinner)
-        repeatForEditText = view.findViewById(R.id.how_long_repeat_edit_text)
-        repeatQuantityTextView = view.findViewById(R.id.repeat_quantity_text_view)
-        cancelButton = view.findViewById(R.id.cancel_button)
-        doneButton = view.findViewById(R.id.done_button)
+    override fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): DialogEntryPointBinding {
+        return DialogEntryPointBinding.inflate(inflater, container, false)
     }
 }

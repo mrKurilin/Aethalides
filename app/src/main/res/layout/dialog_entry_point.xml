@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/event_name_edit_text"
+        android:id="@+id/point_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/what_need_to_do"
@@ -72,7 +72,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/barrier"
-        app:layout_constraintTop_toBottomOf="@+id/event_name_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/point_name_edit_text" />
 
     <TextView
         android:id="@+id/time_picker_text_view"

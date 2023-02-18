@@ -1,68 +1,48 @@
 package com.mrkurilin.aethalides.presentation.dialogs.entry_spending_dialog
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.*
+import com.mrkurilin.aethalides.databinding.DialogEntrySpendingBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
-class EntrySpendingDialogFragment : EntryItemDialogFragment(R.layout.dialog_entry_spending) {
+class EntrySpendingDialogFragment : EntryItemDialogFragment<DialogEntrySpendingBinding>(
+    R.layout.dialog_entry_spending
+) {
 
     private val viewModel by viewModels<EntrySpendingViewModel>()
 
-    private lateinit var headerTextView: TextView
-    private lateinit var spendingNameEditText: EditText
-    private lateinit var spendingAmountEditText: EditText
-    private lateinit var spendingMeasureSpinner: Spinner
-    private lateinit var spendingCountEditText: EditText
-    private lateinit var datePickerTextView: TextView
-    private lateinit var timePickerTextView: TextView
-    private lateinit var cancelButton: Button
-    private lateinit var doneButton: Button
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initViews()
-
         observeFlows()
-    }
-
-    private fun observeFlows() {
-        lifecycleScope.launch {
-            viewModel.currentLocalDateFlow.collect { localDate ->
-                datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.currentLocalTimeFlow.collect { localTime ->
-                timePickerTextView.text = LocalTimeUtil.toString(localTime)
-            }
-        }
-    }
-
-    private fun initViews() {
-        val view = requireView()
-        headerTextView = view.findViewById(R.id.header_text_view)
-        spendingNameEditText = view.findViewById(R.id.spending_name_edit_text)
-        spendingAmountEditText = view.findViewById(R.id.amount_edit_text)
-        spendingMeasureSpinner = view.findViewById(R.id.amount_spinner)
-        spendingCountEditText = view.findViewById(R.id.count_edit_text_view)
-        datePickerTextView = view.findViewById(R.id.date_picker_text_view)
-        timePickerTextView = view.findViewById(R.id.time_picker_text_view)
-        cancelButton = view.findViewById(R.id.cancel_button)
-        doneButton = view.findViewById(R.id.done_button)
 
         setListeners()
+
+        val epochDay = arguments?.getLong(
+            NavigationConstants.EPOCH_DAY_KEY
+        ) ?: LocalDate.now().toEpochDay()
+        viewModel.currentLocalDateFlow.value = LocalDate.ofEpochDay(epochDay)
+    }
+
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalDateFlow,
+            viewModel.currentLocalTimeFlow
+        ) { localDate, localTime ->
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+        }.collect()
     }
 
     private fun setListeners() {
-        datePickerTextView.setOnClickListener {
+        binding.datePickerTextView.setOnClickListener {
             AethalidesDatePickerDialog.show(
                 context = requireContext(),
                 localDate = viewModel.currentLocalDateFlow.value,
@@ -72,7 +52,7 @@ class EntrySpendingDialogFragment : EntryItemDialogFragment(R.layout.dialog_entr
             )
         }
 
-        timePickerTextView.setOnClickListener {
+        binding.timePickerTextView.setOnClickListener {
             AethalidesTimePickerDialog.show(
                 context = requireContext(),
                 localTime = viewModel.currentLocalTimeFlow.value,
@@ -82,18 +62,25 @@ class EntrySpendingDialogFragment : EntryItemDialogFragment(R.layout.dialog_entr
             )
         }
 
-        cancelButton.setOnClickListener {
+        binding.cancelButton.setOnClickListener {
             dismiss()
         }
 
-        doneButton.setOnClickListener {
+        binding.doneButton.setOnClickListener {
             viewModel.addSpending(
-                name = spendingNameEditText.text.toString(),
-                amount = spendingAmountEditText.text.toString().toFloat(),
-                measure = spendingMeasureSpinner.selectedItem.toString(),
-                cost = spendingCountEditText.text.toString().toFloat(),
+                name = binding.nameEditText.text.toString(),
+                amount = binding.amountEditText.text.toString().toFloat(),
+                measure = binding.measureSpinner.selectedItem.toString(),
+                cost = binding.countEditTextView.text.toString().toFloat(),
             )
             dismiss()
         }
+    }
+
+    override fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): DialogEntrySpendingBinding {
+        return DialogEntrySpendingBinding.inflate(inflater, container, false)
     }
 }

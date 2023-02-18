@@ -1,6 +1,7 @@
 package com.mrkurilin.aethalides.presentation.main.main_fragment
 
 import android.app.Application
+import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrkurilin.aethalides.AethalidesApp
@@ -8,6 +9,7 @@ import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Event
 import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.Models
+import com.mrkurilin.aethalides.data.util.NavigationConstants.Companion.EPOCH_DAY_KEY
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -42,7 +44,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private suspend fun observeRepositories(
-        localDate: LocalDate
+        localDate: LocalDate,
     ): Job = viewModelScope.launch {
         val epochDay = localDate.toEpochDay()
 
@@ -101,6 +103,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 R.id.action_mainFragment_to_entrySpendingDialogFragment
             }
         }
-        navController.navigate(action)
+        navController.navigate(
+            action,
+            bundleOf(EPOCH_DAY_KEY to currentShownDayFlow.value.toEpochDay())
+        )
     }
 }

@@ -18,7 +18,7 @@ class EntryPointViewModel(app: Application) : EntryItemAndroidViewModel<Point>(a
     fun doneButtonPressed(
         description: String,
         localDate: LocalDate,
-        localTime: LocalTime
+        localTime: LocalTime,
     ) {
         pointsRepository.addPoint(
             Point(
