@@ -108,4 +108,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             bundleOf(EPOCH_DAY_KEY to currentShownDayFlow.value.toEpochDay())
         )
     }
+
+    fun updatePoint(point: Point) {
+        pointsRepository.updatePoint(point)
+    }
 }

@@ -72,7 +72,8 @@ interface PointsDao {
                         "OR " +
                         "${PointRoomEntity.IS_ANNUALLY_COLUMN_NAME} = true " +
                     ") " +
-                ")"
+                ") " +
+                "ORDER BY ${PointRoomEntity.IS_DONE_COLUMN_NAME}"
 
     )
     fun getPointRoomEntitiesListFlowByDate(
