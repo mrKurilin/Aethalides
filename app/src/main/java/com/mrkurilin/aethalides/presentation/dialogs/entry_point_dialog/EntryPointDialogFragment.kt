@@ -12,10 +12,10 @@ import com.mrkurilin.aethalides.data.model.Point
 import com.mrkurilin.aethalides.data.util.*
 import com.mrkurilin.aethalides.data.util.NavigationConstants.Companion.EPOCH_DAY_KEY
 import com.mrkurilin.aethalides.databinding.DialogEntryPointBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class EntryPointDialogFragment : EntryItemDialogFragment<DialogEntryPointBinding>(
     R.layout.dialog_entry_point
@@ -36,7 +36,7 @@ class EntryPointDialogFragment : EntryItemDialogFragment<DialogEntryPointBinding
 
         setListeners()
 
-        observeData()
+        observeFlows()
     }
 
     private fun updateUi(point: Point) {
@@ -108,22 +108,14 @@ class EntryPointDialogFragment : EntryItemDialogFragment<DialogEntryPointBinding
         )
     }
 
-    private fun observeData() {
-        lifecycleScope.launch {
-            viewModel.currentLocalDate.collect { localDate ->
-                binding.datePickerTextView.text = localDate.format(
-                    DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
-                )
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.currentLocalTime.collect { localTime ->
-                binding.timePickerTextView.text = localTime.format(
-                    DateTimeFormatter.ofPattern("HH:mm")
-                )
-            }
-        }
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalDate,
+            viewModel.currentLocalTime
+        ) { localDate, localTime ->
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+        }.collect()
     }
 
     private fun showDatePickerDialog() {

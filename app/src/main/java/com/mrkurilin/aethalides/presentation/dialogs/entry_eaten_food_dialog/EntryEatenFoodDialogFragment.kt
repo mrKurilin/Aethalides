@@ -11,9 +11,10 @@ import com.mrkurilin.aethalides.data.model.EatenFood
 import com.mrkurilin.aethalides.data.util.*
 import com.mrkurilin.aethalides.data.util.NavigationConstants.Companion.EPOCH_DAY_KEY
 import com.mrkurilin.aethalides.databinding.DialogEntryEatenFoodBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import com.mrkurilin.aethalides.data.util.EntryItemDialogFragment
 
 class EntryEatenFoodDialogFragment : EntryItemDialogFragment<DialogEntryEatenFoodBinding>(
     R.layout.dialog_entry_eaten_food
@@ -27,21 +28,17 @@ class EntryEatenFoodDialogFragment : EntryItemDialogFragment<DialogEntryEatenFoo
         observeFlows()
 
         val epochDay = arguments?.getLong(EPOCH_DAY_KEY) ?: LocalDate.now().toEpochDay()
-        viewModel.currentLocalDate.value = LocalDate.ofEpochDay(epochDay)
+        viewModel.currentLocalDateFlow.value = LocalDate.ofEpochDay(epochDay)
     }
 
-    private fun observeFlows() {
-        lifecycleScope.launch {
-            viewModel.currentLocalDate.collect { localDate ->
-                binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.timeFlow.collect { localTime ->
-                binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
-            }
-        }
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalTimeFlow,
+            viewModel.currentLocalDateFlow,
+        ) { localTime, localDate ->
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+        }.collect()
     }
 
     private fun setListeners() {
@@ -78,9 +75,9 @@ class EntryEatenFoodDialogFragment : EntryItemDialogFragment<DialogEntryEatenFoo
     private fun showTimePickerDialog() {
         AethalidesTimePickerDialog.show(
             context = requireContext(),
-            localTime = viewModel.timeFlow.value,
+            localTime = viewModel.currentLocalTimeFlow.value,
             onTimeSet = { setLocalTime ->
-                viewModel.timeFlow.value = setLocalTime
+                viewModel.currentLocalTimeFlow.value = setLocalTime
             }
         )
     }
@@ -88,9 +85,9 @@ class EntryEatenFoodDialogFragment : EntryItemDialogFragment<DialogEntryEatenFoo
     private fun showDatePickerDialog() {
         AethalidesDatePickerDialog.show(
             context = requireContext(),
-            localDate = viewModel.currentLocalDate.value,
+            localDate = viewModel.currentLocalDateFlow.value,
             onDateSet = { setLocalDate ->
-                viewModel.currentLocalDate.value = setLocalDate
+                viewModel.currentLocalDateFlow.value = setLocalDate
             }
         )
     }

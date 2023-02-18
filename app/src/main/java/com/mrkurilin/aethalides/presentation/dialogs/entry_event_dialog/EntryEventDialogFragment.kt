@@ -10,6 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.*
 import com.mrkurilin.aethalides.databinding.DialogEntryEventBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -42,21 +44,14 @@ class EntryEventDialogFragment : EntryItemDialogFragment<DialogEntryEventBinding
         setListeners()
     }
 
-    private fun observeFlows() {
-
-        lifecycleScope.launch {
-            viewModel.currentLocalDateFlow.collect { localDate ->
-                binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.currentLocalTimeFlow.collect { localTime ->
-                if (!binding.noSpecificTimeCheckBox.isChecked) {
-                    binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
-                }
-            }
-        }
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalTimeFlow,
+            viewModel.currentLocalDateFlow,
+        ) { localTime, localDate ->
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+        }.collect()
     }
 
     private fun setListeners() {

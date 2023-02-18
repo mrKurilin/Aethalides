@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.*
 import com.mrkurilin.aethalides.databinding.DialogEntrySpendingBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -29,18 +31,14 @@ class EntrySpendingDialogFragment : EntryItemDialogFragment<DialogEntrySpendingB
         viewModel.currentLocalDateFlow.value = LocalDate.ofEpochDay(epochDay)
     }
 
-    private fun observeFlows() {
-        lifecycleScope.launch {
-            viewModel.currentLocalDateFlow.collect { localDate ->
-                binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.currentLocalTimeFlow.collect { localTime ->
-                binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
-            }
-        }
+    private fun observeFlows() = lifecycleScope.launch {
+        combine(
+            viewModel.currentLocalDateFlow,
+            viewModel.currentLocalTimeFlow
+        ) { localDate, localTime ->
+            binding.datePickerTextView.text = LocalDateUtil.localDateToString(localDate)
+            binding.timePickerTextView.text = LocalTimeUtil.toString(localTime)
+        }.collect()
     }
 
     private fun setListeners() {
