@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/header_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/add_to_eaten_food_list"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/name_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/dumplings"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences"
+        android:paddingTop="16dp"
+        android:textAlignment="center"
+        android:textColorHint="#546E7A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_text_view" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/text_views_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="amount_text_view, count_text_view" />
+
+    <TextView
+        android:id="@+id/amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amount"
+        android:textColor="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/food_amount_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/food_amount_edit_text" />
+
+    <EditText
+        android:id="@+id/food_amount_edit_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="6"
+        android:hint="@string/_1"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:paddingTop="16dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/measure_spinner"
+        app:layout_constraintStart_toEndOf="@id/text_views_barrier"
+        app:layout_constraintTop_toBottomOf="@id/name_edit_text" />
+
+    <Spinner
+        android:id="@+id/measure_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/eaten_food_measure_string_array"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/food_amount_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/food_amount_edit_text" />
+
+    <TextView
+        android:id="@+id/count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_calories"
+        android:textAlignment="center"
+        android:textColor="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/count_edit_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/count_edit_text_view" />
+
+    <EditText
+        android:id="@+id/count_edit_text_view"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:ems="6"
+        android:hint="@string/_100"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#546E7A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/kcal_count_spinner"
+        app:layout_constraintStart_toStartOf="@id/text_views_barrier"
+        app:layout_constraintTop_toBottomOf="@id/food_amount_edit_text" />
+
+    <TextView
+        android:id="@+id/kcal_count_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kcal"
+        android:textColor="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/count_edit_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/count_edit_text_view"
+        app:layout_constraintTop_toTopOf="@id/count_edit_text_view" />
+
+    <TextView
+        android:id="@+id/when_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/when"
+        android:textColor="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/date_picker_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date_picker_text_view" />
+
+    <TextView
+        android:id="@+id/date_picker_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:text="@string/sample_date"
+        android:textColor="#546E7A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_views_barrier"
+        app:layout_constraintTop_toBottomOf="@+id/count_edit_text_view" />
+
+    <TextView
+        android:id="@+id/at_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/at_what_time"
+        android:textColor="#546E7A"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/time_picker_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time_picker_text_view" />
+
+    <TextView
+        android:id="@+id/time_picker_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:text="@string/sample_time"
+        android:textColor="#546E7A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_views_barrier"
+        app:layout_constraintTop_toBottomOf="@+id/date_picker_text_view" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/done_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_picker_text_view" />
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/time_picker_text_view" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

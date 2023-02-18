@@ -3,6 +3,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -37,11 +39,14 @@ android {
     compileOptions {
         coreLibraryDesugaringEnabled true
 
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -86,7 +91,7 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.5.2")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
 

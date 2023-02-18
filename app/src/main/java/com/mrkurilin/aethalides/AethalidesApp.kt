@@ -3,12 +3,9 @@ package com.mrkurilin.aethalides
 import android.app.Application
 import androidx.navigation.NavController
 import androidx.room.Room
-import com.mrkurilin.aethalides.data.repository.NotesRepository
-import com.mrkurilin.aethalides.data.repository.PointsRepository
-import com.mrkurilin.aethalides.data.repository.roomRepositories.NotesRoomRepository
-import com.mrkurilin.aethalides.data.repository.roomRepositories.PointsRoomRepository
+import com.mrkurilin.aethalides.data.repository.*
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
-import com.mrkurilin.aethalides.data.room.RoomConstants
+import com.mrkurilin.aethalides.data.room.repositories.*
 
 class AethalidesApp : Application() {
 
@@ -18,7 +15,7 @@ class AethalidesApp : Application() {
         Room.databaseBuilder(
             this,
             AethalidesRoomDatabase::class.java,
-            RoomConstants.AETHALIDES_ROOM_DATABASE_NAME
+            "Aethalides Room Database"
         ).allowMainThreadQueries().build()
     }
 
@@ -27,9 +24,24 @@ class AethalidesApp : Application() {
         return@lazy NotesRoomRepository(dao)
     }
 
+    private val eventsRepository: EventsRepository by lazy {
+        val dao = roomDatabase.getEventsDao()
+        return@lazy EventsRoomRepository(dao)
+    }
+
     private val pointsRepository: PointsRepository by lazy {
         val dao = roomDatabase.getPointsDao()
         return@lazy PointsRoomRepository(dao)
+    }
+
+    private val eatenFoodRepository: EatenFoodRepository by lazy {
+        val dao = roomDatabase.getEatenFoodDao()
+        return@lazy EatenFoodRoomRepository(dao)
+    }
+
+    private val spendingRepository: SpendingRepository by lazy {
+        val dao = roomDatabase.getSpendingDao()
+        return@lazy SpendingRoomRepository(dao)
     }
 
     fun setNavController(navController: NavController) {
@@ -46,5 +58,17 @@ class AethalidesApp : Application() {
 
     fun provideNotesRepository(): NotesRepository {
         return notesRepository
+    }
+
+    fun provideEventsRepository(): EventsRepository {
+        return eventsRepository
+    }
+
+    fun provideEatenFoodRepository(): EatenFoodRepository {
+        return eatenFoodRepository
+    }
+
+    fun provideSpendingRepository(): SpendingRepository {
+        return spendingRepository
     }
 }

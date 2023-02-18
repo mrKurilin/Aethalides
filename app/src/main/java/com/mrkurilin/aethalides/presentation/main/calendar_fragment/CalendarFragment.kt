@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mrkurilin.aethalides.R
-import com.mrkurilin.aethalides.presentation.views.GridCalendarRecyclerView
+import com.mrkurilin.aethalides.presentation.views.CalendarRecyclerView
 import kotlinx.coroutines.launch
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
-    private lateinit var recyclerView: GridCalendarRecyclerView
+    private lateinit var recyclerView: CalendarRecyclerView
     private lateinit var monthTextView: TextView
     private lateinit var yearTextView: TextView
 
@@ -34,7 +34,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun initRecyclerView() {
-        val adapter = CalendarDaysAdapter(
+        val adapter = MonthCalendarDaysAdapter(
             onVisibleMonthChanged = { month ->
                 monthTextView.text = month
             },

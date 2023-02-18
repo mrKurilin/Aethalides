@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="repeat_options_string_array">
+        <item>@string/once</item>
+        <item>@string/daily</item>
+        <item>@string/weekly</item>
+        <item>@string/monthly</item>
+        <item>@string/annually</item>
+        <item>@string/special</item>
+    </string-array>
+
+    <string-array name="eaten_food_measure_string_array">
+        <item>@string/liter_shor</item>
+        <item>@string/pieces_short</item>
+        <item>@string/gram_short</item>
+    </string-array>
+</resources>

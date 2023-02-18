@@ -29,5 +29,58 @@
     <string name="repeat">Повтор</string>
     <string name="point">Задача</string>
     <string name="amount">Количество</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="events">Мероприятия</string>
+    <string name="to_do_list">Список дел</string>
+    <string name="add_button_description">Add something</string>
+    <string name="no_points_at_current_day">No points at current day</string>
+    <string name="no_events_at_current_day">No events at current day</string>
+    <string name="kcal_count">%1$d ккал</string>
+    <string name="money_count">%1$d</string>
+    <string name="add_point">Добавить задачу</string>
+    <string name="add_event">Добавить событие</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="add_spending">Добавить траты</string>
+    <string name="add_eaten_food">Добавить калории</string>
+    <string name="sample_time">14:45</string>
+    <string name="more">more</string>
+
+    <string name="sample_date">28 JAN 2023</string>
+    <string name="sample_count">2300</string>
+
+    <string name="cancel">Отменить</string>
+    <string name="add">Добавить</string>
+
+    <string name="once">Однократно</string>
+    <string name="daily">Ежедневно</string>
+    <string name="weekly">Еженедельно</string>
+    <string name="monthly">Ежемесячно</string>
+    <string name="annually">Ежегодно</string>
+    <string name="special">Особый</string>
+    <string name="what_need_to_do">Что нужно сделать</string>
+    <string name="repeat_for">Повторять</string>
+    <string name="for_days">Дней</string>
+
+    <string name="liter_shor">л</string>
+    <string name="pieces_short">шт</string>
+    <string name="gram_short">гр</string>
+    <string name="spending_name_sample">Ноутбук</string>
+    <string name="cost">Стоимость</string>
+    <string name="dumplings">Пельмени</string>
+    <string name="total_calories">Общая\nкалорийность</string>
+    <string name="kcal">ккал</string>
+    <string name="event">Событие</string>
+    <string name="sample_day_of_week_short">ПН</string>
+    <string name="sample_day_of_month">15</string>
+    <string name="sample_month">Январь</string>
+    <string name="sample_year">2023</string>
+    <string name="no_events_planned">Мероприятий не запланировано</string>
+    <string name="no_points_planned">Задачи не запланированы</string>
+    <string name="_100">100</string>
+    <string name="add_to_eaten_food_list">Добавить в список съеденного</string>
+    <string name="_1">1</string>
+    <string name="no_network_image_button">No network image button</string>
+    <string name="no_network_image">No network image</string>
 
 </resources>
