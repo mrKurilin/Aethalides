@@ -155,6 +155,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             },
             editPoint = { point ->
                 viewModel.editPoint(point)
+            },
+            updatePoint = {point ->
+                viewModel.updatePoint(point)
             }
         )
 
