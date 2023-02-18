@@ -24,7 +24,7 @@ abstract class EntryItemDialogFragment<T : ViewBinding>(
         savedInstanceState: Bundle?,
     ): View? {
         _binding = initBinding(inflater, container)
-        return _binding!!.root
+        return binding.root
     }
 
     abstract fun initBinding(
