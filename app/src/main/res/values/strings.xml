@@ -82,5 +82,7 @@
     <string name="_1">1</string>
     <string name="no_network_image_button">No network image button</string>
     <string name="no_network_image">No network image</string>
+    <string name="settings">Настройки</string>
+    <string name="sign_out">Выйти</string>
 
 </resources>

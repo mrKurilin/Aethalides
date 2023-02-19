@@ -9,6 +9,7 @@ sealed class AuthUiState {
     object NoNetworkError : AuthUiState()
     object GoogleSignIn : AuthUiState()
     object GoogleSignInCanceled : AuthUiState()
+    object SignedIn : AuthUiState()
 
     data class ToastError(@StringRes private val errorDescription: Int) : AuthUiState() {
 

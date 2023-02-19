@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/sign_in_fragment">
 
     <fragment
-        android:id="@+id/signInFragment"
+        android:id="@+id/sign_in_fragment"
         android:name="com.mrkurilin.aethalides.presentation.auth_screen.fragments.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_mainFragment"
             app:destination="@id/mainFragment"
-            app:launchSingleTop="true" />
+            app:popUpTo="@+id/sign_in_fragment"
+            app:popUpToInclusive="true"
+        app:launchSingleTop="true" />
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />

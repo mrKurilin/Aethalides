@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.ColorOfMonthUtil
@@ -32,13 +34,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
+    private val navController: NavController
+        get() = findNavController()
+
     private lateinit var eventsAdapter: EventsRecyclerViewAdapter
     private lateinit var pointsAdapter: PointsRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(
             inflater,
@@ -100,7 +105,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     throw IllegalArgumentException()
                 }
             }
-            viewModel.addItemPressed(modelToAdd)
+            viewModel.addItemPressed(modelToAdd, navController)
             return@setOnMenuItemClickListener true
         }
         popupMenu.show()
@@ -136,7 +141,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.deleteEvent(event)
             },
             editEvent = { event ->
-                viewModel.editEvent(event)
+                viewModel.editEvent(event, navController)
             }
         )
 
@@ -154,9 +159,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.deletePoint(point)
             },
             editPoint = { point ->
-                viewModel.editPoint(point)
+                viewModel.editPoint(point, navController)
             },
-            updatePoint = {point ->
+            updatePoint = { point ->
                 viewModel.updatePoint(point)
             }
         )

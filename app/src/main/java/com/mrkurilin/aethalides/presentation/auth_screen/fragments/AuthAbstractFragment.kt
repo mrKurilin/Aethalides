@@ -12,14 +12,21 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.AuthCredential
+import com.mrkurilin.aethalides.MainActivity
+import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.setErrorIfEmpty
 import com.mrkurilin.aethalides.data.util.showLongToast
 import com.mrkurilin.aethalides.presentation.auth_screen.AuthUiState
 import com.mrkurilin.aethalides.presentation.auth_screen.GoogleSignInActivityResultContract
 
-abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
+abstract class AuthAbstractFragment(
+    @LayoutRes
+    layoutId: Int,
+) : Fragment(layoutId) {
 
     protected lateinit var mainUiGroup: Group
     protected lateinit var noNetworkErrorGroup: Group
@@ -33,6 +40,8 @@ abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (requireActivity() as MainActivity).supportActionBar?.hide()
 
         launcher = registerForActivityResult(GoogleSignInActivityResultContract()) { credential ->
             onGoogleSignInActivityResult(credential)
@@ -65,6 +74,16 @@ abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutI
             AuthUiState.GoogleSignInCanceled -> {
                 uiShowMainUi()
             }
+            AuthUiState.SignedIn -> {
+                val navController = findNavController()
+                val currentFragmentId =
+                    navController.currentDestination?.id ?: throw RuntimeException()
+                navController.navigate(
+                    R.id.mainFragment,
+                    null,
+                    NavOptions.Builder().setPopUpTo(currentFragmentId, true).build()
+                )
+            }
         }
     }
 
@@ -93,4 +112,6 @@ abstract class AuthAbstractFragment(@LayoutRes layoutId: Int) : Fragment(layoutI
             }
         }
     }
+
+    abstract fun setListeners()
 }
