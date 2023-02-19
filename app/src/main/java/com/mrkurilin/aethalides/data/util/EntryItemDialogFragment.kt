@@ -1,10 +1,10 @@
 package com.mrkurilin.aethalides.data.util
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
@@ -34,10 +34,15 @@ abstract class EntryItemDialogFragment<T : ViewBinding>(
 
     override fun onResume() {
         val metrics = resources.displayMetrics
-        requireView().layoutParams = FrameLayout.LayoutParams(
-            (metrics.widthPixels * 0.90).toInt(),
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
+        val params = requireView().layoutParams
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            params.width = (metrics.heightPixels * 0.90).toInt()
+        } else {
+            params.width = (metrics.widthPixels * 0.90).toInt()
+        }
+
+        requireView().layoutParams = params
         super.onResume()
     }
 }

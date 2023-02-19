@@ -1,15 +1,12 @@
 package com.mrkurilin.aethalides
 
 import android.app.Application
-import androidx.navigation.NavController
 import androidx.room.Room
 import com.mrkurilin.aethalides.data.repository.*
 import com.mrkurilin.aethalides.data.room.AethalidesRoomDatabase
 import com.mrkurilin.aethalides.data.room.repositories.*
 
 class AethalidesApp : Application() {
-
-    private lateinit var navController: NavController
 
     private val roomDatabase: AethalidesRoomDatabase by lazy {
         Room.databaseBuilder(
@@ -42,14 +39,6 @@ class AethalidesApp : Application() {
     private val spendingRepository: SpendingRepository by lazy {
         val dao = roomDatabase.getSpendingDao()
         return@lazy SpendingRoomRepository(dao)
-    }
-
-    fun setNavController(navController: NavController) {
-        this.navController = navController
-    }
-
-    fun provideNavController(): NavController {
-        return navController
     }
 
     fun providePointsRepository(): PointsRepository {

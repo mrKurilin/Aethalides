@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.AuthCredential
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.hideKeyboard
@@ -25,26 +27,7 @@ class SignUpFragment : AuthAbstractFragment(R.layout.fragment_sign_up) {
 
         initViews()
 
-        signUpButton.setOnClickListener {
-            hideKeyboard()
-            if (passwordsAreEquals()) {
-                tryToSignUp()
-            } else {
-                setPasswordEditTextViewsNotEqualsError()
-            }
-        }
-
-        googleSignInButton.setOnClickListener {
-            viewModel.googleSignInButtonPressed()
-        }
-
-        retryButton.setOnClickListener {
-            tryToSignUp()
-        }
-
-        signInTextView.setOnClickListener {
-            viewModel.signInTextViewPressed()
-        }
+        setListeners()
 
         lifecycleScope.launch {
             viewModel.uiState.collect(this@SignUpFragment::updateUi)
@@ -81,5 +64,32 @@ class SignUpFragment : AuthAbstractFragment(R.layout.fragment_sign_up) {
         retryButton = view.findViewById(R.id.no_network_image_button)
         mainUiGroup = view.findViewById(R.id.sign_up_group)
         noNetworkErrorGroup = view.findViewById(R.id.no_network_error_group)
+    }
+
+    override fun setListeners() {
+        signUpButton.setOnClickListener {
+            hideKeyboard()
+            if (passwordsAreEquals()) {
+                tryToSignUp()
+            } else {
+                setPasswordEditTextViewsNotEqualsError()
+            }
+        }
+
+        googleSignInButton.setOnClickListener {
+            viewModel.googleSignInButtonPressed()
+        }
+
+        retryButton.setOnClickListener {
+            tryToSignUp()
+        }
+
+        signInTextView.setOnClickListener {
+            findNavController().navigate(
+                R.id.sign_in_fragment,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.signUpFragment, true).build()
+            )
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.mrkurilin.aethalides.AethalidesApp
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.model.Event
@@ -20,7 +21,6 @@ import java.time.LocalDate
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val aethalidesApp = app as AethalidesApp
-    private val navController = aethalidesApp.provideNavController()
     private val pointsRepository = aethalidesApp.providePointsRepository()
     private val eventsRepository = aethalidesApp.provideEventsRepository()
     private val spendingRepository = aethalidesApp.provideSpendingRepository()
@@ -65,7 +65,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         pointsRepository.deletePoint(point)
     }
 
-    fun editPoint(point: Point) {
+    fun editPoint(point: Point, navController: NavController) {
         val action = MainFragmentDirections.actionMainFragmentToEntryPointDialogFragment()
         action.point = point
         navController.navigate(action)
@@ -75,7 +75,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         eventsRepository.deleteEvent(event)
     }
 
-    fun editEvent(event: Event) {
+    fun editEvent(event: Event, navController: NavController) {
         val action = MainFragmentDirections.actionMainFragmentToEntryEventDialogFragment()
         action.event = event
         navController.navigate(action)
@@ -85,7 +85,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         currentShownDayFlow.value = LocalDate.ofEpochDay(epochDay)
     }
 
-    fun addItemPressed(modelToAdd: Models) {
+    fun addItemPressed(modelToAdd: Models, navController: NavController) {
         val action = when (modelToAdd) {
             Models.EatenFood -> {
                 R.id.action_mainFragment_to_entryEatenFoodDialogFragment

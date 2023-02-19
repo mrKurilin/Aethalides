@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.AuthCredential
 import com.mrkurilin.aethalides.R
 import com.mrkurilin.aethalides.data.util.hideKeyboard
@@ -24,22 +25,7 @@ class SignInFragment : AuthAbstractFragment(R.layout.fragment_sign_in) {
 
         initViews()
 
-        signInButton.setOnClickListener {
-            hideKeyboard()
-            tryToSignIn()
-        }
-
-        retryButton.setOnClickListener {
-            tryToSignIn()
-        }
-
-        googleSignInButton.setOnClickListener {
-            viewModel.googleSignInButtonPressed()
-        }
-
-        signUpTextView.setOnClickListener {
-            viewModel.signUpTextViewPressed()
-        }
+        setListeners()
 
         lifecycleScope.launch {
             viewModel.uiState.collect(this@SignInFragment::updateUi)
@@ -67,5 +53,26 @@ class SignInFragment : AuthAbstractFragment(R.layout.fragment_sign_in) {
         mainUiGroup = view.findViewById(R.id.sign_in_group)
         noNetworkErrorGroup = view.findViewById(R.id.no_network_error_group)
         retryButton = view.findViewById(R.id.no_network_image_button)
+    }
+
+    override fun setListeners() {
+        signInButton.setOnClickListener {
+            hideKeyboard()
+            tryToSignIn()
+        }
+
+        retryButton.setOnClickListener {
+            tryToSignIn()
+        }
+
+        googleSignInButton.setOnClickListener {
+            viewModel.googleSignInButtonPressed()
+        }
+
+        signUpTextView.setOnClickListener {
+            findNavController().navigate(
+                R.id.signUpFragment,
+            )
+        }
     }
 }
